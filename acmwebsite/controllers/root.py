@@ -5,7 +5,7 @@ from tg import expose, flash, require, url, lurl
 from tg import request, redirect, tmpl_context
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from tg.exceptions import HTTPFound
-from tg import predicates
+from tg import predicates, session
 from acmwebsite import model
 from acmwebsite.controllers.secure import SecureController
 from acmwebsite.model import DBSession
@@ -117,3 +117,12 @@ class RootController(BaseController):
         """
         flash(_('We hope to see you soon!'))
         return HTTPFound(location=came_from)
+
+    @expose()
+    def toggle_theme(self):
+        if session.get('theme', None) == 'dark':
+            session['theme'] = 'light'
+        else:
+            session['theme'] = 'dark'
+        session.save()
+        return session.get('theme', None)
