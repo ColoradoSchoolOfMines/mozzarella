@@ -18,3 +18,7 @@ pip-log.txt
 # Unit test / coverage reports
 .coverage
 .tox
+
+# paste config files
+development.ini
+production.ini

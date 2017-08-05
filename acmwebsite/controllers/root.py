@@ -16,6 +16,7 @@ from acmwebsite.model.meeting import Meeting
 
 from acmwebsite.lib.base import BaseController
 from acmwebsite.controllers.error import ErrorController
+from acmwebsite.lib.helpers import mmadmin
 
 import datetime
 
@@ -47,6 +48,20 @@ class RootController(BaseController):
     def index(self):
         """Handle the front-page."""
         return dict(page='index')
+
+    @expose('acmwebsite.templates.mailinglist')
+    def mailinglist(self):
+        """Handle the 'mailinglist' page."""
+        return dict(page='mailinglist')
+
+    @expose()
+    def post_mailinglist(self, came_from=lurl('/mailinglist'), ml_username=None, ml_fullname=None):
+        try:
+            mmadmin.mymail_subscribe(ml_username, ml_fullname)
+            flash("Successfully subscribed to mailing list")
+        except Exception as e:
+            flash("An error occurred: {}".format(e), 'error')
+        return HTTPFound(location=came_from)
 
     @expose('acmwebsite.templates.login')
     def login(self, came_from=lurl('/'), failure=None, login=''):

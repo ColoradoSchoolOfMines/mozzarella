@@ -54,6 +54,11 @@ cache_dir = %(here)s/data
 session.key = acmwebsite
 session.secret = 2a654f87-1cb4-43fb-834b-413c449a71a8
 
+# Configuration to interface with ACM mailman
+# You must get the password from Jack for MM related features to work
+mailman.url = https://mailman.mines.edu/mailman/admin/acmx
+mailman.secret = getthisfromjack
+
 #By default session is store in cookies to avoid the overhead
 #of having to manage a session storage. On production you might
 #want to switch to a better session storage.

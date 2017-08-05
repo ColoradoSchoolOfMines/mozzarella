@@ -3,9 +3,13 @@
 import logging
 from markupsafe import Markup
 from datetime import datetime
+import tg
 
 log = logging.getLogger(__name__)
 
+# The mmadmin object
+from acmwebsite.lib.mailmanapi import ListAdminAPI
+mmadmin = ListAdminAPI(tg.config.get('mailman.url'), tg.config.get('mailman.secret'))
 
 def current_year():
     now = datetime.now()

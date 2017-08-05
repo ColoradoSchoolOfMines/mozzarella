@@ -40,3 +40,8 @@
     margin-bottom: 0;
     color: #555;
 }
+
+/* Mailing List Stuff */
+.ml-fullname-warn {
+    display: none;
+}
