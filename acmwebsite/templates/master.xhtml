@@ -43,11 +43,11 @@
 
           <ul py:if="value_of('luser')" class="nav navbar-nav navbar-right">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 <span py:content="luser"></span> <span class="caret"></span>
               </a>
               <ul class="dropdown-menu">
-                <li><a href="${tg.url(luser.profile_path)}"><i class="fa fa-user fa-fw"></i> My Profile</a></li>
+                <li><a href=""><i class="fa fa-user fa-fw"></i> My Profile</a></li>
                 <li py:if="tg.predicates.has_permission('manage')"><a href="${tg.url('/admin')}"><i class="fa fa-cogs fa-fw"></i> Admin Panel</a></li>
                 <li><a href="${tg.url('/logout_handler')}"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
               </ul>

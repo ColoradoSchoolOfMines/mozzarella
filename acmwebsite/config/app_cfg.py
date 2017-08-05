@@ -9,6 +9,7 @@ from tg.configuration import AppConfig
 
 import acmwebsite
 from acmwebsite import model, lib
+from tg import request
 
 base_config = AppConfig()
 base_config.renderers = []
@@ -133,6 +134,20 @@ base_config.sa_auth.post_login_url = '/post_login'
 # You may optionally define a page where you want users to be redirected to
 # on logout:
 base_config.sa_auth.post_logout_url = '/post_logout'
+
+# Variable provider: this provides a default set of variables to the templating engine
+
+def variable_provider():
+    d = {}
+    if request.identity:
+        userid = request.identity['repoze.who.userid']
+        d['luser'] = model.User.by_user_name(userid)
+    else:
+        d['luser'] = None
+    return d
+
+base_config.variable_provider = variable_provider
+
 try:
     # Enable DebugBar if available, install tgext.debugbar to turn it on
     from tgext.debugbar import enable_debugbar

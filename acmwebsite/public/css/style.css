@@ -45,3 +45,7 @@
 .ml-fullname-warn {
     display: none;
 }
+
+.navbar-right {
+    margin-right: 0px;
+}

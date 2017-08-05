@@ -97,7 +97,7 @@ class User(DeclarativeBase):
             repr(self.display_name)
         )
 
-    def __unicode__(self):
+    def __str__(self):
         return self.display_name or self.user_name
 
     @property
