@@ -1,0 +1,15 @@
+<html py:strip=""
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <py:extends href="master.xhtml" />
+
+<head py:block="head" py:strip="True">
+  <title>Colorado School of Mines: ACM - Schedule</title>
+</head>
+
+<body py:block="body" py:strip="True">
+    <h1 class="page-header">Upcoming Meetings</h1>
+    <py:include href="acmwebsite.templates.meeting_list" />
+</body>
+</html>

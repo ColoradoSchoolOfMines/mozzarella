@@ -59,5 +59,6 @@ def init_model(engine):
 
 # Import your model modules here.
 from acmwebsite.model.auth import User, Group, Permission
+from acmwebsite.model.meeting import Meeting
 
-__all__ = ('User', 'Group', 'Permission')
+__all__ = ('User', 'Group', 'Permission', 'Meeting')

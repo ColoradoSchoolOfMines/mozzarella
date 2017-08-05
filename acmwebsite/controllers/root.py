@@ -12,8 +12,12 @@ from acmwebsite.model import DBSession
 from tgext.admin.tgadminconfig import BootstrapTGAdminConfig as TGAdminConfig
 from tgext.admin.controller import AdminController
 
+from acmwebsite.model.meeting import Meeting
+
 from acmwebsite.lib.base import BaseController
 from acmwebsite.controllers.error import ErrorController
+
+import datetime
 
 __all__ = ['RootController']
 
@@ -96,3 +100,11 @@ class RootController(BaseController):
             session['theme'] = 'dark'
         session.save()
         return session.get('theme', None)
+
+    @expose('acmwebsite.templates.schedule')
+    def schedule(self):
+        """Handle the schedule page."""
+        meetings = DBSession.query(Meeting).filter(
+                Meeting.date > datetime.datetime.now() - datetime.timedelta(hours=3)
+                ).order_by(Meeting.date)
+        return dict(page='schedule', meetings=meetings)
