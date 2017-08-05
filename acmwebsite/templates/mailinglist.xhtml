@@ -1,0 +1,41 @@
+<html py:strip=""
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <py:extends href="master.xhtml" />
+
+<head py:block="head" py:strip="True">
+  <title>Colorado School of Mines: LUG - Mailing List Signup</title>
+</head>
+
+<body py:block="body" py:strip="True">
+    <h1 class="page-header">Mailing List Signup</h1>
+    <div class="row">
+        <div class="col-md-8">
+            <p>Subscribe to get meeting announcements and updates delivered to your inbox. We promise we won't spam you!</p>
+            <form action="post_mailinglist" method="post">
+                <div class="form-group">
+                    <label for="ml-username">Mines Username</label>
+                    <input type="text" class="form-control" id="ml-username" name="ml_username" autocomplete="off" />
+                </div>
+                <div class="form-group">
+                    <label for="ml-fullname">Full Name</label>
+                    <input type="text" class="form-control" id="ml-fullname" name="ml_fullname" autocomplete="off" />
+                    <p class="help-block ml-fullname-warn">Go by a different name? Adjust as needed.</p>
+                </div>
+                <button type="submit" class="btn btn-primary">Subscribe</button>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <div class="well">
+                <h3>More Options</h3>
+                <ul>
+                    <li><a href="https://mailman.mines.edu/mailman/listinfo/acmx" target="_blank">Subscribe an non-Mines email</a></li>
+                    <li><a href="https://mailman.mines.edu/pipermail/acmx/" target="_blank">View list archives</a></li>
+                    <li><a href="https://mailman.mines.edu/mailman/options/acmx" target="_blank">Unsubscribe or edit options</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
