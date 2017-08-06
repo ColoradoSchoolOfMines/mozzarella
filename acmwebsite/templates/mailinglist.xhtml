@@ -1,41 +1,70 @@
 <html py:strip=""
-      xmlns:py="http://genshi.edgewall.org/"
-      xmlns:xi="http://www.w3.org/2001/XInclude">
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude">
 
   <py:extends href="master.xhtml" />
 
-<head py:block="head" py:strip="True">
-  <title>Mailing List Signup</title>
-</head>
+  <head py:block="head" py:strip="True">
+    <title>Mailing List Signup</title>
+  </head>
 
-<body py:block="body" py:strip="True">
+  <body py:block="body" py:strip="True">
     <h1 class="page-header">Mailing List Signup</h1>
     <div class="row">
-        <div class="col-md-8">
-            <p>Subscribe to get meeting announcements and updates delivered to your inbox. We promise we won't spam you!</p>
-            <form action="post_mailinglist" method="post">
-                <div class="form-group">
-                    <label for="ml-username">Mines Username</label>
-                    <input type="text" class="form-control" id="ml-username" name="ml_username" autocomplete="off" />
-                </div>
-                <div class="form-group">
-                    <label for="ml-fullname">Full Name</label>
-                    <input type="text" class="form-control" id="ml-fullname" name="ml_fullname" autocomplete="off" />
-                    <p class="help-block ml-fullname-warn">Go by a different name? Adjust as needed.</p>
-                </div>
-                <button type="submit" class="btn btn-primary">Subscribe</button>
-            </form>
+      <div class="col-md-8">
+        <p>Subscribe to get meeting announcements and updates delivered to your inbox. We promise we won't spam you!</p>
+        <form action="post_mailinglist" method="post">
+          <div class="form-group">
+            <label for="ml-username">Mines Username</label>
+            <input type="text" class="form-control" id="ml-username" name="ml_username" autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label for="ml-fullname">Full Name</label>
+            <input type="text" class="form-control" id="ml-fullname" name="ml_fullname" autocomplete="off" />
+            <p class="help-block ml-fullname-warn">Go by a different name? Adjust as needed.</p>
+          </div>
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+      </div>
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">More Options</h3>
+          </div>
+          <div class="panel-body">
+            <ul>
+              <li><a href="https://mailman.mines.edu/mailman/listinfo/acmx" target="_blank">Subscribe an non-Mines email</a></li>
+              <li><a href="https://mailman.mines.edu/pipermail/acmx/" target="_blank">View list archives</a></li>
+              <li><a href="https://mailman.mines.edu/mailman/options/acmx" target="_blank">Unsubscribe or edit options</a></li>
+            </ul>
+          </div>
         </div>
-        <div class="col-md-4">
-            <div class="well">
-                <h3>More Options</h3>
-                <ul>
-                    <li><a href="https://mailman.mines.edu/mailman/listinfo/acmx" target="_blank">Subscribe an non-Mines email</a></li>
-                    <li><a href="https://mailman.mines.edu/pipermail/acmx/" target="_blank">View list archives</a></li>
-                    <li><a href="https://mailman.mines.edu/mailman/options/acmx" target="_blank">Unsubscribe or edit options</a></li>
-                </ul>
-            </div>
-        </div>
+      </div>
     </div>
-</body>
+    <h2>Posting to the List</h2>
+    <p>
+    We welcome posts from others to our list. You do not have to be subscribed
+    to post to our list. To post to our list, send your message to
+    <tt>acmx@mailman.mines.edu</tt>.
+    </p>
+
+    <p>
+    Note that there only a small group of people who may post to our
+    list without moderation (officers and faculty advisors). When you
+    post, a message will automatically be sent to the list
+    administrator asking for their approval.
+    </p>
+
+    <p>
+    We ask that you follow
+    <a href="http://david.woodhou.se/email.html"
+       target="_blank">good email etiquette</a> when
+     posting to our list. Sending
+     <a href="http://www.georgedillon.com/web/html_email_is_evil_still.shtml"
+        target="_blank">HTML mail</a> or
+      <a href="http://catb.org/jargon/html/T/top-post.html"
+         target="_blank">TOFU mail</a> is a great way to
+       get your post rejected.
+    </p>
+  </body>
 </html>
