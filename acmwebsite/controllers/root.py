@@ -17,6 +17,7 @@ from acmwebsite.lib.base import BaseController
 from acmwebsite.controllers.error import ErrorController
 
 from acmwebsite.controllers.mailinglist import MailingListController
+from acmwebsite.controllers.contact import ContactController
 
 import datetime
 
@@ -39,6 +40,7 @@ class RootController(BaseController):
     admin = AdminController(model, DBSession, config_type=AdminConfig)
     mailinglist = MailingListController()
     error = ErrorController()
+    contact = ContactController()
 
     def _before(self, *args, **kw):
         tmpl_context.project_name = "acmwebsite"

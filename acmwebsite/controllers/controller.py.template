@@ -12,7 +12,7 @@ from acmwebsite.lib.base import BaseController
 class {{target.capitalize()}}Controller(BaseController):
     # Uncomment this line if your controller requires an authenticated user
     # allow_only = predicates.not_anonymous()
-    
+
     @expose('acmwebsite.templates.{{target.lower()}}')
     def index(self, **kw):
         return dict(page='{{target.lower()}}-index')
