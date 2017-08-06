@@ -1,0 +1,72 @@
+<html py:strip=""
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <py:extends href="master.xhtml" />
+
+  <head py:block="head" py:strip="True">
+    <title>ACM Mailing List Message: ${message.subject}</title>
+  </head>
+
+  <body py:block="body" py:strip="True">
+    <h1 class="page-header">Mailing List Message</h1>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">${message.subject}</h3>
+          </div>
+          <table class="table">
+            <tr><td>From:</td><td>${message.from_}</td></tr>
+            <tr><td>Date:</td><td>${h.ftime(message.date)}</td></tr>
+            <tr><td>Message-ID:</td><td>${message.message_id}</td></tr>
+          </table>
+          <div class="panel-body">
+            <pre>
+${message.body}
+            </pre>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">References</h3>
+          </div>
+          <div class="panel-body">
+            <ul>
+              <py:if test="message.parent">
+                <li>This message was a reply to
+                <a href="${message.parent.url}">${message.parent.linkname}</a></li>
+              </py:if><py:else>
+                <li>This message started a new thread</li>
+              </py:else>
+              <py:if test="message.children">
+              <li py:for="child in message.children">This message recieved a response:
+                <a href="${child.url}">${child.linkname}</a></li>
+              </py:if><py:else>
+              <li>This message has recieved no replies</li>
+              </py:else>
+            </ul>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Navigate by Date</h3>
+          </div>
+          <div class="panel-body">
+            <ul>
+              <py:if test="message.prev_by_date">
+                <li><a href="${message.prev_by_date.url}">Previous message by date</a></li>
+              </py:if>
+              <py:if test="message.next_by_date">
+                <li><a href="${message.next_by_date.url}">Next message by date</a></li>
+              </py:if>
+              <li><a href="${tg.url('/mailinglist/archives')}">All messages by date</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

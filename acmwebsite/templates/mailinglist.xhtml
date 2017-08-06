@@ -13,7 +13,7 @@
     <div class="row">
       <div class="col-md-8">
         <p>Subscribe to get meeting announcements and updates delivered to your inbox. We promise we won't spam you!</p>
-        <form action="post_mailinglist" method="post" id="mailinglist-form">
+        <form action="${tg.url('/mailinglist/subscribe')}" method="post" id="mailinglist-form">
           <div class="form-group">
             <label for="ml-username">Mines Username</label>
             <input type="text" class="form-control" id="ml-username" name="ml_username" autocomplete="off" />
@@ -34,8 +34,20 @@
           <div class="panel-body">
             <ul>
               <li><a href="https://mailman.mines.edu/mailman/listinfo/acmx" target="_blank">Subscribe an non-Mines email</a></li>
-              <li><a href="https://mailman.mines.edu/pipermail/acmx/" target="_blank">View list archives</a></li>
+              <li><a href="${tg.url('/mailinglist/archives')}">View list archives</a></li>
               <li><a href="https://mailman.mines.edu/mailman/options/acmx" target="_blank">Unsubscribe or edit options</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Recent Posts</h3>
+          </div>
+          <div class="panel-body">
+            <ul>
+              <li py:for="post in recents"><a href="${post.url}">${post.linkname}</a></li>
             </ul>
           </div>
         </div>

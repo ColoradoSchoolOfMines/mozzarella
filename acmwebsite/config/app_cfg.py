@@ -177,6 +177,10 @@ def start_tgscheduler():
     from acmwebsite.lib.helpers import mmadmin
     tgscheduler.scheduler.add_single_task(action=mmadmin.session.authenticate, initialdelay=0)
 
+    # Schedule up some syncing with pipermail
+    from acmwebsite.lib.pipermailsync import pmsync
+    tgscheduler.scheduler.add_interval_task(action=pmsync, initialdelay=0, interval=5*60)
+
 from tg.configuration import milestones
 milestones.config_ready.register(start_tgscheduler)
 
