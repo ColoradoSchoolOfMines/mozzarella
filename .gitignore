@@ -1,3 +1,4 @@
+*.orig
 *.py[co]
 
 # Default development database
