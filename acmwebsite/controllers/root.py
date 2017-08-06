@@ -21,8 +21,6 @@ from acmwebsite.controllers.contact import ContactController
 
 import datetime
 
-__all__ = ['RootController']
-
 class RootController(BaseController):
     """
     The root controller for the acm-website application.
