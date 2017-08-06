@@ -1,18 +1,46 @@
-# Title: Mailman List Admin API
-# Author: Jack Rosenthal
-# Date: 2016-02-21
 import concurrent.futures
 import requests
 import re
 from acmwebsite.lib.mpapi_connector import uidinfo, InvalidUsername
 
+class MailmanSession(requests.Session):
+    def __init__(self, admin_url, admin_auth):
+        super().__init__()
+        self.admin_url = admin_url
+        self.admin_auth = admin_auth
+
+    def authenticate(self):
+        r = super().post(self.admin_url, data={"adminpw": self.admin_auth})
+        r.raise_for_status()
+
+    def get(self, *args, **kwargs):
+        r = super().get(*args, **kwargs)
+
+        if "Let me in..." in r.text:
+            # Mailman wants us to authenticate
+            self.authenticate()
+
+            # Redo the GET request
+            return super().get(*args, **kwargs)
+
+        return r
+
+    def post(self, *args, **kwargs):
+        r = super().post(*args, **kwargs)
+
+        if "Let me in..." in r.text:
+            # Mailman wants us to authenticate
+            self.authenticate()
+
+            # Redo the POST request
+            return super().post(*args, **kwargs)
+
+        return r
+
 class ListAdminAPI:
     def __init__(self, admin_url, admin_auth):
         self.admin_url = admin_url
-        r = requests.post(admin_url, data={"adminpw": admin_auth})
-        if not r.ok:
-            raise RuntimeError("Error authenticating to mailinglist")
-        self.cookies = r.cookies
+        self.session = MailmanSession(admin_url, admin_auth)
 
     def member_options_url(self, email):
         return self.admin_url.replace("/admin/", "/options/") + "/" + email
@@ -25,7 +53,7 @@ class ListAdminAPI:
                 "subscribees": '\n'.join(emails) + '\n',
                 "invitation": message + '\n'
             }
-        r = requests.post(self.admin_url + "/members/add", cookies=self.cookies, data=post_data)
+        r = self.session.post(self.admin_url + "/members/add", data=post_data)
         if not r.ok:
             raise RuntimeError("Error subscribing members")
 
@@ -35,12 +63,12 @@ class ListAdminAPI:
                 "send_unsub_notifications_to_list_owner": int(notify_owner),
                 "unsubscribees": '\n'.join(emails) + '\n'
             }
-        r = requests.post(self.admin_url + "/members/remove", cookies=self.cookies, data=post_data)
+        r = self.session.post(self.admin_url + "/members/remove", data=post_data)
         if not r.ok:
             raise RuntimeError("Error unsubscribing members")
 
     def get_member_options(self, email):
-        r = requests.get(self.member_options_url(email), cookies=self.cookies)
+        r = self.session.get(self.member_options_url(email))
         if not r.ok:
             raise RuntimeError("Unable to get member options")
 
@@ -66,11 +94,11 @@ class ListAdminAPI:
                 for k, v in kwargs.items():
                     opts[k] = int(v)
                 opts['options-submit'] = 1
-                options_f = executor.submit(requests.post, self.member_options_url(email), cookies=self.cookies, data=opts)
+                options_f = executor.submit(self.session.post, self.member_options_url(email), data=opts)
                 options_f.add_done_callback(check_response)
             if fullname:
                 opts = {'change-of-address': 1, 'fullname': fullname}
-                fullname_f = executor.submit(requests.post, self.member_options_url(email), cookies=self.cookies, data=opts)
+                fullname_f = executor.submit(self.session.post, self.member_options_url(email), data=opts)
                 fullname_f.add_done_callback(check_response)
 
     def mymail_subscribe(self, mines_username, fullname='', message=''):

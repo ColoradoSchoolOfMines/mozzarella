@@ -168,6 +168,18 @@ def variable_provider():
 
 base_config.variable_provider = variable_provider
 
+# Task secheduler
+def start_tgscheduler():
+    import tgscheduler
+    tgscheduler.start_scheduler()
+
+    # Authenticate to Mailman to speed up the first request there
+    from acmwebsite.lib.helpers import mmadmin
+    tgscheduler.scheduler.add_single_task(action=mmadmin.session.authenticate, initialdelay=0)
+
+from tg.configuration import milestones
+milestones.config_ready.register(start_tgscheduler)
+
 try:
     # Enable DebugBar if available, install tgext.debugbar to turn it on
     from tgext.debugbar import enable_debugbar
