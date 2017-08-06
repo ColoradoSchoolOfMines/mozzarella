@@ -7,10 +7,9 @@ from tg.i18n import ugettext as _, lazy_ugettext as l_
 from tg.exceptions import HTTPFound
 from tg import predicates, session
 from acmwebsite import model
-from acmwebsite.controllers.secure import SecureController
 from acmwebsite.model import DBSession
-from tgext.admin.tgadminconfig import BootstrapTGAdminConfig as TGAdminConfig
 from tgext.admin.controller import AdminController
+from acmwebsite.config.app_cfg import AdminConfig
 
 from acmwebsite.model.meeting import Meeting
 
@@ -36,8 +35,7 @@ class RootController(BaseController):
     must be wrapped around with :class:`tg.controllers.WSGIAppController`.
 
     """
-    secc = SecureController()
-    admin = AdminController(model, DBSession, config_type=TGAdminConfig)
+    admin = AdminController(model, DBSession, config_type=AdminConfig)
 
     error = ErrorController()
 

@@ -11,36 +11,37 @@ def bootstrap(command, conf, vars):
     # <websetup.bootstrap.before.auth
     from sqlalchemy.exc import IntegrityError
     try:
-        u = model.User()
-        u.user_name = 'manager'
-        u.display_name = 'Example manager'
-        u.email_address = 'manager@somedomain.com'
-        u.password = 'managepass'
+        jack = model.User(
+                user_id=28263,
+                user_name="jrosenth",
+                display_name="Jack Rosenthal")
+        model.DBSession.add(jack)
 
-        model.DBSession.add(u)
+        sam = model.User(
+                user_id=250449,
+                user_name="ssartor",
+                display_name="Sam Sartor")
+        model.DBSession.add(sam)
+
+        sumner = model.User(
+                user_id=293299,
+                user_name="jonathanevans",
+                display_name="Sumner Evans")
+        model.DBSession.add(sumner)
 
         g = model.Group()
-        g.group_name = 'managers'
-        g.display_name = 'Managers Group'
+        g.group_name = 'officers'
+        g.display_name = 'Officers'
 
-        g.users.append(u)
-
+        g.users.extend([jack, sam, sumner])
         model.DBSession.add(g)
 
         p = model.Permission()
-        p.permission_name = 'manage'
+        p.permission_name = 'admin'
         p.description = 'This permission gives an administrative right'
         p.groups.append(g)
-
         model.DBSession.add(p)
 
-        u1 = model.User()
-        u1.user_name = 'editor'
-        u1.display_name = 'Example editor'
-        u1.email_address = 'editor@somedomain.com'
-        u1.password = 'editpass'
-
-        model.DBSession.add(u1)
         model.DBSession.flush()
         transaction.commit()
     except IntegrityError:

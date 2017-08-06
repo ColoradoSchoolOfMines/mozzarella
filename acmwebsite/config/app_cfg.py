@@ -8,8 +8,13 @@ This file complements development/deployment.ini.
 from tg.configuration import AppConfig
 
 import acmwebsite
+import transaction
+import tg.predicates
 from acmwebsite import model, lib
+from acmwebsite.lib.mpapi_connector import auth, uidinfo
+from acmwebsite.model.auth import User
 from tg import request
+from tgext.admin.tgadminconfig import BootstrapTGAdminConfig as TGAdminConfig
 
 base_config = AppConfig()
 base_config.renderers = []
@@ -67,7 +72,18 @@ class ApplicationAuthMetadata(TGAuthMetadata):
         ).first()
 
         if not user:
-            login = None
+            # Was it a valid MultiPass login? If so, register an account.
+            if auth(login, identity['password']):
+                info = uidinfo(login)
+                user = User(
+                        user_id=info["uidNumber"],
+                        user_name=login,
+                        display_name="{} {}".format(info["first"], info["sn"]))
+                self.sa_auth.dbsession.add(user)
+                self.sa_auth.dbsession.flush()
+                transaction.commit()
+            else:
+                login = None
         elif not user.validate_password(identity['password']):
             login = None
 
@@ -134,6 +150,10 @@ base_config.sa_auth.post_login_url = '/post_login'
 # You may optionally define a page where you want users to be redirected to
 # on logout:
 base_config.sa_auth.post_logout_url = '/post_logout'
+
+# Admin configuration
+class AdminConfig(TGAdminConfig):
+    allow_only = tg.predicates.has_permission('admin')
 
 # Variable provider: this provides a default set of variables to the templating engine
 
