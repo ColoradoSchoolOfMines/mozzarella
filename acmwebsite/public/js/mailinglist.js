@@ -7,7 +7,7 @@
         }
         if ($("#ml-username").val() != last_query && $("#ml-username").val().length > 1) {
             last_query = $("#ml-username").val();
-            $.getJSON("https://mastergo.mines.edu/mpapi/uid/"+$("#ml-username").val(), function(data) {
+            $.getJSON("https://mastergo.mines.edu/mpapi/uid/" + encodeURIComponent($("#ml-username").val()), function(data) {
                 if (data["result"] == "success") {
                     $("#ml-fullname").val(data["attributes"]["first"] + " " + data["attributes"]["sn"]);
                     $(".ml-fullname-warn").fadeIn();
