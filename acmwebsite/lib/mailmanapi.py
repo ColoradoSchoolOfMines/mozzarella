@@ -4,7 +4,7 @@
 import concurrent.futures
 import requests
 import re
-import string
+from acmwebsite.lib.mpapi_connector import uidinfo, InvalidUsername
 
 class ListAdminAPI:
     def __init__(self, admin_url, admin_auth):
@@ -74,13 +74,9 @@ class ListAdminAPI:
                 fullname_f.add_done_callback(check_response)
 
     def mymail_subscribe(self, mines_username, fullname='', message=''):
-        if not mines_username or set(mines_username) - set(string.ascii_letters + string.digits + '._'):
-            raise ValueError('Invalid input for Mines username')
-        r = requests.get("http://toilers.mines.edu/toilers-cgi-bin/namequery.cgi?un=" + mines_username)
-        if r.ok and r.text == '?\n':
-            raise ValueError('Bad Mines username')
-        if r.ok and not fullname:
-            fullname = r.text.strip()
+        info = uidinfo(mines_username)
+        if not fullname:
+            fullname = info["first"] + " " + info["sn"]
         with concurrent.futures.ThreadPoolExecutor() as executor:
             mines_f = executor.submit(self.bulk_subscribe, mines_username + '@mines.edu', message=message)
             mymail_f = executor.submit(self.bulk_subscribe, mines_username + '@mymail.mines.edu', notify_owner=False, welcome=False)
