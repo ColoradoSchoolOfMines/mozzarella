@@ -17,7 +17,7 @@
             <h3 class="panel-title">${message.subject}</h3>
           </div>
           <table class="table">
-            <tr><td>From:</td><td>${message.from_}</td></tr>
+            <tr><td>From:</td><td>${Markup(message.from_display)}</td></tr>
             <tr><td>Date:</td><td>${h.ftime(message.date)}</td></tr>
           </table>
           <div class="panel-body">

@@ -9,6 +9,7 @@ though.
 
 """
 import os
+import tg
 from datetime import datetime
 from hashlib import sha256
 __all__ = ['User', 'Group', 'Permission']
@@ -96,6 +97,10 @@ class User(DeclarativeBase):
 
     def __str__(self):
         return self.display_name or self.user_name
+
+    @property
+    def profile_url(self):
+        return tg.url("/u/" + self.user_name)
 
     @property
     def permissions(self):
