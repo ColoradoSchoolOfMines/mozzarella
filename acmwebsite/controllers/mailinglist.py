@@ -14,7 +14,7 @@ class MailingListController(BaseController):
     @expose('acmwebsite.templates.mailinglist')
     def index(self):
         """Handle the 'mailinglist' page."""
-        recents = DBSession.query(MailMessage).limit(5)
+        recents = DBSession.query(MailMessage).order_by(MailMessage.date.desc()).limit(5)
         return dict(page='mailinglist', recents=recents)
 
     @expose()
