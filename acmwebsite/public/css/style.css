@@ -46,6 +46,14 @@
     display: none;
 }
 
+.emailtext {
+    padding: 0;
+    color: inherit;
+    background-color: inherit;
+    border: none;
+    border-radius: inherit;
+}
+
 .navbar-right {
     margin-right: 0px;
 }

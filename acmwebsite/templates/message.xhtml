@@ -19,12 +19,9 @@
           <table class="table">
             <tr><td>From:</td><td>${message.from_}</td></tr>
             <tr><td>Date:</td><td>${h.ftime(message.date)}</td></tr>
-            <tr><td>Message-ID:</td><td>${message.message_id}</td></tr>
           </table>
           <div class="panel-body">
-            <pre>
-${message.body}
-            </pre>
+            <pre class="emailtext">${message.body}</pre>
           </div>
         </div>
       </div>
