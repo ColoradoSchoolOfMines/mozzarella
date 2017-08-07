@@ -28,8 +28,6 @@ class MailingListController(BaseController):
 
     @expose('acmwebsite.templates.message')
     def message(self, message_id):
-        if not message_id.startswith('<'):
-            message_id = '<' + message_id + '>'
         msg = DBSession.query(MailMessage).filter(MailMessage.message_id == message_id).one_or_none()
         if not msg:
             abort(404, "No message with ID {}".format(message_id))
