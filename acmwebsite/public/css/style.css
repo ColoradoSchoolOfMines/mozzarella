@@ -46,6 +46,20 @@
     display: none;
 }
 
+.emailtext {
+    padding: 0;
+    color: inherit;
+    background-color: inherit;
+    border: none;
+    border-radius: inherit;
+}
+
 .navbar-right {
     margin-right: 0px;
+}
+
+/* Logo */
+.acm-logo {
+  margin: 20px 0;
+  width: 400px;
 }

@@ -1,0 +1,17 @@
+<html py:strip=""
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <py:extends href="master.xhtml" />
+
+  <head py:block="head" py:strip="True">
+      <title>${u} on Mines ACM</title>
+  </head>
+
+  <body py:block="body" py:strip="True">
+    <h1 class="page-header">${u}</h1>
+    <p>
+    Eventually, this will pull some pretty data from Central Services.
+    </p>
+  </body>
+</html>

@@ -15,7 +15,7 @@
     <!-- Navbar -->
     <div class="container">
       <div class="header-logo">
-        <h1>Sam's logo will go here!</h1>
+        <img src="${tg.url('/img/full_2048.png')}" alt="Mines ACM" class="acm-logo" />
       </div>
     </div>
     <div class="container site-navbar">
@@ -47,7 +47,7 @@
                 <span py:content="luser"></span> <span class="caret"></span>
               </a>
               <ul class="dropdown-menu">
-                <li><a href=""><i class="fa fa-user fa-fw"></i> My Profile</a></li>
+                <li><a href="${luser.profile_url}"><i class="fa fa-user fa-fw"></i> My Profile</a></li>
                 <li py:if="tg.predicates.has_permission('admin')"><a href="${tg.url('/admin')}"><i class="fa fa-cogs fa-fw"></i> Admin Panel</a></li>
                 <li><a href="${tg.url('/logout_handler')}"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
               </ul>
