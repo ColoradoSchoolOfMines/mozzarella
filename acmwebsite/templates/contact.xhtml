@@ -1,16 +1,30 @@
 <html py:extends="master.xhtml" py:strip="True">
-    <head py:block="head" py:strip="True">
-        <title py:block="master_title">Contact</title>
-    </head>
+  <head py:block="head" py:strip="True">
+    <title py:block="master_title">Contact</title>
+  </head>
 
-    <body py:block="body" py:strip="True">
-      <div class="row">
-        <div class="col-md-12">
-          <h2>Contact</h2>
-          <p>
-            Template page for Contact
-          </p>
+  <body py:block="body" py:strip="True">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Contact</h2>
+        <div py:for="officer in officers" class="acm-officer-info row">
+          <div class="col-md-9 col-xs-12">
+            <h2 py:content="officer"></h2>
+            <p class="acm-officer-position"
+              py:content="officer.officer_title">
+            </p>
+            <p class="acm-officer-email">
+              <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+              ${Markup(officer.email_address_html)}
+            </p>
+          </div>
+          <div class="col-md-3 col-xs-12">
+            <a href="${officer.profile_path}">
+              <img src="${officer.profile_image_path}" class="acm-officer-img" />
+            </a>
+          </div>
         </div>
       </div>
-    </body>
+    </div>
+  </body>
 </html>

@@ -24,7 +24,5 @@ class ContactController(BaseController):
         for user in users:
             if user.officer_title:
                 officers.append(user)
-            elif user.show_in_list:
-                general.append(user)
         officers.sort(key=lambda u: officer_sort.index(u.officer_title))
         return dict(page='contact', officers=officers, general=general)

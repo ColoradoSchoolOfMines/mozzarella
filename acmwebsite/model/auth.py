@@ -87,6 +87,7 @@ class User(DeclarativeBase):
     user_name = Column(Unicode(16), unique=True, nullable=False)
     display_name = Column(Unicode(255))
     created = Column(DateTime, default=datetime.now)
+    officer_title = Column(Unicode(255), nullable=True)
 
     def __repr__(self):
         return '<User: name=%s, display=%s>' % (
