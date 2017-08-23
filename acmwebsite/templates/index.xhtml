@@ -1,53 +1,62 @@
-<html py:extends="master.xhtml" py:strip="True">
-    <head py:block="head" py:strip="True">
-        <title py:block="master_title">Welcome to TurboGears 2.3, standing on the shoulders of giants, since 2007</title>
-    </head>
+<html py:strip=""
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
 
-    <body py:block="body" py:strip="True">
-      <div class="row">
-        <div class="col-md-8">
-          <div class="jumbotron">
-            <h1>Welcome to TurboGears 2.3</h1>
-            <p>If you see this page it means your installation was successful!</p>
-            <p>TurboGears 2 is rapid web application development toolkit designed to make your life easier.</p>
-            <p>
-              <a class="btn btn-primary btn-lg" href="http://www.turbogears.org" target="_blank">
-                ${h.icon('book')} Learn more
-              </a>
-            </p>
-          </div>
-        </div>
-        <div class="col-md-4 hidden-xs hidden-sm">
-          <a class="btn btn-info btn-sm active" href="http://turbogears.readthedocs.io/en/latest">${h.icon('book')} TG2 Documentation</a> <span class="label label-success">new</span><em> Get Started</em><br/>
-            <br/>
-          <a class="btn btn-info btn-sm active" href="http://turbogears.readthedocs.io/en/latest/cookbook/cookbook.html">${h.icon('book')} TG2 CookBook</a><em> Read the Cookbook</em> <br/>
-            <br/>
-          <a class="btn btn-info btn-sm active" href="http://groups.google.com/group/turbogears">${h.icon('comment')} Join the Mail List</a> <em>for help/discussion</em><br/>
-            <br/>
-          <a class="btn btn-info btn-sm active" href="http://runnable.com/TurboGears">${h.icon('play')} Play on Runnable</a> <em>for basic examples</em><br/>
-            <br/>
-          <a class="btn btn-info btn-sm active" href="http://stackoverflow.com/questions/tagged/turbogears2">${h.icon('search')} Search Stackoverflow</a> <em>for questions</em>
-        </div>
-      </div>
+  <py:extends href="master.xhtml" />
 
-      <div class="row">
-        <div class="col-md-4">
-          <h3>Code your data model</h3>
-          <p> Design your data <code>model</code>, Create the database, and Add some bootstrap data.</p>
+<body py:block="body" py:strip="True">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="home-banner">
+                <img class="home-banner-img" src="${tg.url('/img/banner.jpg')}" />
+                <small>
+                Image above: ACM Members and other clubs at a Mozilla Campus Clubs training event
+                </small>
+            </div>
         </div>
-
-        <div class="col-md-4">
-          <h3>Design your URL architecture</h3>
-          <p> Decide your URLs, Program your <code>controller</code> methods, Design your
-            <code>templates</code>, and place some static files (CSS and/or Javascript). </p>
+        <div class="col-md-5">
+            <div class="intro-block">
+                <h2>Mines ACM Student Chapter</h2>
+                <p>
+                    The Mines ACM Student Chapter is the local chapter of the <a href="http://www.acm.org" target="_blank">Association for Computing
+                    Machinery</a> at the <a href="http://www.mines.edu" target="_blank">Colorado School of Mines</a>. As a Mozilla Open Source
+                    Club, we work on open source projects that target local problems and apply to a global issue. Our club finds
+                    recognized professionals from industry for tech talks to educate our members. We are a diverse group of students
+                    that when united can solve many computing problems.
+                </p>
+            </div>
         </div>
+    </div>
 
-        <div class="col-md-4">
-          <h3>Distribute your app</h3>
-          <p> Test your source, Generate project documents, Build a distribution.</p>
+    <div class="row homepage-panels">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Join our ACM Chapter!</h3>
+                </div>
+                <div class="panel-body">
+                    <p>To join our ACM chapter, simply show up to our meetings. Newcomers are welcome to all meetings.</p>
+                    <p>You should <a href="${tg.url('/mailinglist')}">subscribe to our mailing list</a> to
+                       stay up to date with our latest happenings.</p>
+                    <p>We also recommend our members <a
+                    href="https://campus2.acm.org/public/qj/quickjoin/qj_control.cfm?promo=PWEBTOP&amp;form_type=Student"
+                    target="_blank">purchase a student membership</a> with
+                    ACM, although this is not a requirement for membership in
+                    our club.</p>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <em class="pull-right small"> Thank you for choosing TurboGears.</em>
-    </body>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Upcoming Meetings</h3>
+                </div>
+                <py:include href="acmwebsite.templates.meeting_list" />
+                <div class="panel-footer text-center">
+                    <a href="${tg.url('/schedule')}">View Full Schedule</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
