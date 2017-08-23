@@ -3,60 +3,62 @@
       xmlns:xi="http://www.w3.org/2001/XInclude">
 
   <py:extends href="master.xhtml" />
-
-<body py:block="body" py:strip="True">
+  <head py:block="head" py:strip="True">
+    <title>Mines ACM</title>
+  </head>
+  <body py:block="body" py:strip="True">
     <div class="row">
-        <div class="col-md-7">
-            <div class="home-banner">
-                <img class="home-banner-img" src="${tg.url('/img/banner.jpg')}" />
-                <small>
-                Image above: ACM Members and other clubs at a Mozilla Campus Clubs training event
-                </small>
-            </div>
+      <div class="col-md-7">
+        <div class="home-banner">
+          <img class="home-banner-img" src="${tg.url('/img/banner.jpg')}" />
+          <small>
+          Image above: ACM Members and other clubs at a Mozilla Campus Clubs training event
+          </small>
         </div>
-        <div class="col-md-5">
-            <div class="intro-block">
-                <h2>Mines ACM Student Chapter</h2>
-                <p>
-                    The Mines ACM Student Chapter is the local chapter of the <a href="http://www.acm.org" target="_blank">Association for Computing
-                    Machinery</a> at the <a href="http://www.mines.edu" target="_blank">Colorado School of Mines</a>. As a Mozilla Open Source
-                    Club, we work on open source projects that target local problems and apply to a global issue. Our club finds
-                    recognized professionals from industry for tech talks to educate our members. We are a diverse group of students
-                    that when united can solve many computing problems.
-                </p>
-            </div>
-        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="intro-block">
+        <h2>Mines ACM Student Chapter</h2>
+        <p>
+            The Mines ACM Student Chapter is the local chapter of the <a href="http://www.acm.org" target="_blank">Association for Computing
+            Machinery</a> at the <a href="http://www.mines.edu" target="_blank">Colorado School of Mines</a>. As a Mozilla Open Source
+            Club, we work on open source projects that target local problems and apply to a global issue. Our club finds
+            recognized professionals from industry for tech talks to educate our members. We are a diverse group of students
+            that when united can solve many computing problems.
+        </p>
+      </div>
     </div>
+  </div>
 
-    <div class="row homepage-panels">
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Join our ACM Chapter!</h3>
-                </div>
-                <div class="panel-body">
-                    <p>To join our ACM chapter, simply show up to our meetings. Newcomers are welcome to all meetings.</p>
-                    <p>You should <a href="${tg.url('/mailinglist')}">subscribe to our mailing list</a> to
-                       stay up to date with our latest happenings.</p>
-                    <p>We also recommend our members <a
-                    href="https://campus2.acm.org/public/qj/quickjoin/qj_control.cfm?promo=PWEBTOP&amp;form_type=Student"
-                    target="_blank">purchase a student membership</a> with
-                    ACM, although this is not a requirement for membership in
-                    our club.</p>
-                </div>
-            </div>
+  <div class="row homepage-panels">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Join our ACM Chapter!</h3>
         </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Upcoming Meetings</h3>
-                </div>
-                <py:include href="acmwebsite.templates.meeting_list" />
-                <div class="panel-footer text-center">
-                    <a href="${tg.url('/schedule')}">View Full Schedule</a>
-                </div>
-            </div>
+        <div class="panel-body">
+          <p>To join our ACM chapter, simply show up to our meetings. Newcomers are welcome to all meetings.</p>
+          <p>You should <a href="${tg.url('/mailinglist')}">subscribe to our mailing list</a> to
+             stay up to date with our latest happenings.</p>
+          <p>We also recommend our members <a
+          href="https://campus2.acm.org/public/qj/quickjoin/qj_control.cfm?promo=PWEBTOP&amp;form_type=Student"
+          target="_blank">purchase a student membership</a> with
+          ACM, although this is not a requirement for membership in
+          our club.</p>
         </div>
+      </div>
     </div>
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Upcoming Meetings</h3>
+        </div>
+        <py:include href="acmwebsite.templates.meeting_list" />
+        <div class="panel-footer text-center">
+          <a href="${tg.url('/schedule')}">View Full Schedule</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
