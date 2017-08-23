@@ -17,6 +17,11 @@ __all__ = ['User', 'Group', 'Permission']
 from sqlalchemy import Table, ForeignKey, Column
 from sqlalchemy.types import Unicode, Integer, DateTime
 from sqlalchemy.orm import relation, synonym
+
+from tg.predicates import not_anonymous
+
+from depot.fields.sqlalchemy import UploadedFileField
+
 from acmwebsite.lib.mpapi_connector import auth
 from acmwebsite.model import DeclarativeBase, metadata, DBSession
 
@@ -89,6 +94,7 @@ class User(DeclarativeBase):
     display_name = Column(Unicode(255))
     created = Column(DateTime, default=datetime.now)
     officer_title = Column(Unicode(255), nullable=True)
+    profile_pic = Column(UploadedFileField)
 
     def __repr__(self):
         return '<User: name=%s, display=%s>' % (
@@ -101,7 +107,26 @@ class User(DeclarativeBase):
 
     @property
     def profile_url(self):
-        return tg.url("/u/" + self.user_name)
+        return tg.url('/u/' + self.user_name)
+
+    @property
+    def profile_image_url(self):
+        return tg.url('/u/profile_pic/%s' % self.user_name)
+
+    @property
+    def email_address(self):
+        return '%s@mines.edu' % self.user_name
+
+    @property
+    def email_address_web(self):
+        return self.email_address.replace('@', ' [at] ').replace('.', ' [dot] ')
+
+    @property
+    def email_address_html(self):
+        if not_anonymous():
+            return '<a href="mailto:{email}" target="_blank">{email}</a>'.format(email=self.email_address)
+        else:
+            return self.email_address_web
 
     @property
     def permissions(self):

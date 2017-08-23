@@ -121,6 +121,11 @@ templating.genshi.doctype = html5
 # to an in-memory cache.
 templating.mako.compiled_templates_dir = %(here)s/data/templates
 
+# Depot Configuration
+
+# Use a local file system path
+depot.storage_path = /tmp/depot
+
 # Logging configuration
 # Add additional loggers, handlers, formatters here
 # Uses python's logging config file format

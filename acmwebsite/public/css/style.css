@@ -63,3 +63,13 @@
   margin: 20px 0;
   width: 400px;
 }
+
+/* Contact Page */
+.acm-officer-position {
+    font-style: italic;
+}
+
+.acm-officer-img {
+    width: 100%;
+    border-radius: 8px;
+}

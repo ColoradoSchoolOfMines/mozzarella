@@ -16,6 +16,9 @@ from acmwebsite.model.auth import User
 from tg import request
 from tgext.admin.tgadminconfig import BootstrapTGAdminConfig as TGAdminConfig
 
+# Depot
+from depot.manager import DepotManager
+
 base_config = AppConfig()
 base_config.renderers = []
 
@@ -154,6 +157,11 @@ base_config.sa_auth.post_logout_url = '/post_logout'
 # Admin configuration
 class AdminConfig(TGAdminConfig):
     allow_only = tg.predicates.has_permission('admin')
+
+# Configure default depot
+tg.milestones.config_ready.register(
+    lambda: DepotManager.configure('default', tg.config)
+)
 
 # Variable provider: this provides a default set of variables to the templating engine
 
