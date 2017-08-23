@@ -13,3 +13,5 @@ class Meeting(DeclarativeBase):
     location = Column(Text)
     title = Column(Unicode, nullable=False)
     description = Column(Unicode)
+    survey_id = Column(Integer, ForeignKey('survey.id'), nullable=True, unique=True)
+    survey = relation("Survey", back_populates="meeting")

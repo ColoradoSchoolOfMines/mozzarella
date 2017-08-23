@@ -19,6 +19,8 @@ from acmwebsite.controllers.error import ErrorController
 from acmwebsite.controllers.mailinglist import MailingListController
 from acmwebsite.controllers.contact import ContactController
 from acmwebsite.controllers.user import UsersController
+from acmwebsite.controllers.today import TodayController
+from acmwebsite.controllers.meeting import MeetingsController
 
 import datetime
 
@@ -41,6 +43,8 @@ class RootController(BaseController):
     admin = AdminController(model, DBSession, config_type=AdminConfig)
     mailinglist = MailingListController()
     u = UsersController()
+    m = MeetingsController()
+    today = TodayController()
     error = ErrorController()
     contact = ContactController()
 
