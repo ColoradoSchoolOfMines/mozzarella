@@ -111,7 +111,7 @@ class User(DeclarativeBase):
 
     @property
     def profile_image_url(self):
-        return tg.url('/u/profile_pic/%s' % self.user_name)
+        return tg.url('/u/%s/picture' % self.user_name)
 
     @property
     def email_address(self):

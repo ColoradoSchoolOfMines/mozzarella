@@ -10,21 +10,28 @@ from acmwebsite.model import DBSession, User
 
 __all__ = ['ProfileController']
 
-class ProfileController(BaseController):
+class ProfileRootController(BaseController):
+    def __init__(self, uname):
+        self.uname = uname
 
     @expose('acmwebsite.templates.profile')
-    def _default(self, uname=None):
+    def _default(self):
         """Handle the user's profile page."""
         user = DBSession.query(User) \
-                        .filter(User.user_name == uname) \
+                        .filter(User.user_name == self.uname) \
                         .one_or_none()
         if not user:
             abort(404, "No such user")
         return dict(page='profile', u=user)
 
     @expose()
-    def profile_pic(self, user_name):
+    def picture(self):
         user = DBSession.query(User) \
-                        .filter(User.user_name == user_name) \
+                        .filter(User.user_name == self.uname) \
                         .one_or_none()
         redirect(DepotManager.url_for(user.profile_pic.path))
+
+class ProfilesController(BaseController):
+    @expose()
+    def _lookup(self, uname, *args):
+        return ProfileRootController(uname), args
