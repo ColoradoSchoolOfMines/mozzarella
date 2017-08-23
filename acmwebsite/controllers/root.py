@@ -50,7 +50,10 @@ class RootController(BaseController):
     @expose('acmwebsite.templates.index')
     def index(self):
         """Handle the front-page."""
-        return dict(page='index')
+        meetings = DBSession.query(Meeting).filter(
+            Meeting.date > datetime.datetime.now() - datetime.timedelta(hours=3)
+        ).order_by(Meeting.date).limit(2)
+        return dict(page='index', meetings=meetings)
 
     @expose('acmwebsite.templates.login')
     def login(self, came_from=lurl('/'), failure=None, login=''):

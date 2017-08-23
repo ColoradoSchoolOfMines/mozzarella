@@ -77,3 +77,19 @@
     width: 100%;
     border-radius: 8px;
 }
+
+/* Homepage */
+.home-banner {
+    margin: 35px 0 30px;
+    width: 100%;
+}
+
+.home-banner-img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.homepage-panels {
+    margin-top: 35px;
+}
