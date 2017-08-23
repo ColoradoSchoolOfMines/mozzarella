@@ -65,6 +65,10 @@
 }
 
 /* Contact Page */
+.acm-officer-info {
+    margin-bottom: 15px;
+}
+
 .acm-officer-position {
     font-style: italic;
 }

@@ -3,6 +3,10 @@
 from acmwebsite.config.app_cfg import base_config
 from acmwebsite.config.environment import load_environment
 
+# Depot
+from depot.manager import DepotManager
+
+
 __all__ = ['make_app']
 
 # Use base_config to setup the necessary PasteDeploy application factory.
@@ -29,6 +33,7 @@ def make_app(global_conf, full_stack=True, **app_conf):
     under ``[app:main]``.
     """
     app = make_base_app(global_conf, full_stack=True, **app_conf)
+    app = DepotManager.make_middleware(app)
 
     # Wrap your base TurboGears 2 application with custom middleware here
 
