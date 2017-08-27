@@ -13,7 +13,7 @@ $(document).ready(function() {
         $(this).attr("value", $(this).val());
     });
 
-    $('#set_first_time').change(function() {
+    $('input[name="first_time"]').change(function() {
         checked = this.checked;
         $('.on_first_time').each(function() {
             if (checked) { $(this).fadeIn() } else { $(this).fadeOut() }

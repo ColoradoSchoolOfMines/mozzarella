@@ -66,7 +66,7 @@ class MeetingController(BaseController):
             flash('Response submitted successfully')
             redirect(base_url='/')
         else:
-            return {'meeting': self.meeting, 'fields': survey.fields, 'show_ft': any(f.first_time for f in survey.fields) }
+            return {'meeting': self.meeting, 'fields': survey.fields }
 
 class MeetingsController(BaseController):
     @expose()

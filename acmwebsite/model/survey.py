@@ -33,9 +33,8 @@ class SurveyField(DeclarativeBase):
     priority = Column(Float, default=0)
     first_time = Column(Boolean, default=False)
 
-    @property
     def field_object(self):
-        return types[self.type](name=self.name, **literal_eval(self.params))
+        return types[self.type](name=self.name, on_first_time=self.first_time, **literal_eval(self.params))
 
 class SurveyResponse(DeclarativeBase):
     __tablename__ = 'response'

@@ -1,9 +1,12 @@
 class SurveyType:
-    css_class = 'form-control'
+    group_class = 'from-group'
+    item_class = 'form-control'
 
-    def __init__(self, name, **kwargs):
+    def __init__(self, name, on_first_time=False, **kwargs):
         self.params = kwargs
         self.name = name
+        if on_first_time:
+            self.group_class += ' on_first_time'
 
     def value(self, form):
         v = form.get(self.name)
@@ -13,14 +16,15 @@ class SurveyType:
         return value
 
     def html_params(self, **kwargs):
-        params = {'class': self.css_class ,'name': self.name, **self.params, **kwargs}
+        params = {'class': self.item_class ,'name': self.name, **self.params, **kwargs}
         return ' '.join(['{}="{}"'.format(k, v) for k, v in params.items()])
 
     def dom(self):
         return '<input {} />'.format(self.html_params())
 
 class Bool(SurveyType):
-    css_class = ''
+    group_class = 'checkbox'
+    item_class = ''
 
     def __init__(self, checked=False, **kwargs):
         params = {'type': 'checkbox'}
