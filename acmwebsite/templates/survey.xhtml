@@ -10,7 +10,11 @@
 
   <div py:def="render_field(f)" py:with="fo = f.field_object()" class="${fo.group_class}${' disabled' if 'disabled' in fo.params.keys() else ''}">
     <py:if test="isinstance(fo, SelectionComponent)">
-      <label py:if="f.label">${Markup(fo.dom())} ${f.label}</label>
+      <py:if test="f.label">
+        <label>${Markup(fo.dom())} ${f.label}</label>
+      </py:if><py:else>
+        ${Markup(fo.dom())}
+      </py:else>
     </py:if><py:else>
       <label py:if="f.label">${f.label}</label>
       ${Markup(fo.dom())}
