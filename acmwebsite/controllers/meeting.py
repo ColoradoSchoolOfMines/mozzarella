@@ -1,23 +1,24 @@
 # -*- coding: utf-8 -*-
 """Profile controller module"""
 
-from tg import expose, redirect, validate, flash, url, lurl, abort
+import tg
+from tg import expose, redirect, validate, flash, url, lurl, abort, require, request
 
 from acmwebsite.lib.base import BaseController
 from acmwebsite.lib.helpers import log
-from acmwebsite.model import DBSession, Survey, Meeting
+from acmwebsite.model import DBSession, Survey, Meeting, SurveyResponse, SurveyData, User
 
 from sqlalchemy import func
 
 __all__ = ['SurveyController']
 
-def survey_feilds(survey):
-    return [{'name': f.name, 'type': f.ty} for f in survey.fields]
+def survey_fields(survey):
+    return [{'name': f.name, 'type': f.type} for f in survey.fields]
 
 def response_to_dict(response):
     out = {'name': response.name, 'email': response.email}
     for item in response.data:
-        out[item.field.name] = item.contents
+        out[item.field.name] = item.field.field_object.parse(item.contents)
     return out
 
 class MeetingController(BaseController):
@@ -29,7 +30,8 @@ class MeetingController(BaseController):
         return "Hello, world!"
 
     @expose('json')
-    def survey(self, number=None):
+    @require(tg.predicates.has_permission('admin'))
+    def results(self, number=None):
         survey = self.meeting.survey
         if not survey:
             abort(404, "No survey for meeting")
@@ -38,15 +40,38 @@ class MeetingController(BaseController):
         return {
             'count': len(responses),
             'responses': responses, 
-            'fields': survey_feilds(survey),
+            'fields': survey_fields(survey),
             'meeting': self.meeting.title,
             'date': self.meeting.date
         }
 
+    @expose('acmwebsite.templates.survey')
+    @require(tg.predicates.not_anonymous())
+    def attend(self):
+        survey = self.meeting.survey
+        if not survey:
+            abort(404, "No survey for meeting")
+
+        user = User.by_user_name(request.identity['repoze.who.userid'])
+
+        form = request.POST
+        if form:
+            response = SurveyResponse(user=user, survey=survey)
+            DBSession.add(response)
+
+            for f in survey.fields:
+                v = f.field_object.value(form)
+                if v:
+                    DBSession.add(SurveyData(response=response, field=f, contents=v))
+            flash('Response submitted successfully')
+            redirect(base_url='/')
+        else:
+            return {'meeting': self.meeting, 'fields': survey.fields, 'show_ft': any(f.first_time for f in survey.fields) }
+
 class MeetingsController(BaseController):
     @expose()
-    def _lookup(self, date, *args):
-        meeting = DBSession.query(Meeting).filter(func.date(Meeting.date) == date).first()
+    def _lookup(self, mid, *args):
+        meeting = DBSession.query(Meeting).filter(Meeting.id==mid).first()
         if not meeting:
             abort(404, "No such meeting")
         return MeetingController(meeting), args

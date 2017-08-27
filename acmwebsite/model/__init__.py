@@ -61,6 +61,6 @@ def init_model(engine):
 from acmwebsite.model.auth import User, Group, Permission
 from acmwebsite.model.meeting import Meeting
 from acmwebsite.model.mailmessage import MailMessage
-from acmwebsite.model.survey import Survey, Field, Response, ResponseData
+from acmwebsite.model.survey import Survey, SurveyField, SurveyResponse, SurveyData
 
-__all__ = ('User', 'Group', 'Permission', 'Meeting', 'MailMessage', 'Survey', 'Field', 'Response', 'ResponseData')
+__all__ = ('User', 'Group', 'Permission', 'Meeting', 'MailMessage', 'Survey', 'SurveyField', 'SurveyResponse', 'SurveyData')

@@ -22,18 +22,19 @@ def upgrade():
     op.create_table(
         'survey',
         sa.Column('id', sa.Integer, autoincrement=True, primary_key=True),
-        sa.Column('active', sa.Boolean, default=False),
-        sa.Column('avalible', sa.Boolean, default=True),
+        sa.Column('opens', sa.DateTime),
+        sa.Column('closes', sa.DateTime),
     )
 
     op.create_table(
         'field',
         sa.Column('id', sa.Integer, autoincrement=True, primary_key=True),
         sa.Column('name', sa.String(255), unique=True, nullable=False),
-        sa.Column('ty', sa.String(63), nullable=False),
-        sa.Column('vertical', sa.Float, default=0),
-        sa.Column('style', sa.String(63), default="basic"),
-        sa.Column('required', sa.Boolean, default=False),
+        sa.Column('label', sa.Unicode),
+        sa.Column('type', sa.String, nullable=False),
+        sa.Column('params', sa.String),
+        sa.Column('priority', sa.Float, default=0),
+        sa.Column('first_time', sa.Boolean, default=False),
     )
 
     op.create_table(
@@ -64,3 +65,4 @@ def downgrade():
     op.drop_table('survey_field')
     op.drop_table('field')
     op.drop_table('survey')
+    op.drop_column('meeting', 'survey_id')

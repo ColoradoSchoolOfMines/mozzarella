@@ -1,0 +1,35 @@
+<html py:strip=""
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <py:extends href="master.xhtml" />
+
+  <head py:block="head" py:strip="True">
+    <title>Mines ACM - Attendence</title>
+  </head>
+
+  <body py:block="body" py:strip="True">
+    <h1 class="page-header">${meeting.title} Attendence</h1>
+    <div class="row">
+      <div class="col-md-8">
+        <p>Welcome to ACM! Please take a minute to fill out these questions.</p>
+        <form action="${tg.url('/m/{}/attend'.format(meeting.id))}" method="post" id="meeting-form">
+          <div py:if="show_ft" class="checkbox">
+            <label>
+              <input id="set_first_time" type="checkbox"/> Is this your first time at ACM?
+            </label>
+          </div>
+          <div py:if="show_ft" py:for="f in fields" class="${('checkbox' if f.type=='Bool' else 'form-group') + (' on_first_time' if f.first_time else '')}">
+            <py:if test="f.type=='Bool'">
+              <label py:if="f.label">${Markup(f.field_object.dom())} ${f.label}</label>
+            </py:if><py:else>
+              <label py:if="f.label">${f.label}</label>
+              ${Markup(f.field_object.dom())}
+            </py:else>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

@@ -4,6 +4,9 @@ from sqlalchemy import Table, ForeignKey, Column
 from sqlalchemy.types import Integer, String, Unicode
 
 from acmwebsite.model import DeclarativeBase, metadata, DBSession
+from acmwebsite.lib.surveytypes import types
+
+from ast import literal_eval
 
 survey_field_table = Table('survey_field', metadata,
     Column('survey_id', Integer, ForeignKey('survey.id'), primary_key=True),
@@ -14,30 +17,35 @@ class Survey(DeclarativeBase):
     __tablename__ = 'survey'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    active = Column(Boolean, default=False)
-    avalible = Column(Boolean, default=True)
-    meeting = relation("Meeting", back_populates="survey", uselist=False)
-    fields = relation("Field", secondary=survey_field_table, backref="surveys")
+    meeting = relation('Meeting', back_populates='survey', uselist=False)
+    fields = relation('SurveyField', secondary=survey_field_table, backref='surveys', order_by='SurveyField.priority')
+    opens = Column(DateTime)
+    closes = Column(DateTime)
 
-class Field(DeclarativeBase):
+class SurveyField(DeclarativeBase):
     __tablename__ = 'field'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
     name = Column(String(255), unique=True, nullable=False)
-    ty = Column(String(63), nullable=False)
-    vertical = Column(Float, default=0)
-    style = Column(String(63), default="basic")
-    required = Column(Boolean, default=False)
+    label = Column(Unicode)
+    type = Column(String, nullable=False)
+    params = Column(String, default='{}')
+    priority = Column(Float, default=0)
+    first_time = Column(Boolean, default=False)
 
-class Response(DeclarativeBase):
+    @property
+    def field_object(self):
+        return types[self.type](name=self.name, **literal_eval(self.params))
+
+class SurveyResponse(DeclarativeBase):
     __tablename__ = 'response'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
     user_id = Column(Integer, ForeignKey('tg_user.user_id'))
-    user = relation("User")
+    user = relation('User')
     provided_name = Column(Unicode(255))
     survey_id = Column(Integer, ForeignKey('survey.id'), nullable=False)
-    survey = relation("Survey", backref="responses")
+    survey = relation('Survey', backref='responses')
 
     @property
     def name(self):
@@ -54,11 +62,11 @@ class Response(DeclarativeBase):
             return self.user.email_address
 
 
-class ResponseData(DeclarativeBase):
+class SurveyData(DeclarativeBase):
     __tablename__ = 'response_data'
 
     response_id = Column(Integer, ForeignKey('response.id'), primary_key=True, nullable=False)
-    response = relation("Response", backref="data")
+    response = relation('SurveyResponse', backref='data')
     field_id = Column(Integer, ForeignKey('field.id'), primary_key=True, nullable=False)
-    field = relation("Field", backref="responses")
+    field = relation('SurveyField', backref='responses')
     contents = Column(Unicode, nullable=False)

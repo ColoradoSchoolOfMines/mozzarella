@@ -12,4 +12,11 @@ $(document).ready(function() {
     $(".vupdate").on("change keyup paste", function() {
         $(this).attr("value", $(this).val());
     });
+
+    $('#set_first_time').change(function() {
+        checked = this.checked;
+        $('.on_first_time').each(function() {
+            if (checked) { $(this).fadeIn() } else { $(this).fadeOut() }
+        });
+    });
 });
