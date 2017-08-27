@@ -45,9 +45,9 @@ class ShortText(SurveyType):
 class LongText(SurveyType):
     def __init__(self, value='', **kwargs):
         super().__init__(**kwargs)
-        self.value = value
+        self.val = value
 
     def dom(self):
-        return '<textarea {}>{}</textarea>'.format(self.html_params(), self.value)
+        return '<textarea {}>{}</textarea>'.format(self.html_params(), self.val)
 
 types = {k: v for k, v in globals().items() if isinstance(v, type) and issubclass(v, SurveyType)}

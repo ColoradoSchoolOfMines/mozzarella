@@ -18,7 +18,7 @@ def survey_fields(survey):
 def response_to_dict(response):
     out = {'name': response.name, 'email': response.email}
     for item in response.data:
-        out[item.field.name] = item.field.field_object.parse(item.contents)
+        out[item.field.name] = item.field.field_object().parse(item.contents)
     return out
 
 class MeetingController(BaseController):
@@ -60,7 +60,8 @@ class MeetingController(BaseController):
             DBSession.add(response)
 
             for f in survey.fields:
-                v = f.field_object.value(form)
+                fo = f.field_object()
+                v = fo.value(form)
                 if v:
                     DBSession.add(SurveyData(response=response, field=f, contents=v))
             flash('Response submitted successfully')
