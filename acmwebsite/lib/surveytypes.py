@@ -2,9 +2,10 @@ class SurveyType:
     group_class = 'from-group'
     item_class = 'form-control'
 
-    def __init__(self, name, on_first_time=False, **kwargs):
+    def __init__(self, on_first_time=False, **kwargs):
         self.params = kwargs
-        self.name = name
+        if 'name' in kwargs.keys():
+            self.name = kwargs['name']
         if on_first_time:
             self.group_class += ' on_first_time'
 
@@ -16,7 +17,7 @@ class SurveyType:
         return value
 
     def html_params(self, **kwargs):
-        params = {'class': self.item_class ,'name': self.name, **self.params, **kwargs}
+        params = {'class': self.item_class, **self.params, **kwargs}
         return ' '.join(['{}="{}"'.format(k, v) for k, v in params.items()])
 
     def dom(self):
