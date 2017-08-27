@@ -87,4 +87,34 @@ class LongText(SurveyType):
     def dom(self):
         return '<textarea {}>{}</textarea>'.format(self.html_params(), self.val)
 
+class GroupComponent(SurveyType):
+    """
+    Superclass for all components which have multiple components.
+    Not to be used directly.
+    """
+
+    def __init__(self, subfields, **kwargs):
+        self.subfields = subfields
+        super().__init__(**kwargs)
+
+    def dom(self):
+        """
+        YOU must recursively generate the DOM of group components.
+        (as it's your responsibility to handle labels etc.)
+        """
+        raise NotImplementedError
+
+class Section(GroupComponent):
+    """
+    A section of fields
+    """
+    group_class = 'section'
+
+class SelectionGroup(GroupComponent):
+    """
+    A group of radio options or checkboxes
+    """
+    group_class = 'selection-group'
+
+
 types = {k: v for k, v in globals().items() if isinstance(v, type) and issubclass(v, SurveyType)}

@@ -35,6 +35,7 @@ def upgrade():
         sa.Column('params', sa.String),
         sa.Column('priority', sa.Float, default=0),
         sa.Column('first_time', sa.Boolean, default=False),
+        sa.Column('parent_id', sa.Integer, sa.ForeignKey('field.id')),
     )
 
     op.create_table(

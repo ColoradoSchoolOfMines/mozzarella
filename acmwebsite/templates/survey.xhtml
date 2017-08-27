@@ -16,8 +16,14 @@
         ${Markup(fo.dom())}
       </py:else>
     </py:if><py:else>
-      <label py:if="f.label">${f.label}</label>
-      ${Markup(fo.dom())}
+      <py:if test="isinstance(fo, GroupComponent)">
+        <legend py:if="isinstance(fo, Section)" py:content="f.label" />
+        <label py:if="not isinstance(fo, Section) and f.label" py:content="f.label" />
+        <py:for each="f in fo.subfields">${render_field(f)}</py:for>
+      </py:if><py:else>
+        <label py:if="f.label">${f.label}</label>
+        ${Markup(fo.dom())}
+      </py:else>
     </py:else>
   </div>
 

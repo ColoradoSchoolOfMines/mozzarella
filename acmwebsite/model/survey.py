@@ -1,5 +1,5 @@
 from sqlalchemy import *
-from sqlalchemy.orm import mapper, relation
+from sqlalchemy.orm import mapper, relation, relationship, backref
 from sqlalchemy import Table, ForeignKey, Column
 from sqlalchemy.types import Integer, String, Unicode
 
@@ -37,8 +37,11 @@ class SurveyField(DeclarativeBase):
     priority = Column(Float, default=0)
     first_time = Column(Boolean, default=False)
 
+    parent_id = Column(Integer, ForeignKey('field.id'), nullable=True)
+    children = relationship("SurveyField", backref=backref("parent", remote_side=[id]))
+
     def field_object(self):
-        return types[self.type](name=self.name, on_first_time=self.first_time, **literal_eval(self.params))
+        return types[self.type](name=self.name, on_first_time=self.first_time, subfields=self.children, **literal_eval(self.params))
 
 class SurveyResponse(DeclarativeBase):
     __tablename__ = 'response'
