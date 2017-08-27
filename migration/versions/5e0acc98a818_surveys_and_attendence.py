@@ -29,7 +29,7 @@ def upgrade():
     op.create_table(
         'field',
         sa.Column('id', sa.Integer, autoincrement=True, primary_key=True),
-        sa.Column('name', sa.String(255), unique=True, nullable=False),
+        sa.Column('name', sa.String(255), unique=False, nullable=True),
         sa.Column('label', sa.Unicode),
         sa.Column('type', sa.String, nullable=False),
         sa.Column('params', sa.String),

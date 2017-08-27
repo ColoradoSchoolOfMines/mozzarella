@@ -26,7 +26,11 @@ class SurveyField(DeclarativeBase):
     __tablename__ = 'field'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    name = Column(String(255), unique=True, nullable=False)
+
+    # Name might be the same (eg. for radios, or surveys which share the same field names)
+    # ...or they might be NULL entirely (for component groups maybe)
+    name = Column(String(255), unique=False, nullable=True)
+
     label = Column(Unicode)
     type = Column(String, nullable=False)
     params = Column(String, default='{}')

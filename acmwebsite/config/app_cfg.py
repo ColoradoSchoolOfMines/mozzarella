@@ -164,7 +164,7 @@ tg.milestones.config_ready.register(
 )
 
 # Variable provider: this provides a default set of variables to the templating engine
-
+from acmwebsite.lib.surveytypes import SelectionComponent
 def variable_provider():
     d = {}
     if request.identity:
@@ -172,6 +172,8 @@ def variable_provider():
         d['luser'] = model.User.by_user_name(userid)
     else:
         d['luser'] = None
+    # Provide survey types as needed
+    d['SelectionComponent'] = SelectionComponent
     return d
 
 base_config.variable_provider = variable_provider

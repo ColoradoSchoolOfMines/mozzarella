@@ -22,21 +22,57 @@ class SurveyType:
     def dom(self):
         return '<input {} />'.format(self.html_params())
 
-class Bool(SurveyType):
+class SelectionComponent(SurveyType):
+    """
+    Superclass for Radio and Checkbox types, both of these are
+    "selection components with labels".
+
+    Not to be used alone as a Survey Type in the database.
+    """
+
+    def __init__(self, checked=False, disabled=False, **kwargs):
+        params = {}
+        if checked:
+            params['checked'] = 'checked'
+        if disabled:
+            params['disabled'] = 'disabled'
+        super().__init__(**params, **kwargs)
+
+    def parse(self, value):
+        return True if value == 'true' else False
+
+class Checkbox(SelectionComponent):
     group_class = 'checkbox'
     item_class = ''
 
-    def __init__(self, checked=False, **kwargs):
-        params = {'type': 'checkbox'}
-        if checked:
-            params['checked'] = 'checked'
-        super().__init__(**params, **kwargs)
+    def __init__(self, **kwargs):
+        super().__init__(type='checkbox', **kwargs)
 
     def value(self, form):
         return 'true' if form.get(self.name) else 'false'
 
-    def parse(self, value):
-        return True if value == 'true' else False
+class Radio(SelectionComponent):
+    """
+    Radio Component (not a group!). Radios are a bit funky in HTML and
+    this implementation is not exempt from the funkyness. In short:
+
+    1. The radio GROUP is the 'name' parameter. This is HTML's fault.
+    2. The value the radio stores is the 'value' parameter.
+
+    For elogence, I think this should eventually be wrapped in a
+    "RadioGroup" component that abstracts away HTML's funkyness, not
+    quite too sure what's a good way to approach this tho.
+    """
+
+    group_class = 'radio'
+    item_class = ''
+
+    def __init__(self, value, **kwargs):
+        self.val = value
+        super().__init__(type='radio', value=value, **kwargs)
+
+    def value(self, form):
+        return 'true' if form.get(self.name, None) == self.val else 'false'
 
 class ShortText(SurveyType):
     def __init__(self, **kwargs):
