@@ -95,10 +95,16 @@
     margin-top: 35px;
 }
 
-.checkbox label {
-    font-weight: bold !important;
+.checkbox.single-checkbox label {
+    font-weight: bold;
 }
 
 .on-first-time {
     display: none;
+}
+
+/* Survey Page */
+.radio-group .radio-option label,
+.checkbox-group .checkbox label {
+  font-weight: normal;
 }

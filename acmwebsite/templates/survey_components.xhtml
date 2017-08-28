@@ -1,7 +1,7 @@
 <html>
   <label py:def="label(l, f=None)" py:if="l" py:attrs="{'for': f}">${l}</label>
 
-  <div py:def="checkbox(ty)" class="${h.field_cn(ty, 'form-group', 'checkbox')}">
+  <div py:def="checkbox(ty)" class="${h.field_cn(ty, 'form-group', 'checkbox', 'single-checkbox')}">
     <label for="${ty.name}">
       <input type="checkbox" id="${ty.name}" py:attrs="h.strip_attrs(ty, 'name', 'required', 'checked')" /> ${ty.label or ''}
     </label>
@@ -16,7 +16,7 @@
 
   <div py:def="radio_group(ty)" class="${h.field_cn(ty, 'form-group', 'radio-group')}">
     ${label(ty.label)}
-    <div py:for="v in ty.options">
+    <div py:for="v in ty.options" class="radio-option">
       <label>
         <py:if test="v == ty.value">
           <input type="radio" value="${v}" py:attrs="h.strip_attrs(ty, 'name', 'required')" checked="checked"/> ${v or ''}

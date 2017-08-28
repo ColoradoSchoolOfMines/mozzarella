@@ -13,8 +13,8 @@
 
   <body py:block="body" py:strip="True">
     <py:import href="acmwebsite.templates.survey_components" alias="comp" />
-    
-    <h1 class="page-header">${survey.title or survey.meeting.title or 'Survey'}</h1>
+
+    <h1 class="page-header">${survey.title or (survey.meeting and survey.meeting.title) or 'Survey'}</h1>
     <div class="row">
       <div class="col-md-8">
         <p>Welcome to ACM! Please take a minute to fill out these questions.</p>

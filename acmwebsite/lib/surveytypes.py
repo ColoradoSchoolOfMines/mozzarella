@@ -33,7 +33,7 @@ class Text(SurveyType):
     def from_post(self, form):
         v = form.get(self.name)
         return v or None
-    
+
     def from_contents(self, contents):
         return contents
 
