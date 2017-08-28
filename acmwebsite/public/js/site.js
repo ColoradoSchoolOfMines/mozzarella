@@ -15,7 +15,7 @@ $(document).ready(function() {
 
     $('input[name="first_time"]').change(function() {
         checked = this.checked;
-        $('.on_first_time').each(function() {
+        $('.on-first-time').each(function() {
             if (checked) { $(this).fadeIn() } else { $(this).fadeOut() }
         });
     });

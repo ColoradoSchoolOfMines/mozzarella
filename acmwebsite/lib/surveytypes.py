@@ -1,120 +1,107 @@
+from ast import literal_eval
+
 class SurveyType:
-    group_class = 'from-group'
-    item_class = 'form-control'
+    def __init__(self, name, label=None, required=False, first_time=False, **kwargs):
+        self.name = name
+        self.required = required
+        self.first_time = first_time
+        self.label = label
 
-    def __init__(self, on_first_time=False, **kwargs):
-        self.params = kwargs
-        if 'name' in kwargs.keys():
-            self.name = kwargs['name']
-        if on_first_time:
-            self.group_class += ' on_first_time'
+    def from_post(self, form):
+        v = form.get(self.name)
+        return repr(v or None)
 
-    def value(self, form):
+    def from_contents(self, contents):
+        return literal_eval(contents)
+
+class Bool(SurveyType):
+    template = 'checkbox'
+
+    def __init__(self, value=None, **kwargs):
+        super().__init__(**kwargs)
+        self.checked = bool(value) and value != 'unchecked'
+
+    def from_post(self, form):
+        return str(bool(form.get(self.name)))
+
+class Text(SurveyType):
+    def __init__(self, value='', placeholder=None, **kwargs):
+        super().__init__(**kwargs)
+        self.value = value
+        self.placeholder = placeholder
+
+    def from_post(self, form):
         v = form.get(self.name)
         return v or None
+    
+    def from_contents(self, contents):
+        return contents
 
-    def parse(self, value):
-        return value
+class ShortText(Text):
+    template = 'text'
 
-    def html_params(self, **kwargs):
-        params = {'class': self.item_class, **self.params, **kwargs}
-        return ' '.join(['{}="{}"'.format(k, v) for k, v in params.items()])
+class LongText(Text):
+    template = 'textarea'
 
-    def dom(self):
-        return '<input {} />'.format(self.html_params())
+class ManyOf(SurveyType):
+    template = 'checkbox_group'
 
-class SelectionComponent(SurveyType):
-    """
-    Superclass for Radio and Checkbox types, both of these are
-    "selection components with labels".
-
-    Not to be used alone as a Survey Type in the database.
-    """
-
-    def __init__(self, checked=False, disabled=False, **kwargs):
-        params = {}
-        if checked:
-            params['checked'] = 'checked'
-        if disabled:
-            params['disabled'] = 'disabled'
-        super().__init__(**params, **kwargs)
-
-    def parse(self, value):
-        return True if value == 'true' else False
-
-class Checkbox(SelectionComponent):
-    group_class = 'checkbox'
-    item_class = ''
-
-    def __init__(self, **kwargs):
-        super().__init__(type='checkbox', **kwargs)
-
-    def value(self, form):
-        return 'true' if form.get(self.name) else 'false'
-
-class Radio(SelectionComponent):
-    """
-    Radio Component (not a group!). Radios are a bit funky in HTML and
-    this implementation is not exempt from the funkyness. In short:
-
-    1. The radio GROUP is the 'name' parameter. This is HTML's fault.
-    2. The value the radio stores is the 'value' parameter.
-
-    For elogence, I think this should eventually be wrapped in a
-    "RadioGroup" component that abstracts away HTML's funkyness, not
-    quite too sure what's a good way to approach this tho.
-    """
-
-    group_class = 'radio'
-    item_class = ''
-
-    def __init__(self, value, **kwargs):
-        self.val = value
-        super().__init__(type='radio', value=value, **kwargs)
-
-    def value(self, form):
-        return 'true' if form.get(self.name, None) == self.val else 'false'
-
-class ShortText(SurveyType):
-    def __init__(self, **kwargs):
-        super().__init__(type='text', **kwargs)
-
-class LongText(SurveyType):
-    def __init__(self, value='', **kwargs):
+    def __init__(self, options='[]', **kwargs):
         super().__init__(**kwargs)
-        self.val = value
+        self.options = literal_eval(options)
 
-    def dom(self):
-        return '<textarea {}>{}</textarea>'.format(self.html_params(), self.val)
+    def from_post(self, form):
+        vals = [n for i, n in enumerate(self.options) if form.get('{}_{}'.format(self.name, i))]
+        return str(vals)
 
-class GroupComponent(SurveyType):
-    """
-    Superclass for all components which have multiple components.
-    Not to be used directly.
-    """
+class OneOf(SurveyType):
+    template = 'radio_group'
 
-    def __init__(self, subfields, **kwargs):
-        self.subfields = subfields
+    def __init__(self, options='[]', value=None, **kwargs):
         super().__init__(**kwargs)
+        self.options = literal_eval(options)
+        self.value = value
 
-    def dom(self):
-        """
-        YOU must recursively generate the DOM of group components.
-        (as it's your responsibility to handle labels etc.)
-        """
-        raise NotImplementedError
+    def from_post(self, form):
+        return form.get(self.name) or None
 
-class Section(GroupComponent):
-    """
-    A section of fields
-    """
-    group_class = 'section'
+    def from_contents(self, contents):
+        return contents
 
-class SelectionGroup(GroupComponent):
-    """
-    A group of radio options or checkboxes
-    """
-    group_class = 'selection-group'
+class Select(SurveyType):
+    template = 'select'
 
+    def __init__(self, options='[]', value=None, **kwargs):
+        super().__init__(**kwargs)
+        self.options = literal_eval(options)
+        self.value = value
+        self.multiple = False
+
+    def from_post(self, form):
+        return form.get(self.name) or None
+
+    def from_contents(self, contents):
+        return contents
+
+class SelectMany(Select):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.multiple = True
+ 
+class Number(SurveyType):
+    template = 'number'
+
+    def __init__(self, value=None, min=None, max=None, step=None, **kwargs):
+        super().__init__(**kwargs)
+        self.value = value
+        self.min = min,
+        self.max = max,
+        self.step = step
+
+    def from_post(self, form):
+        v = form.get(self.name)
+        if v is None:
+            return None
+        return repr(float(v))
 
 types = {k: v for k, v in globals().items() if isinstance(v, type) and issubclass(v, SurveyType)}

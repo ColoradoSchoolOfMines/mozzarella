@@ -30,6 +30,22 @@ def ftime(datetime_obj, show_day=False):
     if isinstance(datetime_obj, time):
         return (time_fmt).format(datetime_obj)
 
+def proccess_attr(name, attr):
+    if attr == True:
+        return name
+    if not attr:
+        return None
+    return attr
+
+def strip_attrs(ty, *args):
+    return {v: proccess_attr(v, getattr(ty, v)) for v in args}
+
+def field_cn(ty, *args):
+    args = [x for x in args if x]
+    if ty.first_time:
+        args.append('on-first-time')
+    return ' '.join(args)
+
 
 # Import commonly used helpers from WebHelpers2 and TG
 from tg.util.html import script_json_encode

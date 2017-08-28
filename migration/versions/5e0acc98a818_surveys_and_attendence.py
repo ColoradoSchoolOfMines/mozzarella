@@ -28,14 +28,19 @@ def upgrade():
 
     op.create_table(
         'field',
-        sa.Column('id', sa.Integer, autoincrement=True, primary_key=True),
-        sa.Column('name', sa.String(255), unique=False, nullable=True),
-        sa.Column('label', sa.Unicode),
-        sa.Column('type', sa.String, nullable=False),
-        sa.Column('params', sa.String),
-        sa.Column('priority', sa.Float, default=0),
-        sa.Column('first_time', sa.Boolean, default=False),
-        sa.Column('parent_id', sa.Integer, sa.ForeignKey('field.id')),
+        sa.Column("id", sa.Integer, autoincrement=True, primary_key=True),
+        sa.Column("type", sa.String(255), nullable=False),
+        sa.Column("priority", sa.Float, default=0),
+        sa.Column("name", sa.String(255), unique=True, nullable=False),
+        sa.Column("label", sa.Unicode),
+        sa.Column("required", sa.Boolean, default=False),
+        sa.Column("first_time", sa.Boolean, default=False),
+        sa.Column("placeholder", sa.Unicode),
+        sa.Column("value", sa.Unicode),
+        sa.Column("options", sa.Unicode),
+        sa.Column("min", sa.Float),
+        sa.Column("max", sa.Float),
+        sa.Column("step", sa.Float),
     )
 
     op.create_table(

@@ -26,22 +26,33 @@ class SurveyField(DeclarativeBase):
     __tablename__ = 'field'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-
-    # Name might be the same (eg. for radios, or surveys which share the same field names)
-    # ...or they might be NULL entirely (for component groups maybe)
-    name = Column(String(255), unique=False, nullable=True)
-
-    label = Column(Unicode)
-    type = Column(String, nullable=False)
-    params = Column(String, default='{}')
+    type = Column(String(255), nullable=False)
     priority = Column(Float, default=0)
+    name = Column(String(255), unique=True, nullable=False)
+    label = Column(Unicode)
+    required = Column(Boolean, default=False)
     first_time = Column(Boolean, default=False)
+    placeholder = Column(Unicode)
+    value = Column(Unicode)
+    options = Column(Unicode)
+    min = Column(Float)
+    max = Column(Float)
+    step = Column(Float)
 
-    parent_id = Column(Integer, ForeignKey('field.id'), nullable=True)
-    children = relationship("SurveyField", backref=backref("parent", remote_side=[id]))
 
-    def field_object(self):
-        return types[self.type](name=self.name, on_first_time=self.first_time, subfields=self.children, **literal_eval(self.params))
+    def type_object(self):
+        return types[self.type](
+            name=self.name,
+            label=self.label,
+            required=self.required,
+            first_time=self.first_time,
+            placeholder=self.placeholder,
+            value=self.value,
+            options=self.options,
+            min=self.min,
+            max=self.max,
+            step=self.step,
+        )
 
 class SurveyResponse(DeclarativeBase):
     __tablename__ = 'response'
