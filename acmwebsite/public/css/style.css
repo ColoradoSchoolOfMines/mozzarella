@@ -61,7 +61,8 @@
 /* Logo */
 .acm-logo {
   margin: 20px 0;
-  width: 400px;
+  max-width: 400px;
+  width: 100%;
 }
 
 /* Contact Page */
