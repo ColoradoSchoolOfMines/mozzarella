@@ -3,6 +3,8 @@ from sqlalchemy.orm import mapper, relation, relationship, backref
 from sqlalchemy import Table, ForeignKey, Column
 from sqlalchemy.types import Integer, String, Unicode
 
+from datetime import datetime
+
 from acmwebsite.model import DeclarativeBase, metadata, DBSession
 from acmwebsite.lib.surveytypes import types
 
@@ -19,8 +21,14 @@ class Survey(DeclarativeBase):
     id = Column(Integer, autoincrement=True, primary_key=True)
     meeting = relation('Meeting', back_populates='survey', uselist=False)
     fields = relation('SurveyField', secondary=survey_field_table, backref='surveys', order_by='SurveyField.priority')
+    title = Column(Unicode)
     opens = Column(DateTime)
     closes = Column(DateTime)
+
+    @property
+    def active(self):
+        now = datetime.now()
+        return self.opens and self.opens < now and (not self.closes or self.closes > now)
 
 class SurveyField(DeclarativeBase):
     __tablename__ = 'field'
@@ -66,17 +74,11 @@ class SurveyResponse(DeclarativeBase):
 
     @property
     def name(self):
-        if self.user == None:
-            return self.provided_name
-        else:
-            return self.user.display_name
+        return (self.user and self.user.display_name) or self.provided_name
 
     @property
     def email(self):
-        if self.user == None:
-            return None
-        else:
-            return self.user.email_address
+        return self.user and self.user.email_address
 
 
 class SurveyData(DeclarativeBase):

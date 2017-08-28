@@ -167,8 +167,7 @@ tg.milestones.config_ready.register(
 def variable_provider():
     d = {}
     if request.identity:
-        userid = request.identity['repoze.who.userid']
-        d['luser'] = model.User.by_user_name(userid)
+        d['luser'] = request.identity['user']
     else:
         d['luser'] = None
     return d

@@ -29,7 +29,7 @@
 
   <div py:def="select(ty)" class="${h.field_cn(ty, 'form-group')}">
     ${label(ty.label, ty.name)}
-    <select py:attrs="h.strip_attrs(ty, 'name', 'required', 'multiple')" class="form-control">
+    <select id="${ty.name}" py:attrs="h.strip_attrs(ty, 'name', 'required', 'multiple')" class="form-control">
       <option py:for="v in ty.options" py:attrs="{'selected': 'selected' if v == ty.value else None}">${v}</option>
     </select>
   </div>

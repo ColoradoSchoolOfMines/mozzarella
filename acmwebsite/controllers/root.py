@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Main Controller"""
 
-from tg import expose, flash, require, url, lurl
+from tg import expose, flash, require, url, lurl, abort
 from tg import request, redirect, tmpl_context
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from tg.exceptions import HTTPFound
@@ -11,7 +11,7 @@ from acmwebsite.model import DBSession
 from tgext.admin.controller import AdminController
 from acmwebsite.config.app_cfg import AdminConfig
 
-from acmwebsite.model.meeting import Meeting
+from acmwebsite.model import Meeting, Survey
 
 from acmwebsite.lib.base import BaseController
 from acmwebsite.controllers.error import ErrorController
@@ -20,6 +20,7 @@ from acmwebsite.controllers.mailinglist import MailingListController
 from acmwebsite.controllers.contact import ContactController
 from acmwebsite.controllers.user import UsersController
 from acmwebsite.controllers.meeting import MeetingsController
+from acmwebsite.controllers.survey import SurveysController
 
 import datetime
 
@@ -43,6 +44,7 @@ class RootController(BaseController):
     mailinglist = MailingListController()
     u = UsersController()
     m = MeetingsController()
+    s = SurveysController()
     error = ErrorController()
     contact = ContactController()
 
@@ -84,8 +86,8 @@ class RootController(BaseController):
             login_counter = request.environ.get('repoze.who.logins', 0) + 1
             redirect('/login',
                      params=dict(came_from=came_from, __logins=login_counter))
-        userid = request.identity['repoze.who.userid']
-        flash(_('Welcome back, %s!') % userid)
+        user = request.identity['user']
+        flash(_('Welcome back, %s!') % user.display_name)
 
         # Do not use tg.redirect with tg.url as it will add the mountpoint
         # of the application twice.
@@ -117,3 +119,16 @@ class RootController(BaseController):
                 Meeting.date > datetime.datetime.now() - datetime.timedelta(hours=3)
                 ).order_by(Meeting.date)
         return dict(page='schedule', meetings=meetings)
+
+    @expose()
+    def attend(self):
+        meeting = DBSession.query(Meeting)\
+        .join(Meeting.survey)\
+        .filter(
+            Survey.opens < datetime.datetime.now()
+        ).order_by(Meeting.date.desc()).first()
+
+        if meeting and meeting.survey.active:
+            redirect('s/{}/respond'.format(meeting.survey.id))
+        else:
+            abort(404, 'No active meeting')

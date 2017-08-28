@@ -22,6 +22,7 @@ def upgrade():
     op.create_table(
         'survey',
         sa.Column('id', sa.Integer, autoincrement=True, primary_key=True),
+        sa.Column('title', sa.Unicode),
         sa.Column('opens', sa.DateTime),
         sa.Column('closes', sa.DateTime),
     )
