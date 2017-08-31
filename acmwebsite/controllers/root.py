@@ -2,7 +2,7 @@
 """Main Controller"""
 
 from tg import expose, flash, require, url, lurl, abort
-from tg import request, redirect, tmpl_context
+from tg import request, redirect, tmpl_context, response
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 from tg.exceptions import HTTPFound
 from tg import predicates, session
@@ -116,9 +116,14 @@ class RootController(BaseController):
     @expose('json', exclude_names=['page'])
     def schedule(self):
         """Handle the schedule page."""
+
+        # Allow CORS
+        response.headers.add("Access-Control-Allow-Origin", "*");
+
         meetings = DBSession.query(Meeting).filter(
                 Meeting.date > datetime.datetime.now() - datetime.timedelta(hours=3)
                 ).order_by(Meeting.date).all()
+
         return dict(page='schedule', meetings=meetings)
 
     @expose()
