@@ -113,11 +113,12 @@ class RootController(BaseController):
         return session.get('theme', None)
 
     @expose('acmwebsite.templates.schedule')
+    @expose('json', exclude_names=['page'])
     def schedule(self):
         """Handle the schedule page."""
         meetings = DBSession.query(Meeting).filter(
                 Meeting.date > datetime.datetime.now() - datetime.timedelta(hours=3)
-                ).order_by(Meeting.date)
+                ).order_by(Meeting.date).all()
         return dict(page='schedule', meetings=meetings)
 
     @expose()
