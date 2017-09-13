@@ -79,9 +79,9 @@ class ApplicationAuthMetadata(TGAuthMetadata):
             if auth(login, identity['password']):
                 info = uidinfo(login)
                 user = User(
-                        user_id=info["uidNumber"],
-                        user_name=login,
-                        display_name="{} {}".format(info["first"], info["sn"]))
+                    user_id=info["uidNumber"],
+                    user_name=login,
+                    display_name="{} {}".format(info["first"], info["sn"]))
                 self.sa_auth.dbsession.add(user)
                 self.sa_auth.dbsession.flush()
                 transaction.commit()

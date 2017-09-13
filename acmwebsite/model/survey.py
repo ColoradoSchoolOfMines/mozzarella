@@ -11,8 +11,8 @@ from acmwebsite.lib.surveytypes import types
 from ast import literal_eval
 
 survey_field_table = Table('survey_field', metadata,
-    Column('survey_id', Integer, ForeignKey('survey.id'), primary_key=True),
-    Column('field_id', Integer, ForeignKey('field.id'), primary_key=True)
+                           Column('survey_id', Integer, ForeignKey('survey.id'), primary_key=True),
+                           Column('field_id', Integer, ForeignKey('field.id'), primary_key=True)
 )
 
 class Survey(DeclarativeBase):

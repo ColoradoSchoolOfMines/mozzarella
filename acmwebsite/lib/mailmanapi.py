@@ -47,22 +47,22 @@ class ListAdminAPI:
 
     def bulk_subscribe(self, *emails, invite=False, welcome=True, notify_owner=True, message=''):
         post_data = {
-                "subscribe_or_invite": int(invite),
-                "send_welcome_msg_to_this_batch": int(welcome),
-                "send_notifications_to_list_owner": int(notify_owner),
-                "subscribees": '\n'.join(emails) + '\n',
-                "invitation": message + '\n'
-            }
+            "subscribe_or_invite": int(invite),
+            "send_welcome_msg_to_this_batch": int(welcome),
+            "send_notifications_to_list_owner": int(notify_owner),
+            "subscribees": '\n'.join(emails) + '\n',
+            "invitation": message + '\n'
+        }
         r = self.session.post(self.admin_url + "/members/add", data=post_data)
         if not r.ok:
             raise RuntimeError("Error subscribing members")
 
     def bulk_unsubscribe(self, *emails, notify_user=True, notify_owner=True):
         post_data = {
-                "send_unsub_ack_to_this_batch": int(notify_user),
-                "send_unsub_notifications_to_list_owner": int(notify_owner),
-                "unsubscribees": '\n'.join(emails) + '\n'
-            }
+            "send_unsub_ack_to_this_batch": int(notify_user),
+            "send_unsub_notifications_to_list_owner": int(notify_owner),
+            "unsubscribees": '\n'.join(emails) + '\n'
+        }
         r = self.session.post(self.admin_url + "/members/remove", data=post_data)
         if not r.ok:
             raise RuntimeError("Error unsubscribing members")
