@@ -40,16 +40,16 @@ class MailMessage(DeclarativeBase):
     @property
     def next_by_date(self):
         return DBSession.query(MailMessage)\
-                .filter(MailMessage.date > self.date)\
-                .order_by(MailMessage.date)\
-                .first()
+                        .filter(MailMessage.date > self.date)\
+                        .order_by(MailMessage.date)\
+                        .first()
 
     @property
     def prev_by_date(self):
         return DBSession.query(MailMessage)\
-                .filter(MailMessage.date < self.date)\
-                .order_by(MailMessage.date.desc())\
-                .first()
+                        .filter(MailMessage.date < self.date)\
+                        .order_by(MailMessage.date.desc())\
+                        .first()
 
     @property
     def mines_username(self):
@@ -59,8 +59,8 @@ class MailMessage(DeclarativeBase):
     @property
     def user(self):
         return DBSession.query(User)\
-                .filter(User.user_name == self.mines_username)\
-                .one_or_none()
+                        .filter(User.user_name == self.mines_username)\
+                        .one_or_none()
 
     @property
     def from_display(self):

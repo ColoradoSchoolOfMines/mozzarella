@@ -118,21 +118,21 @@ class RootController(BaseController):
         """Handle the schedule page."""
 
         # Allow CORS
-        response.headers.add("Access-Control-Allow-Origin", "*");
+        response.headers.add("Access-Control-Allow-Origin", "*")
 
         meetings = DBSession.query(Meeting).filter(
-                Meeting.date > datetime.datetime.now() - datetime.timedelta(hours=3)
-                ).order_by(Meeting.date).all()
+            Meeting.date > datetime.datetime.now() - datetime.timedelta(hours=3)
+        ).order_by(Meeting.date).all()
 
         return dict(page='schedule', meetings=meetings)
 
     @expose()
     def attend(self):
         meeting = DBSession.query(Meeting)\
-        .join(Meeting.survey)\
-        .filter(
-            Survey.opens < datetime.datetime.now()
-        ).order_by(Meeting.date.desc()).first()
+                           .join(Meeting.survey)\
+                           .filter(
+                               Survey.opens < datetime.datetime.now()
+                           ).order_by(Meeting.date.desc()).first()
 
         if meeting and meeting.survey.active:
             redirect('s/{}/respond'.format(meeting.survey.id))
