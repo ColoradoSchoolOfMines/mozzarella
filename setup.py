@@ -46,6 +46,7 @@ install_requires = [
     "WebHelpers2",
     "tgscheduler",
     "filedepot",
+    "requests"
 ]
 
 if py_version != (3, 2):
