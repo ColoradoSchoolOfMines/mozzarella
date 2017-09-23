@@ -1,9 +1,10 @@
 from sqlalchemy import *
+from sqlalchemy import Column, ForeignKey, Table
 from sqlalchemy.orm import mapper, relation
-from sqlalchemy import Table, ForeignKey, Column
-from sqlalchemy.types import Integer, Text, Unicode, DateTime
+from sqlalchemy.types import DateTime, Integer, Text, Unicode
 
-from acmwebsite.model import DeclarativeBase, metadata, DBSession
+from acmwebsite.model import DBSession, DeclarativeBase, metadata
+
 
 class Meeting(DeclarativeBase):
     __tablename__ = 'meeting'

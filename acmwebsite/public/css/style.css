@@ -108,3 +108,8 @@
 .checkbox-group .checkbox label {
   font-weight: normal;
 }
+
+/* Schedule Page */
+.acm-meeting-title {
+  font-weight: bold;
+}

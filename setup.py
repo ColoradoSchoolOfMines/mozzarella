@@ -37,6 +37,7 @@ install_requires = [
     "alembic",
     "Beaker >= 1.8.0",
     "filedepot",
+    "icalendar",
     "Kajiki >= 0.6.3",
     "repoze.who",
     "requests",
