@@ -39,6 +39,7 @@ install_requires = [
     "filedepot",
     "Kajiki >= 0.6.3",
     "repoze.who",
+    "requests",
     "sqlalchemy",
     "tgext.admin >= 0.6.1",
     "tgscheduler",
