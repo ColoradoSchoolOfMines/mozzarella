@@ -27,25 +27,25 @@ except ImportError:
     from setuptools import setup, find_packages
 
 testpkgs = [
-    'WebTest >= 1.2.3',
-    'nose',
     'coverage',
-    'gearbox'
+    'gearbox',
+    'nose',
+    'WebTest >= 1.2.3',
 ]
 
 install_requires = [
-    "TurboGears2 >= 2.3.11",
-    "Beaker >= 1.8.0",
-    "Kajiki >= 0.6.3",
-    "zope.sqlalchemy >= 0.4",
-    "sqlalchemy",
     "alembic",
-    "repoze.who",
-    "tw2.forms",
-    "tgext.admin >= 0.6.1",
-    "WebHelpers2",
-    "tgscheduler",
+    "Beaker >= 1.8.0",
     "filedepot",
+    "Kajiki >= 0.6.3",
+    "repoze.who",
+    "sqlalchemy",
+    "tgext.admin >= 0.6.1",
+    "tgscheduler",
+    "TurboGears2 >= 2.3.11",
+    "tw2.forms",
+    "WebHelpers2",
+    "zope.sqlalchemy >= 0.4",
 ]
 
 if py_version != (3, 2):
