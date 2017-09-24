@@ -13,12 +13,8 @@ class ScheduleController(BaseController):
         self.meetings = DBSession.query(Meeting).order_by(Meeting.date)
 
     @expose('acmwebsite.templates.schedule')
-    @expose('json', exclude_names=['page'])
     def index(self):
         """Handle the schedule page."""
-
-        # Allow CORS
-        response.headers.add("Access-Control-Allow-Origin", "*")
 
         # Filter meetings that occurred in the past
         upcoming_meetings = self.meetings.filter(
@@ -28,7 +24,7 @@ class ScheduleController(BaseController):
         return dict(page='schedule', meetings=upcoming_meetings)
 
     @expose(content_type='text/calendar')
-    def acm(self):
+    def schedule(self):
         """ Returns the iCal version of the ACM schedule """
         cal = Calendar()
         cal.add('prodid', '-//Mines ACM//web//EN')
