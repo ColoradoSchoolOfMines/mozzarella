@@ -38,6 +38,7 @@ install_requires = [
     "Beaker >= 1.8.0",
     "filedepot",
     "Kajiki >= 0.6.3",
+    "markdown",
     "repoze.who",
     "requests",
     "sqlalchemy",
