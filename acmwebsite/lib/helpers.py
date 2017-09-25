@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Template Helpers used in acm-website."""
 import logging
+import markdown as md
 from markupsafe import Markup
 from datetime import datetime
 import tg
@@ -15,6 +16,11 @@ def current_year():
     now = datetime.now()
     return now.strftime('%Y')
 
+def markdown(*args, strip_par=False, **kwargs):
+    res = md.markdown(*args, **kwargs)
+    if strip_par:
+        res = res.replace('<p>', '').replace('</p>', '')
+    return Markup(res)
 
 def icon(icon_name):
     return Markup('<i class="glyphicon glyphicon-%s"></i>' % icon_name)
