@@ -126,6 +126,11 @@ templating.mako.compiled_templates_dir = %(here)s/data/templates
 # Use a local file system path
 depot.storage_path = /tmp/depot
 
+# Meetings Configuration
+meetings.timezone = America/Denver
+meetings.default_duration = 7200
+meetings.icalendar.prodid = -//Mines ACM//web//EN
+
 # Logging configuration
 # Add additional loggers, handlers, formatters here
 # Uses python's logging config file format

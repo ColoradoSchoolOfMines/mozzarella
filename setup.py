@@ -40,6 +40,7 @@ install_requires = [
     "icalendar",
     "Kajiki >= 0.6.3",
     "markdown",
+    "pytz",
     "repoze.who",
     "requests",
     "sqlalchemy",

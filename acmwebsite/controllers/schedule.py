@@ -1,7 +1,8 @@
 import datetime
+import pytz
 
 from icalendar import Calendar, Event
-from tg import expose, response, request
+from tg import expose, response, request, config
 
 from acmwebsite.lib.base import BaseController
 from acmwebsite.lib.helpers import log
@@ -30,19 +31,23 @@ class ScheduleController(BaseController):
         return dict(page='schedule', meetings=upcoming_meetings)
 
     def ical_schedule(self):
-        """ Returns the iCal version of the ACM schedule """
+        """ Returns the iCalendar version of the schedule """
         cal = Calendar()
-        cal.add('prodid', '-//Mines ACM//web//EN')
+        cal.add('prodid', config.get('meetings.icalendar.prodid'))
         cal.add('version', '2.0')
+        default_duration = datetime.timedelta(
+            seconds=int(config.get('meetings.default_duration'))
+        )
 
         for m in self.meetings.all():
             event = Event()
             event.add('summary', m.title)
             event.add('description', m.description)
             event.add('location', m.location)
-            event.add('dtstart', m.date)
-            event.add('dtend', m.date + datetime.timedelta(hours=2))
-            event.add('dtstamp', m.date)
+            d = m.date.replace(tzinfo=pytz.timezone(config.get('meetings.timezone')))
+            event.add('dtstart', d)
+            event.add('dtend', d + default_duration)
+            event.add('dtstamp', d)
 
             cal.add_component(event)
 
