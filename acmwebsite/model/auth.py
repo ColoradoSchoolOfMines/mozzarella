@@ -96,6 +96,8 @@ class User(DeclarativeBase):
     officer_title = Column(Unicode(255), nullable=True)
     profile_pic = Column(UploadedFileField)
 
+    page_revisions = relation("WikiPage", back_populates="author")
+
     def __repr__(self):
         return '<User: name=%s, display=%s>' % (
             repr(self.user_name),
@@ -171,6 +173,8 @@ class Permission(DeclarativeBase):
 
     groups = relation(Group, secondary=group_permission_table,
                       backref='permissions')
+
+    pages = relation('WikiPage', back_populates='edit_permission')
 
     def __repr__(self):
         return '<Permission: name=%s>' % repr(self.permission_name)
