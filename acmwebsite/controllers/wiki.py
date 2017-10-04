@@ -26,9 +26,9 @@ class WikiPageController(BaseController):
             and self.page.edit_permission # pages without permissions set may be edited by anyone
             and self.page.edit_permission not in user.permissions):
             abort(403, "You do not have permission to edit this page.")
-        return dict(page='wiki', wikipage=self.page)
+        return dict(page='wiki', wikipage=self.page, new=self.new)
 
-    @expose('acmwebsite.template.wikihistory')
+    @expose('acmwebsite.templates.wikihistory')
     def history(self):
         revisions = (DBSession.query(WikiPage)
                               .filter(WikiPage.slug == self.page.slug)
@@ -38,11 +38,22 @@ class WikiPageController(BaseController):
 
 class WikiPagesController(BaseController):
     @expose()
-    def _lookup(self, slug, *args):
+    def _lookup(self, *args):
+        # no trailing slashes in this wiki!
+        if request.path.endswith('/'):
+            redirect(url(request.path[:-1]))
+
+        # no slug specified? go to the FrontPage
+        if not args:
+            redirect(url(request.path + '/FrontPage'))
+        slug, *args = args
+
+        # the special path /history/{id} is used to view a certain revision
         if slug == 'history':
             if not args:
                 abort(404)
             return self.page_by_id(*args)
+
         page = latest_revision(slug)
         new = not page
         if new:

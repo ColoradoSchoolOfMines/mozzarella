@@ -113,3 +113,8 @@
 .acm-meeting-title {
   font-weight: bold;
 }
+
+/* Markdown Code Editor */
+textarea.markdown {
+    font-family: "Iosevka", "Liberation Mono", monospace;
+}

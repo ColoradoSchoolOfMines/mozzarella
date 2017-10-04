@@ -1,0 +1,36 @@
+<html py:strip=""
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <py:extends href="master.xhtml" />
+
+  <head py:block="head" py:strip="True">
+    <title py:if="new">Create New Page</title>
+    <title py:if="not new">Editing ${wikipage.title}...</title>
+  </head>
+
+  <body py:block="body" py:strip="True">
+    <py:if test="new">
+      <h1>Create New Page</h1>
+      <p>This page will live at <tt py:content="tg.request.url.replace('/edit', '')" />.</p>
+    </py:if><py:else>
+      <h1 class="page-header">Editing ${wikipage.title}...</h1>
+    </py:else>
+    <form method="POST">
+      <div class="form-group">
+        <label for="title">Page Title</label>
+        <input type="text" class="form-control" id="title" name="title" autocomplete="off" value="${wikipage.title}" maxlength="100" />
+      </div>
+      <div class="form-group">
+        <label for="content">Content</label>
+        <textarea class="form-control markdown" id="content" name="content" rows="15" py:content="wikipage.content" />
+      </div>
+      <div class="form-group">
+        <label for="comment">Comment</label>
+        <input type="text" class="form-control" id="comment" name="comment" value="${'New page' if new else ''}" maxlength="250" />
+        <p class="help-block">Write a <strong>brief</strong> description of your changes.</p>
+      </div>
+      <button type="submit" class="btn btn-primary" py:content="'Create New Page' if new else 'Save Changes'" />
+    </form>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<html py:strip=""
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <py:extends href="master.xhtml" />
+
+  <head py:block="head" py:strip="True">
+    <title>${wikipage.title}</title>
+  </head>
+
+  <body py:block="body" py:strip="True">
+    <h1 class="page-header" py:content="wikipage.slug if new else wikipage.title" />
+    <div class="row">
+      <div class="col-md-8">
+        <py:if test="new">
+          <py:if test="luser">
+            This page does not exist yet. Would you like to <a href="${tg.request.path}/edit">create it</a>?
+          </py:if><py:else>
+            This page does not exist yet. <a href="${tg.url('login', params={'came_from': tg.request.path})}">Login</a> to create it.
+          </py:else>
+        </py:if><py:else>
+          ${h.markdown(wikipage.content)}
+        </py:else>
+      </div>
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-history fa-fw"></i> History</h3>
+          </div>
+          <div class="panel-body">
+            <ul>
+              <li><b>Last modified:</b> ${"Never" if new else h.ftime(wikipage.revision)}</li>
+              <li><b>Modified by:</b> ${"Nobody" if new else h.ftime(wikipage.author)}</li>
+              <li><a href="${tg.request.path}/history">View previous revisions</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
