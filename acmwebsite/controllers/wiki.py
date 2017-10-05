@@ -20,12 +20,16 @@ class WikiPageController(BaseController):
 
     @expose('acmwebsite.templates.wikiedit')
     @require(predicates.not_anonymous())
-    def edit(self):
+    def edit(self, title=None, content=None, comment=None):
         user = request.identity.get('user')
-        if (self.page # anyone may make a new page
-            and self.page.edit_permission # pages without permissions set may be edited by anyone
+        if (self.page.edit_permission # pages without permissions set may be edited by anyone
             and self.page.edit_permission not in user.permissions):
             abort(403, "You do not have permission to edit this page.")
+        if title or content or comment:
+            self.page = WikiPage(slug=self.page.slug, title=title, content=content, comment=comment, author=user)
+            DBSession.add(self.page)
+            flash("Your changes have been saved. Thank you for your attention to detail.")
+            redirect(request.url.replace('/edit', ''))
         return dict(page='wiki', wikipage=self.page, new=self.new)
 
     @expose('acmwebsite.templates.wikihistory')

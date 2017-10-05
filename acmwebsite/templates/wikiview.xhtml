@@ -16,7 +16,7 @@
           <py:if test="luser">
             This page does not exist yet. Would you like to <a href="${tg.request.path}/edit">create it</a>?
           </py:if><py:else>
-            This page does not exist yet. <a href="${tg.url('login', params={'came_from': tg.request.path})}">Login</a> to create it.
+            This page does not exist yet. <a href="${tg.url('/login', params={'came_from': tg.request.path})}">Login</a> to create it.
           </py:else>
         </py:if><py:else>
           ${h.markdown(wikipage.content)}
@@ -30,7 +30,7 @@
           <div class="panel-body">
             <ul>
               <li><b>Last modified:</b> ${"Never" if new else h.ftime(wikipage.revision)}</li>
-              <li><b>Modified by:</b> ${"Nobody" if new else h.ftime(wikipage.author)}</li>
+              <li><b>Modified by:</b> ${"Nobody" if new else wikipage.author}</li>
               <li><a href="${tg.request.path}/history">View previous revisions</a></li>
             </ul>
           </div>

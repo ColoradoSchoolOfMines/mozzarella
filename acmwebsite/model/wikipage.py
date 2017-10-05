@@ -9,7 +9,7 @@ from acmwebsite.model import DBSession, DeclarativeBase, metadata
 class WikiPage(DeclarativeBase):
     __tablename__ = 'wikipages'
 
-    id = Column(Unicode(32), primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     slug = Column(Unicode(60), nullable=False)
     revision = Column(DateTime, nullable=False, default=datetime.datetime.now)
     comment = Column(Unicode(250), nullable=True)
