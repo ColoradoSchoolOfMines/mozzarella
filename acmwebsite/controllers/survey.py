@@ -18,14 +18,15 @@ class SurveyController(BaseController):
     def __init__(self, survey):
         self.survey = survey
 
-    @expose('json')
+    @expose('acmwebsite.templates.survey_results')
     @require(has_permission('admin'))
     def results(self, number=None):
         responses = self.survey.responses or []
         responses = [response_to_dict(r) for r in responses]
         return {
+            'survey': self.survey,
             'count': len(responses),
-            'responses': responses, 
+            'responses': responses,
             'fields': survey_fields(self.survey),
         }
 

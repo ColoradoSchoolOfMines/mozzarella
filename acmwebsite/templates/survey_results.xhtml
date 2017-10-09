@@ -1,0 +1,34 @@
+<html py:strip=""
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:extends="master.xhtml">
+
+  <head py:block="head" py:strip="True">
+    <title>Mines ACM - Survey</title>
+  </head>
+
+  <div py:def="unknown_type(ty)">
+    Unknown survey field! 
+  </div>
+
+  <body py:block="body" py:strip="True">
+    <py:import href="acmwebsite.templates.survey_components" alias="comp" />
+
+    <h1 class="page-header">${survey.title or (survey.meeting and survey.meeting.title) or 'Survey'}</h1>
+    <h2>Responses</h2>
+    <div class="row">
+      <table class="table">
+        <thead>
+          <tr>
+            <th py:for="field in fields" py:content="field['name']" />
+          </tr>
+        </thead>
+        <tbody>
+          <tr py:for="r in responses">
+            <td py:content="r['name']" />
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
