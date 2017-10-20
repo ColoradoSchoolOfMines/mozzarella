@@ -3,7 +3,7 @@
 import logging
 import markdown as md
 from markupsafe import Markup
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
 import tg
 
 log = logging.getLogger(__name__)
@@ -29,12 +29,17 @@ def icon(icon_name):
     return Markup('<i class="glyphicon glyphicon-%s"></i>' % icon_name)
 
 
-def ftime(datetime_obj, show_day=False):
+def ftime(datetime_obj, duration=None, show_day=False):
     day_fmt = '{0:%A}, ' if show_day else ''
     date_fmt = '{0.day} {0:%B %Y}'
     time_fmt = '{0:%H}:{0:%M}'
     if isinstance(datetime_obj, datetime):
-        return (day_fmt + date_fmt + ' at ' + time_fmt).format(datetime_obj)
+        if not isinstance(duration, timedelta):
+            return (day_fmt + date_fmt + ' at ' + time_fmt).format(datetime_obj)
+        else:
+            duration_str = (day_fmt + date_fmt + ' from ' + time_fmt).format(datetime_obj)
+            duration_str += '-' + time_fmt.format(datetime_obj + duration)
+            return duration_str
     if isinstance(datetime_obj, date):
         return (day_fmt + date_fmt).format(datetime_obj)
     if isinstance(datetime_obj, time):
