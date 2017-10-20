@@ -3,7 +3,7 @@
 import logging
 import markdown as md
 from markupsafe import Markup
-from datetime import datetime
+from datetime import datetime, time
 import tg
 
 log = logging.getLogger(__name__)
