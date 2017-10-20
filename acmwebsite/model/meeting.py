@@ -1,9 +1,8 @@
-from sqlalchemy import *
-from sqlalchemy import Column, ForeignKey, Table
-from sqlalchemy.orm import mapper, relation
+from sqlalchemy import Column, ForeignKey
+from sqlalchemy.orm import relation
 from sqlalchemy.types import DateTime, Integer, Text, Unicode
 
-from acmwebsite.model import DBSession, DeclarativeBase, metadata
+from acmwebsite.model import DeclarativeBase
 
 
 class Meeting(DeclarativeBase):
