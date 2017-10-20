@@ -12,9 +12,11 @@ log = logging.getLogger(__name__)
 from acmwebsite.lib.mailmanapi import ListAdminAPI
 mmadmin = ListAdminAPI(tg.config.get('mailman.url'), tg.config.get('mailman.secret'))
 
+
 def current_year():
     now = datetime.now()
     return now.strftime('%Y')
+
 
 def markdown(*args, strip_par=False, **kwargs):
     res = md.markdown(*args, **kwargs)
@@ -22,8 +24,10 @@ def markdown(*args, strip_par=False, **kwargs):
         res = res.replace('<p>', '').replace('</p>', '')
     return Markup(res)
 
+
 def icon(icon_name):
     return Markup('<i class="glyphicon glyphicon-%s"></i>' % icon_name)
+
 
 def ftime(datetime_obj, show_day=False):
     day_fmt = '{0:%A}, ' if show_day else ''
@@ -36,6 +40,7 @@ def ftime(datetime_obj, show_day=False):
     if isinstance(datetime_obj, time):
         return (time_fmt).format(datetime_obj)
 
+
 def proccess_attr(name, attr):
     if attr == True:
         return name
@@ -43,8 +48,10 @@ def proccess_attr(name, attr):
         return None
     return attr
 
+
 def strip_attrs(ty, *args):
     return {v: proccess_attr(v, getattr(ty, v)) for v in args}
+
 
 def field_cn(ty, *args):
     args = [x for x in args if x]
