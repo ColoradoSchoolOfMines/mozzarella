@@ -10,7 +10,7 @@ class Meeting(DeclarativeBase):
 
     id = Column(Integer, primary_key=True)
     date = Column(DateTime, nullable=False)
-    duration = Column(Integer)
+    duration = Column(Integer, nullable=True)
     location = Column(Text)
     title = Column(Unicode, nullable=False)
     description = Column(Unicode)
