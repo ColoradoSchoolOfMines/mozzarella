@@ -17,7 +17,7 @@ import sqlalchemy as sa
 def upgrade():
     op.add_column(
         'meeting',
-        sa.Column('duration', sa.Integer),
+        sa.Column('duration', sa.Integer, nullable=True),
     )
 
 
