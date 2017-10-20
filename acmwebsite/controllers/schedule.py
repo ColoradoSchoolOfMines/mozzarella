@@ -35,9 +35,6 @@ class ScheduleController(BaseController):
         cal = Calendar()
         cal.add('prodid', config.get('meetings.icalendar.prodid'))
         cal.add('version', '2.0')
-        default_duration = datetime.timedelta(
-            seconds=int(config.get('meetings.default_duration'))
-        )
 
         for m in self.meetings.all():
             event = Event()
@@ -46,7 +43,7 @@ class ScheduleController(BaseController):
             event.add('location', m.location)
             d = m.date.replace(tzinfo=pytz.timezone(config.get('meetings.timezone')))
             event.add('dtstart', d)
-            event.add('dtend', d + default_duration)
+            event.add('dtend', d + m.get_duration())
             event.add('dtstamp', d)
 
             cal.add_component(event)

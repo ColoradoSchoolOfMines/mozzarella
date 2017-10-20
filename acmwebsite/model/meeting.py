@@ -1,6 +1,10 @@
+import datetime
+
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.orm import relation
 from sqlalchemy.types import DateTime, Integer, Text, Unicode
+
+from tg import config
 
 from acmwebsite.model import DeclarativeBase
 
@@ -16,3 +20,7 @@ class Meeting(DeclarativeBase):
     description = Column(Unicode)
     survey_id = Column(Integer, ForeignKey('survey.id'), nullable=True, unique=True)
     survey = relation("Survey", back_populates="meeting")
+
+    def get_duration(self):
+        default_duration = int(config.get('meetings.default_duration'))
+        return datetime.timedelta(self.duration or default_duration)
