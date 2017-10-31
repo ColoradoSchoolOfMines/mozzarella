@@ -23,4 +23,4 @@ class Meeting(DeclarativeBase):
 
     def get_duration(self):
         default_duration = int(config.get('meetings.default_duration'))
-        return datetime.timedelta(self.duration or default_duration)
+        return datetime.timedelta(seconds=self.duration or default_duration)
