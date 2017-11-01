@@ -35,8 +35,23 @@ def ftime(datetime_obj, duration=None, show_day=False):
     time_fmt = '{0:%H}:{0:%M}'
     if isinstance(datetime_obj, datetime):
         if not isinstance(duration, timedelta):
+            # Format date without duration
+            # For example, assume:
+            #     datetime_obj = datetime(year=2017, month=10, day=31,
+            #                             hour=17, minute=0, second=0)
+            #     show_day = True
+            # This will return:
+            #     'Tuesday, 31 October 2017 at 17:00'
             return (day_fmt + date_fmt + ' at ' + time_fmt).format(datetime_obj)
         else:
+            # Format date with duration
+            # For example, assume:
+            #     datetime_obj = datetime(year=2017, month=10, day=31,
+            #                             hour=17, minute=0, second=0)
+            #     show_day = True
+            #     duration = timedelta(hours=3)
+            # This will return:
+            #     'Tuesday, 31 October 2017 from 17:00-20:00'
             duration_str = (day_fmt + date_fmt + ' from ' + time_fmt).format(datetime_obj)
             duration_str += '-' + time_fmt.format(datetime_obj + duration)
             return duration_str
