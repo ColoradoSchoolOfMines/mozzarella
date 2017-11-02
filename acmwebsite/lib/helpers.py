@@ -44,7 +44,7 @@ def ftime(datetime_obj, duration=None, show_day=False):
             #     'Tuesday, 31 October 2017 at 17:00'
             return (day_fmt + date_fmt + ' at ' + time_fmt).format(datetime_obj)
         else:
-            # Format date with duration
+            # Format date with duration if duration is not default
             # For example, assume:
             #     datetime_obj = datetime(year=2017, month=10, day=31,
             #                             hour=17, minute=0, second=0)
@@ -52,9 +52,14 @@ def ftime(datetime_obj, duration=None, show_day=False):
             #     duration = timedelta(hours=3)
             # This will return:
             #     'Tuesday, 31 October 2017 from 17:00-20:00'
-            duration_str = (day_fmt + date_fmt + ' from ' + time_fmt).format(datetime_obj)
-            duration_str += '-' + time_fmt.format(datetime_obj + duration)
-            return duration_str
+
+            default_duration = int(tg.config.get('meetings.default_duration'))
+            if duration == timedelta(seconds=default_duration):
+                return (day_fmt + date_fmt + ' at ' + time_fmt).format(datetime_obj)
+            else:
+                duration_str = (day_fmt + date_fmt + ' from ' + time_fmt).format(datetime_obj)
+                duration_str += '-' + time_fmt.format(datetime_obj + duration)
+                return duration_str
     if isinstance(datetime_obj, date):
         return (day_fmt + date_fmt).format(datetime_obj)
     if isinstance(datetime_obj, time):
