@@ -22,5 +22,5 @@ class Meeting(DeclarativeBase):
     survey = relation("Survey", back_populates="meeting")
 
     def get_duration(self):
-        default_duration = int(config.get('meetings.default_duration'))
-        return datetime.timedelta(seconds=self.duration or default_duration)
+        return datetime.timedelta(seconds=self.duration or
+                                  int(config.get('meetings.default_duration')))
