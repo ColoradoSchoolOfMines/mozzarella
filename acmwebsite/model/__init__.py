@@ -64,4 +64,4 @@ from acmwebsite.model.mailmessage import MailMessage
 from acmwebsite.model.survey import Survey, SurveyField, SurveyResponse, SurveyData
 from acmwebsite.model.wikipage import WikiPage
 
-__all__ = ('User', 'Group', 'Permission', 'Meeting', 'MailMessage', 'Survey', 'SurveyField', 'SurveyResponse', 'SurveyData')
+__all__ = ('User', 'Group', 'Permission', 'Meeting', 'MailMessage', 'Survey', 'SurveyField', 'SurveyResponse', 'SurveyData', 'WikiPage')
