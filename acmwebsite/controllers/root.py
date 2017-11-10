@@ -11,7 +11,7 @@ from acmwebsite.model import DBSession
 from tgext.admin.controller import AdminController
 from acmwebsite.config.app_cfg import AdminConfig
 
-from acmwebsite.model import Meeting, Survey
+from acmwebsite.model import Meeting, Survey, Banner
 
 from acmwebsite.lib.base import BaseController
 from acmwebsite.controllers.error import ErrorController
@@ -23,7 +23,7 @@ from acmwebsite.controllers.meeting import MeetingsController
 from acmwebsite.controllers.schedule import ScheduleController
 from acmwebsite.controllers.survey import SurveysController
 
-import datetime
+import datetime, random
 
 __all__ = ['RootController']
 
@@ -59,7 +59,23 @@ class RootController(BaseController):
         meetings = DBSession.query(Meeting).filter(
             Meeting.date > datetime.datetime.now() - datetime.timedelta(hours=3)
         ).order_by(Meeting.date).limit(2)
-        return dict(page='index', meetings=meetings)
+        try:
+            banner = random.choice(DBSession.query(Banner).all())
+        except:
+            banner = type(
+                '',
+                (object,),
+                dict(
+                    description='Image above: ACM Members and other clubs at a'
+                                'Mozilla Campus Clubs training event',
+                    photo=type(
+                        'obj',
+                        (object,),
+                        {'url': '/img/banner.jpg'}
+                    ),
+                )
+            )
+        return dict(page='index', meetings=meetings, banner=banner)
 
     @expose('acmwebsite.templates.login')
     def login(self, came_from=lurl('/'), failure=None, login=''):
