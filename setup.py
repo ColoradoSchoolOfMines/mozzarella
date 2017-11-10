@@ -50,6 +50,7 @@ install_requires = [
     "tw2.forms",
     "WebHelpers2",
     "zope.sqlalchemy >= 0.4",
+    "Pillow",
 ]
 
 if py_version != (3, 2):
