@@ -43,7 +43,7 @@ class ScheduleController(BaseController):
             event.add('location', m.location)
             d = m.date.replace(tzinfo=pytz.timezone(config.get('meetings.timezone')))
             event.add('dtstart', d)
-            event.add('dtend', d + m.get_duration())
+            event.add('dtend', d + m.duration)
             event.add('dtstamp', d)
 
             cal.add_component(event)

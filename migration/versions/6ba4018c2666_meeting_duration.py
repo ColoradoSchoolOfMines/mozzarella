@@ -17,9 +17,9 @@ import sqlalchemy as sa
 def upgrade():
     op.add_column(
         'meeting',
-        sa.Column('duration', sa.Integer, nullable=True),
+        sa.Column('_duration', sa.Integer, nullable=True),
     )
 
 
 def downgrade():
-    op.drop_column('meeting', 'duration')
+    op.drop_column('meeting', '_duration')

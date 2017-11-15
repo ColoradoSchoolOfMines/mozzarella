@@ -14,13 +14,14 @@ class Meeting(DeclarativeBase):
 
     id = Column(Integer, primary_key=True)
     date = Column(DateTime, nullable=False)
-    duration = Column(Integer, nullable=True)
+    _duration = Column(Integer, nullable=True)
     location = Column(Text)
     title = Column(Unicode, nullable=False)
     description = Column(Unicode)
     survey_id = Column(Integer, ForeignKey('survey.id'), nullable=True, unique=True)
     survey = relation("Survey", back_populates="meeting")
 
-    def get_duration(self):
-        return datetime.timedelta(seconds=self.duration or
+    @property
+    def duration(self):
+        return datetime.timedelta(seconds=self._duration or
                                   int(config.get('meetings.default_duration')))
