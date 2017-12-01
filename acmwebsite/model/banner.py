@@ -8,6 +8,6 @@ from depot.fields.specialized.image import UploadedImageWithThumb
 class Banner(DeclarativeBase):
     __tablename__ = 'banner'
 
-    uid = Column(Integer, autoincrement=True, primary_key=True)
+    id = Column(Integer, autoincrement=True, primary_key=True)
     photo = Column(UploadedFileField(upload_type=UploadedImageWithThumb))
     description = Column(Unicode(255), unique=True)
