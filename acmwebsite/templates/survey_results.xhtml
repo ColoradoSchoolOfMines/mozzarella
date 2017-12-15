@@ -8,27 +8,40 @@
   </head>
 
   <div py:def="unknown_type(ty)">
-    Unknown survey field! 
+    Unknown survey field!
   </div>
 
   <body py:block="body" py:strip="True">
     <py:import href="acmwebsite.templates.survey_components" alias="comp" />
 
-    <h1 class="page-header">${survey.title or (survey.meeting and survey.meeting.title) or 'Survey'}</h1>
+    <h1 class="page-header" py:content="title" />
     <h2>Responses</h2>
     <div class="row">
-      <table class="table">
-        <thead>
-          <tr>
-            <th py:for="field in fields" py:content="field['name']" />
-          </tr>
-        </thead>
-        <tbody>
-          <tr py:for="r in responses">
-            <td py:content="r['name']" />
-          </tr>
-        </tbody>
-      </table>
+      <div class="col-md-12">
+        <table class="table table-striped table-condensed table-bordered">
+          <thead>
+            <tr>
+              <th>
+                <a href="${h.order_by_link('name', order_by, reverse)}">Name</a>
+                <span py:if="order_by == 'name'"
+                  py:content="h.icon('triangle-%s' % ('top' if reverse else 'bottom'))" />
+              </th>
+              <th py:for="field in fields">
+                <a href="${h.order_by_link(field['name'], order_by, reverse)}"
+                  py:content="field['name']" />
+                <span py:if="order_by == field['name']"
+                  py:content="h.icon('triangle-%s' % ('top' if reverse else 'bottom'))" />
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr py:for="r in responses">
+              <td py:content="r['name']" />
+              <td py:for="field in fields" py:content="r.get(field['name'])" />
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </body>
 </html>

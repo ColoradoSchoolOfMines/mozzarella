@@ -1,18 +1,27 @@
-from tg import expose, redirect, validate, flash, url, lurl, abort, require, request
-from tg.predicates import has_permission, not_anonymous
+from tg import expose, redirect, flash, abort, require, request
+from tg.predicates import has_permission
 
 from acmwebsite.lib.base import BaseController
-from acmwebsite.lib.helpers import log
-from acmwebsite.model import DBSession, Survey, SurveyResponse, SurveyData, User
+from acmwebsite.model import DBSession, Survey, SurveyResponse, SurveyData
 
-def survey_fields(survey):
-    return [{'name': f.name, 'type': f.type} for f in survey.fields]
 
-def response_to_dict(response):
-    out = {'name': response.name, 'email': response.email}
+def response_dict(response, fields):
+    out = {
+        'name': response.name,
+        'email': response.email,
+    }
+
+    # Populate with the default value for the fields. This is necessary for
+    # sorting if some respondents didn't fill out an optional field.
+    for field in fields:
+        out[field.name] = field.type_object().default()
+
+    # Override with the actual response data for the fields that exist.
     for item in response.data:
         out[item.field.name] = item.field.type_object().from_contents(item.contents)
+
     return out
+
 
 class SurveyController(BaseController):
     def __init__(self, survey):
@@ -20,14 +29,27 @@ class SurveyController(BaseController):
 
     @expose('acmwebsite.templates.survey_results')
     @require(has_permission('admin'))
-    def results(self, number=None):
+    def results(self, number=None, order_by=None, reverse=False):
+        if type(reverse) is str:
+            reverse = reverse == 'True'
+
         responses = self.survey.responses or []
-        responses = [response_to_dict(r) for r in responses]
+        responses = [response_dict(r, self.survey.fields) for r in responses]
+        if order_by:
+            responses = sorted(responses,
+                               key=lambda x: x.get(order_by),
+                               reverse=reverse)
+
         return {
             'survey': self.survey,
+            'title': (self.survey.title or
+                      (self.survey.meeting and self.survey.meeting.title) or
+                      'Survey'),
             'count': len(responses),
             'responses': responses,
-            'fields': survey_fields(self.survey),
+            'fields': self.survey.field_metadata(),
+            'order_by': order_by,
+            'reverse': reverse,
         }
 
     @expose('acmwebsite.templates.survey')
@@ -44,7 +66,9 @@ class SurveyController(BaseController):
         form = request.POST
         if form:
             user = request.identity and request.identity.get('user')
-            response = SurveyResponse(user=user, provided_name=form.get('_provided_name'), survey=self.survey)
+            response = SurveyResponse(user=user,
+                                      provided_name=form.get('_provided_name'),
+                                      survey=self.survey)
             DBSession.add(response)
 
             requires_ft = bool(form.get('first_time'))
@@ -59,12 +83,13 @@ class SurveyController(BaseController):
             flash('Response submitted successfully')
             redirect(base_url='/')
         else:
-            return {'survey': self.survey }
+            return {'survey': self.survey}
+
 
 class SurveysController(BaseController):
     @expose()
     def _lookup(self, sid, *args):
-        survey = DBSession.query(Survey).filter(Survey.id==sid).first()
+        survey = DBSession.query(Survey).filter(Survey.id == sid).first()
         if not survey:
             abort(404, "No such survey")
         return SurveyController(survey), args

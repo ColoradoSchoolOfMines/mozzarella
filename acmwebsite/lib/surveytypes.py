@@ -1,5 +1,6 @@
 from ast import literal_eval
 
+
 class SurveyType:
     def __init__(self, name, label=None, required=False, first_time=False, **kwargs):
         self.name = name
@@ -14,6 +15,10 @@ class SurveyType:
     def from_contents(self, contents):
         return literal_eval(contents)
 
+    def default(self):
+        raise NotImplementedError('Descendants of SurveyType must implement default()')
+
+
 class Bool(SurveyType):
     template = 'checkbox'
 
@@ -23,6 +28,10 @@ class Bool(SurveyType):
 
     def from_post(self, form):
         return str(bool(form.get(self.name)))
+
+    def default(self):
+        return False
+
 
 class Text(SurveyType):
     def __init__(self, value='', placeholder=None, **kwargs):
@@ -37,11 +46,17 @@ class Text(SurveyType):
     def from_contents(self, contents):
         return contents
 
+    def default(self):
+        return ''
+
+
 class ShortText(Text):
     template = 'text'
 
+
 class LongText(Text):
     template = 'textarea'
+
 
 class ManyOf(SurveyType):
     template = 'checkbox_group'
@@ -53,6 +68,10 @@ class ManyOf(SurveyType):
     def from_post(self, form):
         vals = [n for i, n in enumerate(self.options) if form.get('{}_{}'.format(self.name, i))]
         return str(vals)
+
+    def default(self):
+        return ''
+
 
 class OneOf(SurveyType):
     template = 'radio_group'
@@ -67,6 +86,10 @@ class OneOf(SurveyType):
 
     def from_contents(self, contents):
         return contents
+
+    def default(self):
+        return ''
+
 
 class Select(SurveyType):
     template = 'select'
@@ -83,11 +106,19 @@ class Select(SurveyType):
     def from_contents(self, contents):
         return contents
 
+    def default(self):
+        return self.value or ''
+
+
 class SelectMany(Select):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.multiple = True
- 
+
+    def default(self):
+        return ''
+
+
 class Number(SurveyType):
     template = 'number'
 
@@ -104,4 +135,12 @@ class Number(SurveyType):
             return None
         return repr(float(v))
 
-types = {k: v for k, v in globals().items() if isinstance(v, type) and issubclass(v, SurveyType)}
+    def default(self):
+        return self.value or 0
+
+
+types = {
+    k: v
+    for k, v in globals().items()
+    if isinstance(v, type) and issubclass(v, SurveyType)
+}

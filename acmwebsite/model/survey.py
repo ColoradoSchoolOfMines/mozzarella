@@ -13,7 +13,7 @@ from ast import literal_eval
 survey_field_table = Table('survey_field', metadata,
                            Column('survey_id', Integer, ForeignKey('survey.id'), primary_key=True),
                            Column('field_id', Integer, ForeignKey('field.id'), primary_key=True)
-)
+                           )
 
 class Survey(DeclarativeBase):
     __tablename__ = 'survey'
@@ -29,6 +29,10 @@ class Survey(DeclarativeBase):
     def active(self):
         now = datetime.now()
         return self.opens and self.opens < now and (not self.closes or self.closes > now)
+
+    def field_metadata(self):
+        return [{'name': f.name, 'type': f.type} for f in self.fields]
+
 
 class SurveyField(DeclarativeBase):
     __tablename__ = 'field'

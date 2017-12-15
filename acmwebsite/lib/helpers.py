@@ -85,6 +85,10 @@ def field_cn(ty, *args):
     return ' '.join(args)
 
 
+def order_by_link(column, current_order_by, reverse):
+    reverse = current_order_by == column and not reverse
+    return '?order_by={}&reverse={}'.format(column, reverse)
+
 # Import commonly used helpers from WebHelpers2 and TG
 from tg.util.html import script_json_encode
 
