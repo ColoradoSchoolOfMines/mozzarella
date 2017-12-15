@@ -11,7 +11,7 @@
       <div class="col-md-7">
         <div py:if="banner is not None" class="home-banner">
           <img class="home-banner-img" src="${banner.photo.url}" />
-          <small py:if="banner.description" py:content="banner.description"></small>
+          <small py:if="banner.description">${h.markdown(banner.description)}</small>
         </div>
       </div>
       <div class="col-md-5">
