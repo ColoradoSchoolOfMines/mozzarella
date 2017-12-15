@@ -47,7 +47,7 @@ class Text(SurveyType):
         return contents
 
     def default(self):
-        return ''
+        return self.value or ''
 
 
 class ShortText(Text):
@@ -88,7 +88,7 @@ class OneOf(SurveyType):
         return contents
 
     def default(self):
-        return ''
+        return self.value or ''
 
 
 class Select(SurveyType):

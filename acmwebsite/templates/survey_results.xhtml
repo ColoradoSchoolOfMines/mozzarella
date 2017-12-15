@@ -4,12 +4,8 @@
   py:extends="master.xhtml">
 
   <head py:block="head" py:strip="True">
-    <title>Mines ACM - Survey</title>
+    <title>Mines ACM - Survey ${survey.id} Responses</title>
   </head>
-
-  <div py:def="unknown_type(ty)">
-    Unknown survey field!
-  </div>
 
   <body py:block="body" py:strip="True">
     <py:import href="acmwebsite.templates.survey_components" alias="comp" />
@@ -19,6 +15,10 @@
     <div class="row">
       <div class="col-md-12">
         <table class="table table-striped table-condensed table-bordered">
+          <!--
+          I'm doing some fancy shenanigans here to allow the user to sort by
+          each column ascending and descending.
+          -->
           <thead>
             <tr>
               <th>

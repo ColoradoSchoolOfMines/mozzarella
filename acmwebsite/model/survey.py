@@ -1,26 +1,28 @@
-from sqlalchemy import *
-from sqlalchemy.orm import mapper, relation, relationship, backref
-from sqlalchemy import Table, ForeignKey, Column
-from sqlalchemy.types import Integer, String, Unicode
-
 from datetime import datetime
 
-from acmwebsite.model import DeclarativeBase, metadata, DBSession
+from sqlalchemy import Boolean, Column, DateTime, Float, ForeignKey, Table
+from sqlalchemy.orm import relation
+from sqlalchemy.types import Integer, String, Unicode
+
 from acmwebsite.lib.surveytypes import types
+from acmwebsite.model import DeclarativeBase, metadata
 
-from ast import literal_eval
+survey_field_table = Table(
+    'survey_field', metadata,
+    Column('survey_id', Integer, ForeignKey('survey.id'), primary_key=True),
+    Column('field_id', Integer, ForeignKey('field.id'), primary_key=True))
 
-survey_field_table = Table('survey_field', metadata,
-                           Column('survey_id', Integer, ForeignKey('survey.id'), primary_key=True),
-                           Column('field_id', Integer, ForeignKey('field.id'), primary_key=True)
-                           )
 
 class Survey(DeclarativeBase):
     __tablename__ = 'survey'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
     meeting = relation('Meeting', back_populates='survey', uselist=False)
-    fields = relation('SurveyField', secondary=survey_field_table, backref='surveys', order_by='SurveyField.priority')
+    fields = relation(
+        'SurveyField',
+        secondary=survey_field_table,
+        backref='surveys',
+        order_by='SurveyField.priority')
     title = Column(Unicode)
     opens = Column(DateTime)
     closes = Column(DateTime)
@@ -51,7 +53,6 @@ class SurveyField(DeclarativeBase):
     max = Column(Float)
     step = Column(Float)
 
-
     def type_object(self):
         return types[self.type](
             name=self.name,
@@ -65,6 +66,7 @@ class SurveyField(DeclarativeBase):
             max=self.max,
             step=self.step,
         )
+
 
 class SurveyResponse(DeclarativeBase):
     __tablename__ = 'response'
