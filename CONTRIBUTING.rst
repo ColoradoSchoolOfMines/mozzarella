@@ -34,5 +34,9 @@ Other Notes
 * Jack will not pull the ``master`` branch to the production site if he tests
   it and discovers software bugs or regressions. Therefore, try to keep
   ``master`` fairly bug-free so that we can pull as often as we need.
+* This is a Python project, and hence documentation should be in
+  reStructuredText format.
+* If you assign a task to someone, but then you later decide that you want to
+  do it yourself, contact that person first to prevent duplicated work.
 * Don't assume any contributing guidelines this file does not state.
 
