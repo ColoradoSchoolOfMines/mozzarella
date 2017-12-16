@@ -1,7 +1,9 @@
 <div class="list-group project-list">
   <div py:for="project in projects" class="list-group-item row">
-    <div class="col-md-4 thumbnail">
-      <img py:if="project.image" src="${project.image.url}" class="" />
+    <div class="col-md-4">
+      <div py:if="project.image" class="thumbnail">
+        <img src="${project.image.url}" />
+      </div>
     </div>
     <div class="col-md-8">
       <!-- Display the project status if it's not verified -->

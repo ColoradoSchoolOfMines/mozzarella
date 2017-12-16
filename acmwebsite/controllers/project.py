@@ -1,6 +1,6 @@
 """Project controller module."""
 
-from tg import abort, expose, request
+from tg import abort, expose, request, require
 from tg.predicates import has_permission, not_anonymous
 
 from acmwebsite.lib.base import BaseController
@@ -34,18 +34,20 @@ class ProjectsController(BaseController):
         # Only show verified projects or projects that the current user is on.
         if has_permission('admin'):
             projects = self.projects.all()
-        elif request.identity:
-            user = request.identity['user']
-            projects = self.projects.filter(Project.status == 'v'
-                                            or user in Project.team_members)
+        if request.identity:
+            uid = request.identity['user'].user_id
+            projects = [p for p in self.projects
+                        if p.status == 'v' or uid in (u.user_id for u in p.team_members)]
         else:
-            projects = self.projects.filter(Project.status == 'v')
+            projects = self.projects.filter(Project.status == 'v').all()
 
         return dict(page='projects', projects=projects)
 
     @expose('acmwebsite.templates.submit_project')
+    @require(not_anonymous())
     def submit(self):
         if request.method == 'POST':
+            # TODO: Sumner
             pass
         else:
             return dict(page='project_submit')
