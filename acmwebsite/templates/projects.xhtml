@@ -12,16 +12,7 @@
     <h1 class="page-header">Projects</h1>
     <div class="row">
       <div class="col-md-8">
-        <div py:for="project in projects" class="row">
-          <div class="col-md-9 col-xs-12">
-            <h2 py:content="project.name"></h2>
-            <p py:content="project.description" />
-            <p>
-              ${h.icon('github')}
-              ${project.repository}
-            </p>
-          </div>
-        </div>
+        <py:include href="acmwebsite.templates.project_list" />
       </div>
       <div class="col-md-4">
         <div class="panel panel-default">
@@ -30,7 +21,11 @@
           </div>
           <div class="panel-body">
             <p py:if="not value_of('luser')">
-              <i>You must be logged in to submit a project</i>
+              You must be <a href="${tg.url('/login')}">logged in</a> to submit a project.
+            </p>
+            <p py:if="value_of('luser')">
+              To have your project listed here, please
+              <a href="submit">submit it</a> for moderation.
             </p>
           </div>
         </div>
