@@ -6,7 +6,7 @@ a member of our ACM Chapter, you should be able to work out of this repository
 (see below, you will still need to make a branch and submit a PR for most
 changes).
 
-This is as "how to contribute" file, not a "requirements for contributions"
+This is a "how to contribute" file, not a "requirements for contributions"
 file. Chances are, your code will undergo a code review and might receive
 constructive criticism on nit-picky things. Don't take a code review
 personally; the point of the review process is to make sure the code for the
