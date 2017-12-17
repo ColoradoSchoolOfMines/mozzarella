@@ -34,6 +34,7 @@ def upgrade():
         sa.Column('description', sa.Unicode(4096)),
         sa.Column('website', sa.Unicode(512)),
         sa.Column('repository', sa.Unicode(512)),
+        sa.Column('video_url', sa.Unicode(512)),
         sa.Column('status', sa.Unicode(1), nullable=False, default="u"),
         sa.Column('reject_reason', sa.Unicode(512)),
         sa.Column('image', UploadedFileField(upload_type=UploadedImageWithThumb)),

@@ -28,6 +28,7 @@ class Project(DeclarativeBase):
     description = Column(Unicode(4096))
     website = Column(Unicode(512))
     repository = Column(Unicode(512))
+    video_url = Column(Unicode(512))
     status = Column(Unicode(20), nullable=False, default="u")
     reject_reason = Column(Unicode(512))
     image = Column(UploadedFileField(upload_type=UploadedImageWithThumb))

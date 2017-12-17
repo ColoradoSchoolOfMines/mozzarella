@@ -6,27 +6,29 @@
       </div>
     </div>
     <div class="col-md-8">
+      <h3 py:content="project.name" class="project-title" />
+
       <!-- Display the project status if it's not verified -->
       <span py:if="project.status != 'v'"
         py:content="{'u': 'AWAITING APPROVAL', 'r': 'REJECTED'}[project.status]"
         class="label label-${{'u': 'info', 'r': 'danger'}[project.status]}" />
       <span py:if="project.status == 'r'" py:content="project.reject_reason" />
 
-      <h2 py:content="project.name" class="project-title" />
-      <p py:if="project.repository or project.website">
-        <a py:if="project.repository" href="${project.repository}" target="_blank">
-          ${h.fa_icon('code-fork')}
-          Repository
-        </a>
-        <span class="dot-sep" py:if="project.repository and project.website">&#8226;</span>
-        <a py:if="project.website" href="${project.website}" target="_blank">
-          ${h.fa_icon('globe')}
-          Website
-        </a>
-      </p>
+      <ul py:if="project.repository or project.website or project.video"
+        class="project-links">
+        <li py:if="project.repository">
+          <a href="${project.repository}" target="_blank">${h.fa_icon('code-fork')} Repository</a>
+        </li>
+        <li py:if="project.website">
+          <a href="${project.website}" target="_blank">${h.fa_icon('globe')} Website</a>
+        </li>
+        <li py:if="project.video_url">
+          <a href="${project.video_url}" target="_blank">${h.fa_icon('video-camera')} Video</a>
+        </li>
+      </ul>
       <p py:content="project.description" />
       <p>
-        <b>Team Members:</b>
+        <b>Contributors:</b>
         <ul>
           <li py:for="tm in project.team_members">
             <a href="${tg.url('/u/{}'.format(tm.user_name))}"
