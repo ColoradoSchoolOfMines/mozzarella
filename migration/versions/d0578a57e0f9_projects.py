@@ -35,16 +35,7 @@ def upgrade():
         sa.Column('website', sa.Unicode(512)),
         sa.Column('repository', sa.Unicode(512)),
         sa.Column('video_url', sa.Unicode(512)),
-        sa.Column('status', sa.Unicode(1), nullable=False, default="u"),
-        sa.Column('reject_reason', sa.Unicode(512)),
         sa.Column('image', UploadedFileField(upload_type=UploadedImageWithThumb)),
-
-        # Ensure that the statu is valid.
-        # u -> unverified, r-> rejected, v->verified
-        sa.CheckConstraint("status in ('u', 'r', 'v')"),
-
-        # Require reject reason if project is rejected
-        sa.CheckConstraint("reject_reason is not null or status != 'r'")
     )
 
 

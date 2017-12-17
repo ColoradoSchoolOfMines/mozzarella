@@ -137,20 +137,8 @@ span.dot-sep {
 }
 
 /* Add a dot between every project link */
-.project-links {
-    padding-left: 0;
-}
-
-.project-links li {
-    display: inline-block;
-}
-
-.project-links li:not(:last-child) {
-    margin-right: 5px;
-}
-
 .project-links li:not(:last-child)::after {
     content: '\00B7';
     font-size: 20px;
-    margin-left: 5px;
+    margin-left: 10px;
 }
