@@ -13,19 +13,19 @@
     <div class="row">
       <div class="col-md-12">
         <table class="table table-striped table-condensed table-bordered">
-          <!--
+          <!--!
           I'm doing some fancy shenanigans here to allow the user to sort by
           each column ascending and descending.
           -->
           <thead>
             <tr>
               <th>
-                <a href="${h.order_by_link('name', order_by, reverse)}">Name</a>
+                <a href="${tg.url('/s/{}/results'.format(survey_id), {'order_by': 'name', 'reverse': (order_by == 'name' and not reverse)})}">Name</a>
                 <span py:if="order_by == 'name'"
                   py:content="h.icon('triangle-%s' % ('top' if reverse else 'bottom'))" />
               </th>
               <th py:for="field in fields">
-                <a href="${h.order_by_link(field['name'], order_by, reverse)}"
+                <a href="${tg.url('/s/{}/results'.format(survey_id), {'order_by': field['name'], 'reverse': (order_by == field['name'] and not reverse)})}"
                   py:content="field['name']" />
                 <span py:if="order_by == field['name']"
                   py:content="h.icon('triangle-%s' % ('top' if reverse else 'bottom'))" />
