@@ -25,6 +25,8 @@ Coding Style
 This is a Python project, and hence documentation should be in reStructuredText
 format.
 
+XHTML, CSS, JavaScripts should use 2 spaces for indentation.
+
 Other Notes
 -----------
 
