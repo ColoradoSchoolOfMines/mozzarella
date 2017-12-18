@@ -10,12 +10,14 @@ class SurveyController(BaseController):
         self.survey = survey
 
     @expose('acmwebsite.templates.survey_results')
+    @expose("json")
     @require(has_permission('admin'))
     def results(self, number=None, order_by=None, reverse=False):
+        responses = [self._response_dict(r) for r in self.survey.responses or []]
+
         if type(reverse) is str:
             reverse = reverse == 'True'
 
-        responses = self._survey_responses()
         if order_by:
             responses.sort(key=lambda x: x.get(order_by), reverse=reverse)
 
@@ -23,23 +25,13 @@ class SurveyController(BaseController):
                         (self.survey.meeting and self.survey.meeting.title) or
                         'Survey')
         return {
-            'survey': self.survey,
+            'survey_id': self.survey.id,
             'title': survey_title,
             'count': len(responses),
             'responses': responses,
             'fields': self.survey.field_metadata(),
             'order_by': order_by,
             'reverse': reverse,
-        }
-
-    @expose('json')
-    @require(has_permission('admin'))
-    def results_json(self, number=None):
-        responses = self._survey_responses()
-        return {
-            'count': len(responses),
-            'responses': responses,
-            'fields': self.survey.field_metadata(),
         }
 
     def _response_dict(self, response):
@@ -58,10 +50,6 @@ class SurveyController(BaseController):
         })
 
         return out
-
-    def _survey_responses(self):
-        responses = self.survey.responses or []
-        return [self._response_dict(r) for r in responses]
 
     @expose('acmwebsite.templates.survey')
     def respond(self):

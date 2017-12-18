@@ -4,12 +4,10 @@
   py:extends="master.xhtml">
 
   <head py:block="head" py:strip="True">
-    <title>Mines ACM - Survey ${survey.id} Responses</title>
+    <title>Mines ACM - Survey ${survey_id} Responses</title>
   </head>
 
   <body py:block="body" py:strip="True">
-    <py:import href="acmwebsite.templates.survey_components" alias="comp" />
-
     <h1 class="page-header" py:content="title" />
     <h2>Responses</h2>
     <div class="row">
