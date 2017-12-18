@@ -115,25 +115,19 @@
 }
 
 /* Project Page */
-.project-list .row {
-    /*
-     * By default rows have -15px margins on the right and which doesn't line up
-     * correctly in a list-group-item.
-     */
-    margin-left: 0;
-    margin-right: 0;
+.project-list-item .project-title {
+    margin-top: 0;
 }
 
-.project-list .project-title {
-    margin-top: 10px;
+.project-list-item {
+    margin-bottom: 20px;
 }
 
-span.dot-sep {
-    padding: 0 5px;
-}
-
-.project-list .thumbnail {
-    max-width: 250px;
+.project-list-item .project-image {
+    border-radius: 8px;
+    width: 100%;
+    max-width: 300px;
+    max-height: 300px;
 }
 
 /* Add a dot between every project link */

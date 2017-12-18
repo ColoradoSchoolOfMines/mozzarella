@@ -10,37 +10,35 @@
 
   <body py:block="body" py:strip="True">
     <h1 class="page-header">Projects</h1>
-      <div py:for="project in projects" class="row">
-        <div class="col-md-3 col-xs-12">
-          <div py:if="project.image" class="thumbnail">
-            <img src="${project.image.url}" />
-          </div>
-        </div>
-        <div class="col-md-9 col-xs-12">
-          <h3 py:content="project.name" class="project-title" />
+    <div py:for="project in projects" class="project-list-item row">
+      <div class="col-md-3 col-xs-12">
+        <img py:if="project.image" src="${project.image.url}" class="project-image" />
+      </div>
+      <div class="col-md-9 col-xs-12">
+        <h2 py:content="project.name" class="project-title" />
 
-          <ul py:if="project.repository or project.website or project.video"
-            class="list-inline project-links">
-            <li py:if="project.repository">
-              <a href="${project.repository}" target="_blank">${h.fa_icon('code-fork')} Repository</a>
-            </li>
-            <li py:if="project.website">
-              <a href="${project.website}" target="_blank">${h.fa_icon('globe')} Website</a>
-            </li>
-            <li py:if="project.video_url">
-              <a href="${project.video_url}" target="_blank">${h.fa_icon('video-camera')} Video</a>
+        <ul py:if="project.repository or project.website or project.video"
+          class="list-inline project-links">
+          <li py:if="project.repository">
+            <a href="${project.repository}" target="_blank">${h.fa_icon('code-fork')} Repository</a>
+          </li>
+          <li py:if="project.website">
+            <a href="${project.website}" target="_blank">${h.fa_icon('globe')} Website</a>
+          </li>
+          <li py:if="project.video_url">
+            <a href="${project.video_url}" target="_blank">${h.fa_icon('video-camera')} Video</a>
+          </li>
+        </ul>
+        <p py:content="h.markdown(project.description)" />
+        <p>
+          <b>Contributors:</b>
+          <ul>
+            <li py:for="tm in project.team_members">
+              <a href="${tg.url('/u/%s' % tm.user_name)}" py:content="tm.display_name" />
             </li>
           </ul>
-          <p py:content="project.description" />
-          <p>
-            <b>Contributors:</b>
-            <ul>
-              <li py:for="tm in project.team_members">
-                <a href="${tg.url('/u/%s' % tm.user_name)}" py:content="tm.display_name" />
-              </li>
-            </ul>
-          </p>
-        </div>
+        </p>
       </div>
+    </div>
   </body>
 </html>
