@@ -13,13 +13,20 @@ class SurveyController(BaseController):
     @expose("json")
     @require(has_permission('admin'))
     def results(self, number=None, order_by=None, reverse=False):
-        responses = [self._response_dict(r) for r in self.survey.responses or []]
-
         if type(reverse) is str:
             reverse = reverse == 'True'
 
         if order_by:
-            responses.sort(key=lambda x: x.get(order_by), reverse=reverse)
+            # TODO: this doesn't work...
+            # order = '{} {}'.format(order_by, 'asc' if reverse else 'desc')
+            # responses = self.survey.responses.order_by(order)
+            responses = self.survey.responses
+        else:
+            responses = self.survey.responses
+
+        # TODO: This sucks. It would be good to have this done for us with
+        # SQLAlchemy magic
+        responses = [self._response_dict(r) for r in responses or []]
 
         survey_title = (self.survey.title or
                         (self.survey.meeting and self.survey.meeting.title) or
@@ -37,12 +44,7 @@ class SurveyController(BaseController):
     def _response_dict(self, response):
         out = {'name': response.name, 'email': response.email}
 
-        # Populate with the default value for the fields. This is necessary for
-        # sorting if some respondents didn't fill out an optional field.
-        for field in self.survey.fields:
-            out[field.name] = field.type_object().default()
-
-        # Override with the actual response data for the fields that exist.
+        # Add the actual response data for the fields that exist.
         out.update({
             item.field.name:
             item.field.type_object().from_contents(item.contents)

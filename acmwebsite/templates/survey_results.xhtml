@@ -19,23 +19,18 @@
           -->
           <thead>
             <tr>
-              <th>
-                <a href="${tg.url('/s/{}/results'.format(survey_id), {'order_by': 'name', 'reverse': (order_by == 'name' and not reverse)})}">Name</a>
-                <span py:if="order_by == 'name'"
-                  py:content="h.icon('triangle-%s' % ('top' if reverse else 'bottom'))" />
-              </th>
-              <th py:for="field in fields">
-                <a href="${tg.url('/s/{}/results'.format(survey_id), {'order_by': field['name'], 'reverse': (order_by == field['name'] and not reverse)})}"
-                  py:content="field['name']" />
-                <span py:if="order_by == field['name']"
+              <th py:for="field in ('name', *(f['name'] for f in fields))">
+                <a href="${tg.url('/s/{}/results'.format(survey_id), {'order_by': field, 'reverse': (order_by == field and not reverse)})}"
+                  py:content="field" />
+                <span py:if="order_by == field"
                   py:content="h.icon('triangle-%s' % ('top' if reverse else 'bottom'))" />
               </th>
             </tr>
           </thead>
           <tbody>
             <tr py:for="r in responses">
-              <td py:content="r['name']" />
-              <td py:for="field in fields" py:content="r.get(field['name'])" />
+              <td py:for="field in ('name', *(f['name'] for f in fields))"
+                py:content="r.get(field)" />
             </tr>
           </tbody>
         </table>

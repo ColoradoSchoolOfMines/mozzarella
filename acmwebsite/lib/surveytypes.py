@@ -15,9 +15,6 @@ class SurveyType:
     def from_contents(self, contents):
         return literal_eval(contents)
 
-    def default(self):
-        raise NotImplementedError('Descendants of SurveyType must implement default()')
-
 
 class Bool(SurveyType):
     template = 'checkbox'
@@ -28,9 +25,6 @@ class Bool(SurveyType):
 
     def from_post(self, form):
         return str(bool(form.get(self.name)))
-
-    def default(self):
-        return False
 
 
 class Text(SurveyType):
@@ -45,9 +39,6 @@ class Text(SurveyType):
 
     def from_contents(self, contents):
         return contents
-
-    def default(self):
-        return self.value or ''
 
 
 class ShortText(Text):
@@ -69,9 +60,6 @@ class ManyOf(SurveyType):
         vals = [n for i, n in enumerate(self.options) if form.get('{}_{}'.format(self.name, i))]
         return str(vals)
 
-    def default(self):
-        return ''
-
 
 class OneOf(SurveyType):
     template = 'radio_group'
@@ -86,9 +74,6 @@ class OneOf(SurveyType):
 
     def from_contents(self, contents):
         return contents
-
-    def default(self):
-        return self.value or ''
 
 
 class Select(SurveyType):
@@ -106,17 +91,11 @@ class Select(SurveyType):
     def from_contents(self, contents):
         return contents
 
-    def default(self):
-        return self.value or ''
-
 
 class SelectMany(Select):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.multiple = True
-
-    def default(self):
-        return ''
 
 
 class Number(SurveyType):
@@ -134,9 +113,6 @@ class Number(SurveyType):
         if v is None:
             return None
         return repr(float(v))
-
-    def default(self):
-        return self.value or 0
 
 
 types = {
