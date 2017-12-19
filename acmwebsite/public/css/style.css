@@ -1,138 +1,138 @@
 /* TurboGears flash bootstrap look */
 #flash > div {
-    padding: 8px 35px 8px 14px;
-    margin-bottom: 20px;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-    background-color: #fcf8e3;
-    border: 1px solid #fbeed5;
-    -webkit-border-radius: 4px;
-       -moz-border-radius: 4px;
-            border-radius: 4px;
-    color: #c09853;
+  padding: 8px 35px 8px 14px;
+  margin-bottom: 20px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  background-color: #fcf8e3;
+  border: 1px solid #fbeed5;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+  color: #c09853;
 }
 
 #flash > .ok {
-    color: #468847;
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
+  color: #468847;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
 }
 
 #flash > .error {
-    color: #b94a48;
-    background-color: #f2dede;
-    border-color: #eed3d7;
+  color: #b94a48;
+  background-color: #f2dede;
+  border-color: #eed3d7;
 }
 
 #flash > .info {
-    color: #3a87ad;
-    background-color: #d9edf7;
-    border-color: #bce8f1;
+  color: #3a87ad;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
 }
 
 /* Footer styling */
 .footer {
-    margin-top: 45px;
-    padding: 35px 30px 36px;
-    border-top: 1px solid #e5e5e5;
+  margin-top: 45px;
+  padding: 35px 30px 36px;
+  border-top: 1px solid #e5e5e5;
 }
 
 .footer p {
-    margin-bottom: 0;
-    color: #555;
+  margin-bottom: 0;
+  color: #555;
 }
 
 /* Mailing List Stuff */
 .ml-fullname-warn {
-    display: none;
+  display: none;
 }
 
 .emailtext {
-    padding: 0;
-    color: inherit;
-    background-color: inherit;
-    border: none;
-    border-radius: inherit;
+  padding: 0;
+  color: inherit;
+  background-color: inherit;
+  border: none;
+  border-radius: inherit;
 }
 
 .navbar-right {
-    margin-right: 0;
+  margin-right: 0;
 }
 
 /* Logo */
 .acm-logo {
-    margin: 20px 0;
-    max-width: 400px;
-    width: 100%;
+  margin: 20px 0;
+  max-width: 400px;
+  width: 100%;
 }
 
 /* Contact Page */
 .acm-officer-info {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .acm-officer-position {
-    font-style: italic;
+  font-style: italic;
 }
 
 .acm-officer-img {
-    width: 100%;
-    border-radius: 8px;
+  width: 100%;
+  border-radius: 8px;
 }
 
 /* Homepage */
 .home-banner {
-    margin: 35px 0 30px;
-    width: 100%;
+  margin: 35px 0 30px;
+  width: 100%;
 }
 
 .home-banner-img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
 }
 
 .homepage-panels {
-    margin-top: 35px;
+  margin-top: 35px;
 }
 
 .checkbox.single-checkbox label {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .on-first-time {
-    display: none;
+  display: none;
 }
 
 /* Survey Page */
 .radio-group .radio-option label,
 .checkbox-group .checkbox label {
-    font-weight: normal;
+  font-weight: normal;
 }
 
 /* Schedule Page */
 .acm-meeting-title {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 /* Project Page */
 .project-list-item .project-title {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 .project-list-item {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .project-list-item .project-image {
-    border-radius: 8px;
-    width: 100%;
-    max-width: 300px;
-    max-height: 300px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 300px;
+  max-height: 300px;
 }
 
 /* Add a dot between every project link */
 .project-links li:not(:last-child)::after {
-    content: '\00B7';
-    font-size: 20px;
-    margin-left: 10px;
+  content: '\00B7';
+  font-size: 20px;
+  margin-left: 10px;
 }
