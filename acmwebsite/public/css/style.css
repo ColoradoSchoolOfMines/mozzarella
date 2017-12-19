@@ -115,19 +115,17 @@
 }
 
 /* Project Page */
-.project-list-item .project-title {
-  margin-top: 0;
-}
-
-.project-list-item {
-  margin-bottom: 20px;
-}
-
 .project-list-item .project-image {
   border-radius: 8px;
   width: 100%;
-  max-width: 300px;
-  max-height: 300px;
+  max-width: 350px;
+  max-height: 350px;
+  margin-bottom: 10px;
+}
+
+.project-list-item .project-title,
+.project-links li {
+  font-weight: bold;
 }
 
 /* Add a dot between every project link */
