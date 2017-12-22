@@ -9,11 +9,9 @@
   <body py:block="body" py:strip="True">
     <div class="row">
       <div class="col-md-7">
-        <div class="home-banner">
-          <img class="home-banner-img" src="${tg.url('/img/banner.jpg')}" />
-          <small>
-          Image above: ACM Members and other clubs at a Mozilla Campus Clubs training event
-          </small>
+        <div py:if="banner is not None" class="home-banner">
+          <img class="home-banner-img" src="${banner.photo.url}" />
+          <small py:if="banner.description" py:content="h.markdown(banner.description)"></small>
         </div>
       </div>
       <div class="col-md-5">
