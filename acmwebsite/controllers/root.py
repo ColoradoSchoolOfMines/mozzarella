@@ -11,7 +11,7 @@ from acmwebsite.model import DBSession
 from tgext.admin.controller import AdminController
 from acmwebsite.config.app_cfg import AdminConfig
 
-from acmwebsite.model import Meeting, Survey
+from acmwebsite.model import Meeting, Survey, Banner
 
 from acmwebsite.lib.base import BaseController
 from acmwebsite.controllers.error import ErrorController
@@ -22,6 +22,8 @@ from acmwebsite.controllers.user import UsersController
 from acmwebsite.controllers.meeting import MeetingsController
 from acmwebsite.controllers.schedule import ScheduleController
 from acmwebsite.controllers.survey import SurveysController
+
+from sqlalchemy.sql import functions
 
 import datetime
 
@@ -59,7 +61,8 @@ class RootController(BaseController):
         meetings = DBSession.query(Meeting).filter(
             Meeting.date > datetime.datetime.now() - datetime.timedelta(hours=3)
         ).order_by(Meeting.date).limit(2)
-        return dict(page='index', meetings=meetings)
+        banner = DBSession.query(Banner).order_by(functions.random()).first()
+        return dict(page='index', meetings=meetings, banner=banner)
 
     @expose('acmwebsite.templates.login')
     def login(self, came_from=lurl('/'), failure=None, login=''):

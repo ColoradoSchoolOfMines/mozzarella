@@ -3,6 +3,7 @@
 
 # Default development database
 devdata.db
+devdata.db-journal
 
 # Default data directory
 data/*
