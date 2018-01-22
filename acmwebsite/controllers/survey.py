@@ -17,14 +17,15 @@ class SurveyController(BaseController):
             reverse = reverse == 'True'
 
         if order_by:
-            # TODO: this doesn't work...
+            # TODO (#46): this doesn't work... If the column is nullable, then
+            # the sort can't deal with comparing None types
             # order = '{} {}'.format(order_by, 'asc' if reverse else 'desc')
             # responses = self.survey.responses.order_by(order)
             responses = self.survey.responses
         else:
             responses = self.survey.responses
 
-        # TODO: This sucks. It would be good to have this done for us with
+        # TODO (#46): This sucks. It would be good to have this done for us with
         # SQLAlchemy magic
         responses = [self._response_dict(r) for r in responses or []]
 
