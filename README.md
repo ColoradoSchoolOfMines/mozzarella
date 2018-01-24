@@ -48,6 +48,9 @@ Make sure you have `virtualenvwrapper` installed
 On Arch Linux:
 
     $ sudo pacman -S python-virtualenvwrapper
+On Fedora
+
+    $ sudo dnf install python-virtualenvwrapper
 
 Make a virtual environment:
 
