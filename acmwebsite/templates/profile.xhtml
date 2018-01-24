@@ -9,7 +9,21 @@
   </head>
 
   <body py:block="body" py:strip="True">
-    <h1 class="page-header">${u}</h1>
+    <div>
+      <h1 class="page-header">
+        ${u}
+
+        <form action="${u.profile_url}/edit" method="post" id="profile-edit-form">
+          <button type="submit" class="btn btn-primary">Edit Profile</button>
+        </form>
+      </h1>
+
+
+    </div>
+
     <h3>${u.email_address}</h3>
+
+    <h3>Bio</h3>
+    <p>${u.bio}</p>
   </body>
 </html>

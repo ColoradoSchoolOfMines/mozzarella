@@ -22,6 +22,10 @@ class UserController(BaseController):
     def picture(self):
         redirect(DepotManager.url_for(self.user.profile_pic.path))
 
+    @expose('acmwebsite.templates.profile_edit')
+    def edit(self):
+        return dict(page='profile_edit', u=self.user)
+
 class UsersController(BaseController):
     @expose()
     def _lookup(self, uname, *args):
