@@ -8,6 +8,9 @@ This is the website for the Colorado School of Mines' local chapter for the
 It is written in Python and uses the powerful web framework
 [TurboGears](http://turbogears.com/).
 
+The steps below assume that you know how to use the [Linux command line](INTROCOMMANDLINE.md) and how use
+git and github. The two links will take you to a starter guide created by 
+
 ## Setting up your Development Environment
 
 Clone the repo:
