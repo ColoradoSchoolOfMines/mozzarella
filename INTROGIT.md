@@ -13,3 +13,11 @@ Github is just a website that hosts and shares millions of git projects called r
 ## SHH Keys
 # Lets contribute to ACM
 # Advances Topics
+# Useful links
+
+- [LUG Talk on Git](https://raw.githubusercontent.com/sumnerevans/lug-git-talk/master/git.pdf)
+    - This is presentation on Git by the local LUG club (click the git.pdf for the slides).
+- More to come
+
+
+

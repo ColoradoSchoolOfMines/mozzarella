@@ -31,11 +31,13 @@ Setup the application:
 
     $ cp development.ini.sample development.ini
     $ gearbox setup-app
-`If gearbox setup-app fails try specifying pip3 in the last two steps`
+If `gearbox setup-app` fails try specifying `pip3` in the previos two steps
 
-Finally, serve the application:
+Serve the application:
 
     $ gearbox serve --reload --debug
+
+Finaly, go into your web browser and go to localhost:8080 to view the website.
 
 ### To use a virtual environment
 
@@ -52,6 +54,7 @@ Make sure you have `virtualenvwrapper` installed
 On Arch Linux:
 
     $ sudo pacman -S python-virtualenvwrapper
+
 On Fedora
 
     $ sudo dnf install python-virtualenvwrapper
@@ -77,10 +80,11 @@ Setup the application:
     $ cp development.ini.sample development.ini
     $ gearbox setup-app
 
-
-Finally, serve the application:
+Serve the application:
 
     $ gearbox serve --reload --debug
+
+Finaly, go into your web browser and go to localhost:8080 to view the website.
 
 When you're finished working on the project and want to exit the virtual
 environment:
