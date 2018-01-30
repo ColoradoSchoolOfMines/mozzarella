@@ -30,13 +30,13 @@ Setup the application:
 
     $ cp development.ini.sample development.ini
     $ gearbox setup-app
-If `gearbox setup-app` fails try specifying `pip3` in the previos two steps
+If `gearbox setup-app` fails, try specifying `pip3` in the previos two steps.
 
 Serve the application:
 
     $ gearbox serve --reload --debug
 
-Finaly, go into your web browser and go to localhost:8080 to view the website.
+Finaly, go to your web browser and navigate to `localhost:8080` to view the website.
 
 ### To use a virtual environment
 
@@ -83,7 +83,7 @@ Serve the application:
 
     $ gearbox serve --reload --debug
 
-Finaly, go into your web browser and go to localhost:8080 to view the website.
+Finaly, go to your web browser and navigate to `localhost:8080` to view the website.
 
 When you're finished working on the project and want to exit the virtual
 environment:
