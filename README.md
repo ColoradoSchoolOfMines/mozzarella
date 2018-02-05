@@ -30,7 +30,7 @@ Setup the application:
 
     $ cp development.ini.sample development.ini
     $ gearbox setup-app
-If `gearbox setup-app` fails, try specifying `pip3` in the previos two steps.
+If `gearbox setup-app` fails, try specifying `pip3` in the previous two steps.
 
 Serve the application:
 
