@@ -12,7 +12,7 @@
   </head>
 
   <body>
-    <!-- Navbar -->
+    <!--! Navbar -->
     <div class="container">
       <div class="header-logo">
         <a href="${tg.url('/')}">
@@ -61,7 +61,7 @@
     </div>
     <div class="container site-content">
 
-      <!-- Flash messages -->
+      <!--! Flash messages -->
       <py:with vars="flash=tg.flash_obj.render('flash', use_js=False)">
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -70,7 +70,7 @@
         </div>
       </py:with>
 
-      <!-- Main included content -->
+      <!--! Main included content -->
       <py:block name="body"/>
       </div>
       <div class="container site-footer">
@@ -78,10 +78,21 @@
         <footer class="footer">
           <p>
           <small>
-            Unless otherwise noted, all content on this website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            Unless otherwise noted, all content on this website is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+              Creative Commons Attribution-ShareAlike 4.0 International License
+            </a>.
           </small>
           </p>
           <p><small><a href='#' id='toggle-theme'>Too ${('light', 'dark')[tg.session.get('theme', None) == 'dark']}?</a></small></p>
+
+          <!--! Social Links -->
+          <p class="social-links" py:if="tg.config.get('social_links')">
+            <a py:for="link in tg.config.get('social_links').split(',')"
+              py:content="h.fa_icon(link)"
+              href="${tg.config.get('social_links.{}'.format(link))}">
+            </a>
+          </p>
         </footer>
       </div>
 
