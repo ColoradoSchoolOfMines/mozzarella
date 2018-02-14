@@ -22,7 +22,10 @@
           <div py:if="not luser" class="form-group">
             <label for="_provided_name">Your Name</label>
             <input type="text" name="_provided_name" id="_provided_name" class="form-control" />
-            <p class="form-text text-muted">… or <a href="${tg.url('/login')}">login</a> using MultiPass</p>
+            <p class="form-text text-muted">… or
+              <a href="${tg.url('/login', params=dict(came_from='/s/{}/respond'.format(survey.id)))}">login</a>
+              using MultiPass
+            </p>
           </div>
           <py:for each="f in survey.fields" py:with="fo = f.type_object()">
             ${(getattr(comp, fo.template) or unknown_type)(fo)}
