@@ -4,19 +4,19 @@ Mozzarella
 This website is a website for clubs and student organizations.
 
 Mozzarella It is written in Python and uses the powerful web framework
-`TurboGears`.
+TurboGears_.
 
-.. TurboGears: http://turbogears.com/
+.. _TurboGears: http://turbogears.com/
 
-Getting Started
----------------
+Setting up your Development Environment
+---------------------------------------
 
 These steps are meant to give you an overview of how to get a development
 environment set up for developing this application. Please adapt to your system
 as necessary. `This guide` gives more in-depth instructions on how to start
 working on a TurboGears project.
 
-.. This guide: https://github.com/ColoradoSchoolOfMines/ACM-Guide-list/blob/master/computer_science/TurboGears.md
+.. _This guide: https://github.com/ColoradoSchoolOfMines/ACM-Guide-list/blob/master/computer_science/TurboGears.md
 
 Clone the repo::
 
