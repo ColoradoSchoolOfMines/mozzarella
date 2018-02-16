@@ -13,7 +13,7 @@ Setting up your Development Environment
 
 These steps are meant to give you an overview of how to get a development
 environment set up for developing this application. Please adapt to your system
-as necessary. `This guide` gives more in-depth instructions on how to start
+as necessary. `This guide`_ gives more in-depth instructions on how to start
 working on a TurboGears project.
 
 .. _This guide: https://github.com/ColoradoSchoolOfMines/ACM-Guide-list/blob/master/computer_science/TurboGears.md
