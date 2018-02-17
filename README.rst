@@ -39,5 +39,5 @@ Serve the application::
 
     $ gearbox serve --reload --debug
 
-Finaly, go to your web browser and navigate to ``localhost:8080`` to view the
-website.
+Finaly, go to your web browser and navigate to http://localhost:8080/ to view
+the website.
