@@ -87,10 +87,10 @@
           <p><small><a href='#' id='toggle-theme'>Too ${('light', 'dark')[tg.session.get('theme', None) == 'dark']}?</a></small></p>
 
           <!-- Social Links -->
-          <p class="social-links" py:if="tg.config.get('social_links')">
-            <a py:for="link in tg.config.get('social_links').split(',')"
+          <p class="social-links">
+            <a py:for="link in [k.split('.')[1] for k in tg.config.keys() if k.startswith('social_link.')]"
               py:content="h.fa_icon(link)"
-              href="${tg.config.get('social_links.{}'.format(link))}">
+              href="${tg.config.get('social_link.{}'.format(link))}">
             </a>
           </p>
         </footer>

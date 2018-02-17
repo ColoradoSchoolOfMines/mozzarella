@@ -61,9 +61,8 @@ mailman.pipermail.url = https://mailman.mines.edu/pipermail/acmx
 mailman.secret = getthisfromjack
 
 # Social Links
-social_links = github,facebook
-social_links.github = https://github.com/ColoradoSchoolOfMines
-social_links.facebook = https://facebook.com/minesacm
+social_link.github = https://github.com/ColoradoSchoolOfMines
+social_link.facebook = https://facebook.com/minesacm
 
 #By default session is store in cookies to avoid the overhead
 #of having to manage a session storage. On production you might
