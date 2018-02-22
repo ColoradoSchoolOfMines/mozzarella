@@ -13,10 +13,11 @@ Setting up your Development Environment
 
 These steps are meant to give you an overview of how to get a development
 environment set up for developing this application. Please adapt to your system
-as necessary. `This guide`_ gives more in-depth instructions on how to start
-working on a TurboGears project.
+as necessary. *Please note that this project requires Python 3+, so make sure
+you are using the correct version of Python.* The `TurboGears website`_ gives
+more in-depth instructions on how to start working on a TurboGears project.
 
-.. _This guide: https://github.com/ColoradoSchoolOfMines/ACM-Guide-list/blob/master/computer_science/TurboGears.md
+.. _TurboGears website: https://turbogears.readthedocs.io/en/latest/turbogears/minimal/index.html
 
 Clone the repo::
 
