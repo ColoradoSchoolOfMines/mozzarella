@@ -1,44 +1,154 @@
 Mozzarella
 ==========
+A Collaborative Web System for Student Computing Clubs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This website is a website for clubs and student organizations.
+Mozzarella is a web application made to help student computing clubs better
+collaborate and organize their projects, presentations, and even mailing list
+messages. Mozzarella is written in `Python 3`_ using the TurboGears_ framework.
 
-Mozzarella It is written in Python and uses the powerful web framework
-TurboGears_.
+.. _Python 3: https://python.org
+.. _TurboGears: http://turbogears.org/
 
-.. _TurboGears: http://turbogears.com/
+Setting up a Development Environment
+------------------------------------
 
-Setting up your Development Environment
----------------------------------------
+1. First, clone the repository:
 
-These steps are meant to give you an overview of how to get a development
-environment set up for developing this application. Please adapt to your system
-as necessary. *Please note that this project requires Python 3+, so make sure
-you are using the correct version of Python.* The `TurboGears website`_ gives
-more in-depth instructions on how to start working on a TurboGears project.
+   .. code:: console
 
-.. _TurboGears website: https://turbogears.readthedocs.io/en/latest/turbogears/minimal/index.html
+       $ git clone https://github.com/ColoradoSchoolOfMines/mozzarella.git
+       $ cd mozzarella
 
-Clone the repo::
+2. Next, install the application in editable form using ``pip``. Passing the
+   ``--user`` flag installs for just your local user (typically in ``~/.local``).
+   Alternatively, you may wish to use a `virtual enviornment`_.
 
-    $ git clone https://github.com/ColoradoSchoolOfMines/mozzarella.git
+   .. _virtual enviornment: https://docs.python.org/3/library/venv.html
 
-Install the application and its dependencies::
+   .. code:: console
 
-    $ pip install -e . --user
+       $ pip install -e . --user
 
-If you do not have ``gearbox`` installed::
+3. Install development tools for TurboGears:
 
-    $ pip install --user tg.devtools
+   .. code:: console
 
-Setup the application::
+       $ pip install --user tg.devtools
 
-    $ cp development.ini.sample development.ini
-    $ gearbox setup-app
+4. Next, setup the ``development.ini`` file:
 
-Serve the application::
+   .. code:: console
 
-    $ gearbox serve --reload --debug
+       $ cp development.ini.sample development.ini
+       $ vim development.ini
 
-Finaly, go to your web browser and navigate to http://localhost:8080/ to view
-the website.
+5. Seed the development database:
+
+   .. code:: console
+
+       $ gearbox setup-app
+
+6. Finally, serve the application:
+
+   .. code:: console
+
+       $ gearbox serve --reload --debug
+
+   Once up, use your web browser to navigate to http://localhost:8080/.
+
+Deploying Mozzarella
+--------------------
+
+Mozzarella is a WSGI application, and can be deployed using any WSGI-capable
+web server. In our production environment, we use Apache 2.4 with ``mod_wsgi``,
+but any other WSGI environment should work fine (such as Gunicorn, or uWSGI).
+
+First, clone the repository and install the application:
+
+.. code:: console
+
+    $ git clone https://github.com/ColoradoSchoolOfMines/mozzarella.git /path/to/site
+
+Next, install the application:
+
+.. code:: console
+
+    $ pip install .
+
+Next, set up a ``production.ini`` file next to ``app.wsgi``. This file should
+look like ``development.ini``, but you should be sure to disable debug mode and
+make a new random key for cookies.
+
+Database
+~~~~~~~~
+
+Supported databases are PostgreSQL_ and SQLite_. For production purposes, we
+recommend PostgreSQL_. MySQL should work, but we have no intents to maintain
+compatibility with MySQL in the long term.
+
+.. _PostgreSQL: https://www.postgresql.org/
+.. _SQLite: https://www.sqlite.org/index.html
+
+Configure the path to your database in ``production.ini``:
+
+.. code:: ini
+
+    sqlalchemy.url = postgresql://user:pass@hostname/db
+
+Depot Storage
+~~~~~~~~~~~~~
+
+Setup a depot storage. You can either use a path on the file system, or MongoDB
+GridFS. Configure in your ``production.ini``:
+
+.. code:: ini
+
+    # If you opt for file system storage
+    depot.storage_path = /path/to/depot/storage
+
+.. code:: ini
+
+    # If you opt for MongoDB GridFS
+    depot.backend = depot.io.gridfs.GridFSStorage
+    depot.mongouri = mongodb://localhost/db
+
+See the `Depot documentation`_ for more information.
+
+.. _Depot documentation: https://depot.readthedocs.io/en/latest/userguide.html
+
+Apache
+~~~~~~
+
+Here is an example config for Apache with ``mod_wsgi``:
+
+.. code:: apache
+
+    <VirtualHost *:443>
+        ServerAdmin jrosenth@mines.edu
+        ServerName acm.mines.edu
+
+        # Setup the WSGI process group
+        WSGIProcessGroup mozzarella
+        WSGIDaemonProcess mozzarella user=mozzarella group=mozzarella home=/path/to/site threads=8
+        WSGIScriptAlias / /path/to/site/app.wsgi
+
+        <Directory /path/to/site>
+                Require all granted
+        </Directory>
+
+        # Make sure to alias the static files so that we don't have to go thru
+        # a WSGI application to get these
+        Alias /css /path/to/public/css
+        Alias /img /path/to/public/img
+        Alias /fonts /path/to/public/fonts
+        Alias /js /path/to/public/js
+
+        # Optional, where to log errors to
+        ErrorLog /var/log/apache2/mozzarella-error.log
+        CustomLog /var/log/apache2/mozzarella-access.log combined
+        LogLevel warn
+
+        # Make sure to setup anything else you are using, such as SSL certs
+    </VirtualHost>
+
