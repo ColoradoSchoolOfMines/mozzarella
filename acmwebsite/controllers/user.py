@@ -26,7 +26,7 @@ class UsersController(BaseController):
     @expose()
     def _lookup(self, uname=None, *args):
         user = None
-        if uname and uname != "":
+        if uname:
             user = DBSession.query(User) \
                             .filter(User.user_name == uname) \
                             .one_or_none()
