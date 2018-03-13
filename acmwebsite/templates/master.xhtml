@@ -79,10 +79,21 @@
         <footer class="footer">
           <p>
           <small>
-            Unless otherwise noted, all content on this website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            Unless otherwise noted, all content on this website is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+              Creative Commons Attribution-ShareAlike 4.0 International License
+            </a>.
           </small>
           </p>
           <p><small><a href='#' id='toggle-theme'>Too ${('light', 'dark')[tg.session.get('theme', None) == 'dark']}?</a></small></p>
+
+          <!-- Social Links -->
+          <p class="social-links">
+            <a py:for="link in [k.split('.')[1] for k in tg.config.keys() if k.startswith('social_link.')]"
+              py:content="h.fa_icon(link)"
+              href="${tg.config.get('social_link.{}'.format(link))}">
+            </a>
+          </p>
         </footer>
       </div>
 

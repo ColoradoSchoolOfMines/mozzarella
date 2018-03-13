@@ -33,6 +33,10 @@ def fa_icon(icon_name):
     return Markup('<i class="fa fa-{}"></i>'.format(icon_name))
 
 
+def fa_icon(icon_name):
+    return Markup('<i class="fa fa-{}"></i>'.format(icon_name))
+
+
 def ftime(datetime_obj, duration=None, show_day=False):
     day_fmt = '{0:%A}, ' if show_day else ''
     date_fmt = '{0.day} {0:%B %Y}'

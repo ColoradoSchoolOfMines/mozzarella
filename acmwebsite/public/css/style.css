@@ -134,3 +134,14 @@
   font-size: 20px;
   margin-left: 10px;
 }
+
+/* Footer */
+footer .social-links {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 2em;
+}
+
+footer .social-links a:not(:last-child) {
+  margin-right: 10px;
+}

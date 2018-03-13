@@ -1,0 +1,40 @@
+<html py:strip=""
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:extends="master.xhtml">
+
+  <head py:block="head" py:strip="True">
+    <title>Mines ACM - Survey ${survey_id} Responses</title>
+  </head>
+
+  <body py:block="body" py:strip="True">
+    <h1 class="page-header" py:content="title" />
+    <h2>Responses</h2>
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table table-striped table-condensed table-bordered">
+          <!--!
+          I'm doing some fancy shenanigans here to allow the user to sort by
+          each column ascending and descending.
+          -->
+          <thead>
+            <tr>
+              <th py:for="field in ('name', *(f['name'] for f in fields))">
+                <a href="${tg.url('/s/{}/results'.format(survey_id), {'order_by': field, 'reverse': (order_by == field and not reverse)})}"
+                  py:content="field" />
+                <span py:if="order_by == field"
+                  py:content="h.icon('triangle-%s' % ('top' if reverse else 'bottom'))" />
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr py:for="r in responses">
+              <td py:for="field in ('name', *(f['name'] for f in fields))"
+                py:content="r.get(field)" />
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

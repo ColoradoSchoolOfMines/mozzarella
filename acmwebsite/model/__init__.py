@@ -63,6 +63,7 @@ from acmwebsite.model.meeting import Meeting
 from acmwebsite.model.mailmessage import MailMessage
 from acmwebsite.model.survey import Survey, SurveyField, SurveyResponse, SurveyData
 from acmwebsite.model.project import Project, team_table
+from acmwebsite.model.banner import Banner
 
 __all__ = (
     'User',
@@ -74,6 +75,7 @@ __all__ = (
     'SurveyField',
     'SurveyResponse',
     'SurveyData',
+    'Banner',
     'Project',
     'team_table',
 )
