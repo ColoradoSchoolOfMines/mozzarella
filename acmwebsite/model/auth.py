@@ -96,6 +96,7 @@ class User(DeclarativeBase):
     officer_title = Column(Unicode(255), nullable=True)
     profile_pic = Column(UploadedFileField)
     bio = Column(Unicode(255), nullable=True)
+    github_username = Column(Unicode(255), nullable=True)
 
     def __repr__(self):
         return '<User: name=%s, display=%s>' % (

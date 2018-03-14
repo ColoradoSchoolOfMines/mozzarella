@@ -11,15 +11,15 @@
   <body py:block="body" py:strip="True">
     <!-- <div class="container"> -->
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
           <img src="/img/icon256.png" alt="Profile Picture" />
         </div>
 
-        <div class="col-md-9">
+        <div class="col-md-8">
           <h1 class="text-center">${u}</h1>
         </div>
 
-        <div class="col-md-9">
+        <div class="col-md-8">
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">About Me</h3>
@@ -32,18 +32,21 @@
       <br/>
 
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">Contact Block</h3>
+              <h3 class="panel-title">Contact Information</h3>
             </div>
 
-            <ul>
-              <li>Test</li>
-              <li>Test</li>
-              <li>Test</li>
-              <li>Test</li>
-            </ul>
+            <div class="panel-body">
+              ${h.icon('envelope')}
+              ${Markup(u.email_address_html)}
+              <br />
+              ${h.fa_icon('github')}
+              <a href="${'https://github.com/{}'.format(u.github_username)}">
+                ${u.github_username}
+              </a>
+            </div>
           </div>
 
           <div class="panel panel-default">
@@ -73,7 +76,7 @@
           </div>
         </div>
 
-        <div class="col-md-9">
+        <div class="col-md-8">
           <h1 style="margin-top: 0px" class="text-center">ACM Projects</h1>
           <div class="panel panel-default">
             <ul>
