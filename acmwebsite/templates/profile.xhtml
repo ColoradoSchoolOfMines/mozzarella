@@ -42,10 +42,12 @@
               ${h.icon('envelope')}
               ${Markup(u.email_address_html)}
               <br />
-              ${h.fa_icon('github')}
-              <a href="${'https://github.com/{}'.format(u.github_username)}">
-                ${u.github_username}
-              </a>
+              <span py:if="u.github_username">
+                ${h.fa_icon('github')}
+                <a href="${'https://github.com/{}'.format(u.github_username)}">
+                  ${u.github_username}
+                </a>
+              </span>
             </div>
           </div>
 
