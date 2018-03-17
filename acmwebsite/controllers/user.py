@@ -8,7 +8,7 @@ from depot.manager import DepotManager
 from acmwebsite.lib.base import BaseController
 from acmwebsite.model import DBSession, User
 
-__all__ = ['ProfileController']
+__all__ = ['UsersController']
 class UserController(BaseController):
     def __init__(self, user):
         self.user = user
