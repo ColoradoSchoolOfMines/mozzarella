@@ -98,6 +98,7 @@ class User(DeclarativeBase):
     bio = Column(Unicode(255), nullable=True)
     github_username = Column(Unicode(255), nullable=True)
     tagline = Column(Unicode(256), nullable=True)
+    projects = relation('Project', secondary='team', back_populates='team_members')
 
     def __repr__(self):
         return '<User: name=%s, display=%s>' % (

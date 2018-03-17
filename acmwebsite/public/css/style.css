@@ -31,31 +31,31 @@
 
 /* Footer styling */
 .footer {
-    margin-top: 45px;
-    padding: 35px 30px 36px;
-    border-top: 1px solid #e5e5e5;
+  margin-top: 45px;
+  padding: 35px 30px 36px;
+  border-top: 1px solid #e5e5e5;
 }
 
 .footer p {
-    margin-bottom: 0;
-    color: #555;
+  margin-bottom: 0;
+  color: #555;
 }
 
 /* Mailing List Stuff */
 .ml-fullname-warn {
-    display: none;
+  display: none;
 }
 
 .emailtext {
-    padding: 0;
-    color: inherit;
-    background-color: inherit;
-    border: none;
-    border-radius: inherit;
+  padding: 0;
+  color: inherit;
+  background-color: inherit;
+  border: none;
+  border-radius: inherit;
 }
 
 .navbar-right {
-    margin-right: 0px;
+  margin-right: 0;
 }
 
 /* Logo */
@@ -67,17 +67,17 @@
 
 /* Contact Page */
 .acm-officer-info {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .acm-officer-position {
-    font-style: italic;
+  font-style: italic;
 }
 
 /* Profile Styles */
 .profile-image {
-    width: 100%;
-    border-radius: 8px;
+  width: 100%;
+  border-radius: 8px;
 }
 
 .profile-tagline {
@@ -86,26 +86,26 @@
 
 /* Homepage */
 .home-banner {
-    margin: 35px 0 30px;
-    width: 100%;
+  margin: 35px 0 30px;
+  width: 100%;
 }
 
 .home-banner-img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
 }
 
 .homepage-panels {
-    margin-top: 35px;
+  margin-top: 35px;
 }
 
 .checkbox.single-checkbox label {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .on-first-time {
-    display: none;
+  display: none;
 }
 
 /* Survey Page */
@@ -117,6 +117,27 @@
 /* Schedule Page */
 .acm-meeting-title {
   font-weight: bold;
+}
+
+/* Project Page */
+.project-list-item .project-image {
+  border-radius: 8px;
+  width: 100%;
+  max-width: 350px;
+  max-height: 350px;
+  margin-bottom: 10px;
+}
+
+.project-list-item .project-title,
+.project-links li {
+  font-weight: bold;
+}
+
+/* Add a dot between every project link */
+.project-links li:not(:last-child)::after {
+  content: '\00B7';
+  font-size: 20px;
+  margin-left: 10px;
 }
 
 /* Footer */
