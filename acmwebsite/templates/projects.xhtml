@@ -22,7 +22,7 @@
 
           <div class="col-md-9">
             <ul py:if="project.repository or project.website or project.video"
-              class="list-inline project-links">
+              class="list-inline dot-separated-links">
               <li py:if="project.repository">
                 <a href="${project.repository}" target="_blank">${h.fa_icon('code-fork')} Repository</a>
               </li>
