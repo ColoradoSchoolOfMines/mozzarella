@@ -22,15 +22,18 @@
 
           <div class="col-md-9">
             <ul py:if="project.repository or project.website or project.video"
-              class="list-inline project-links">
+              class="list-inline dot-separated-links">
               <li py:if="project.repository">
-                <a href="${project.repository}" target="_blank">${h.fa_icon('code-fork')} Repository</a>
+                ${h.fa_icon('code-fork')}
+                <a href="${project.repository}" target="_blank">Repository</a>
               </li>
               <li py:if="project.website">
-                <a href="${project.website}" target="_blank">${h.fa_icon('globe')} Website</a>
+                ${h.fa_icon('globe')}
+                <a href="${project.website}" target="_blank">Website</a>
               </li>
               <li py:if="project.video_url">
-                <a href="${project.video_url}" target="_blank">${h.fa_icon('video-camera')} Video</a>
+                ${h.fa_icon('video-camera')}
+                <a href="${project.video_url}" target="_blank">Video</a>
               </li>
             </ul>
             <p py:content="h.markdown(project.description)" />

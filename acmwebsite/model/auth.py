@@ -97,6 +97,7 @@ class User(DeclarativeBase):
     profile_pic = Column(UploadedFileField)
     bio = Column(Unicode(255), nullable=True)
     github_username = Column(Unicode(255), nullable=True)
+    tagline = Column(Unicode(256), nullable=True)
     projects = relation('Project', secondary='team', back_populates='team_members')
 
     def __repr__(self):
@@ -114,7 +115,11 @@ class User(DeclarativeBase):
 
     @property
     def profile_image_url(self):
-        return tg.url('/u/%s/picture' % self.user_name)
+        if self.profile_pic:
+            return tg.url('/u/{}/picture'.format(self.user_name))
+        else:
+            return tg.url('/img/default_user.png')
+
 
     @property
     def email_address(self):

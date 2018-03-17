@@ -11,7 +11,27 @@
   <body py:block="body" py:strip="True">
     <div class="row">
       <!-- Header -->
+      <div class="col-md-3">
+        <img src="${u.profile_image_url}" alt="${u}" class="profile-image" />
+      </div>
+      <div class="col-md-9">
+        <h1 py:content="u" />
+        <span class="profile-tagline" py:content="u.tagline" />
+        <ul class="list-inline dot-separated-links">
+          <li>
+            ${h.icon('envelope')}
+            ${Markup(u.email_address_html)}
+          </li>
+          <li>
+            ${h.fa_icon('github')}
+            <a href="${'https://github.com/{}'.format(u.github_username)}">
+              ${u.github_username}
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
+    <hr />
 
     <div class="row">
       <div py:for="(title, body) in cards" class="col-md-6">

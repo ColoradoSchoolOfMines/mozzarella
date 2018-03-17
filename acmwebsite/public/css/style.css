@@ -74,9 +74,14 @@
   font-style: italic;
 }
 
-.acm-officer-img {
+/* Profile Styles */
+.profile-image {
   width: 100%;
   border-radius: 8px;
+}
+
+.profile-tagline {
+  font-size: 1.4em;
 }
 
 /* Homepage */
@@ -124,12 +129,12 @@
 }
 
 .project-list-item .project-title,
-.project-links li {
+.dot-separated-links li {
   font-weight: bold;
 }
 
 /* Add a dot between every project link */
-.project-links li:not(:last-child)::after {
+.dot-separated-links li:not(:last-child)::after {
   content: '\00B7';
   font-size: 20px;
   margin-left: 10px;
