@@ -11,7 +11,14 @@
   <body py:block="body" py:strip="True">
     <div class="row">
       <!-- Header -->
+      <div class="col-md-3">
+        <img src="${u.profile_image_url}" alt="${u}" class="profile-image" />
+      </div>
+      <div class="col-md-9">
+        <h1>${u}</h1>
+      </div>
     </div>
+    <hr />
 
     <div class="row">
       <!-- Cards -->
