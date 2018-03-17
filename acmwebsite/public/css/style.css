@@ -82,6 +82,9 @@
 
 .profile-tagline {
   font-size: 1.4em;
+  margin-top: -10px;
+  display: block;
+  margin-bottom: 10px;
 }
 
 /* Homepage */
@@ -138,6 +141,7 @@
   content: '\00B7';
   font-size: 20px;
   margin-left: 10px;
+  line-height: 1em;
 }
 
 /* Footer */
