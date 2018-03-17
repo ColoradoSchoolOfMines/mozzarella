@@ -74,9 +74,14 @@
     font-style: italic;
 }
 
+/* Profile Styles */
 .profile-image {
     width: 100%;
     border-radius: 8px;
+}
+
+.profile-tagline {
+  font-size: 1.4em;
 }
 
 /* Homepage */

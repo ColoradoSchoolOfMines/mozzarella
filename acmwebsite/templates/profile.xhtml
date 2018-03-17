@@ -15,7 +15,8 @@
         <img src="${u.profile_image_url}" alt="${u}" class="profile-image" />
       </div>
       <div class="col-md-9">
-        <h1>${u}</h1>
+        <h1 py:content="u" />
+        <span class="profile-tagline" py:content="u.tagline" />
       </div>
     </div>
     <hr />
