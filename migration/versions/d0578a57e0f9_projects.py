@@ -1,14 +1,14 @@
 """Projects Schema
 
 Revision ID: d0578a57e0f9
-Revises: 6ba4018c2666
+Revises: bbd3bba567c1
 Create Date: 2017-12-15 22:15:07.284502
 
 """
 
 # revision identifiers, used by Alembic.
 revision = 'd0578a57e0f9'
-down_revision = '6ba4018c2666'
+down_revision = 'bbd3bba567c1'
 
 from alembic import op
 import sqlalchemy as sa
