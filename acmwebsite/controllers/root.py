@@ -48,7 +48,7 @@ class RootController(BaseController):
     mailinglist = MailingListController()
     u = UsersController()
     m = MeetingsController()
-    survey = SurveysController()
+    s = SurveysController()
     schedule = ScheduleController()
     error = ErrorController()
     contact = ContactController()
