@@ -17,7 +17,7 @@
       <div class="col-md-9">
         <h1 py:content="u" />
         <span class="profile-tagline" py:content="u.tagline" />
-        <ul class="list-inline dot-separated-links">
+        <ul class="list-inline bold-list dot-separated-list">
           <li>
             ${h.icon('envelope')}
             ${Markup(u.email_address_html)}
@@ -35,11 +35,11 @@
 
     <div class="row">
       <div py:for="(title, body) in cards" class="col-md-6">
-        <div class="panel panel-default user-card">
-          <div class="panel-heading">${title}</div>
-          <div class="panel-body">
-            ${body}
+        <div class="panel panel-default profile-card">
+          <div class="panel-heading">
+            <h3 class="panel-title">${literal(title)}</h3>
           </div>
+          <div class="panel-body">${literal(body)}</div>
         </div>
       </div>
     </div>

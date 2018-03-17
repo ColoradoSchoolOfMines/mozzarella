@@ -131,13 +131,16 @@
   margin-bottom: 10px;
 }
 
-.project-list-item .project-title,
-.dot-separated-links li {
+.bold-list li {
   font-weight: bold;
 }
 
+.dot-separated-list {
+  margin-bottom: 0px;
+}
+
 /* Add a dot between every project link */
-.dot-separated-links li:not(:last-child)::after {
+.dot-separated-list li:not(:last-child)::after {
   content: '\00B7';
   font-size: 20px;
   margin-left: 10px;
@@ -155,7 +158,14 @@ footer .social-links a:not(:last-child) {
   margin-right: 10px;
 }
 
-.user-card {
-  overflow: hidden;
+.profile-card {
+  overflow-y: auto;
   height: 17em;
+  min-height: 17em;
+}
+
+.card-image {
+  border-radius: 8px;
+  width: 100%;
+  margin-bottom: 5px;
 }
