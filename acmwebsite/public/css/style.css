@@ -124,3 +124,8 @@ footer .social-links {
 footer .social-links a:not(:last-child) {
   margin-right: 10px;
 }
+
+.user-card {
+  overflow: hidden;
+  height: 17em;
+}

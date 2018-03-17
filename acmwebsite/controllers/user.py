@@ -1,12 +1,20 @@
 # -*- coding: utf-8 -*-
 """Profile controller module"""
 
+from itertools import chain
+
 from tg import expose, redirect, abort
 
 from depot.manager import DepotManager
 
 from acmwebsite.lib.base import BaseController
 from acmwebsite.model import DBSession, User
+
+def card_about_me(user):
+    if user.bio:
+        yield ("About Me", user.bio)
+
+card_types = [card_about_me]
 
 __all__ = ['ProfileController']
 class UserController(BaseController):
@@ -16,7 +24,9 @@ class UserController(BaseController):
     @expose('acmwebsite.templates.profile')
     def _default(self):
         """Handle the user's profile page."""
-        return dict(page='profile', u=self.user)
+
+        cards = chain(*(card_gen(self.user) for card_gen in card_types))
+        return dict(page='profile', u=self.user, cards=cards)
 
     @expose()
     def picture(self):
@@ -34,4 +44,5 @@ class UsersController(BaseController):
                         .one_or_none()
         if not user:
             abort(404, "No such user")
+
         return UserController(user), args
