@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 """Main Controller"""
 
-from tg import expose, flash, require, url, lurl, abort
-from tg import request, redirect, tmpl_context, response
-from tg.i18n import ugettext as _, lazy_ugettext as l_
+from tg import expose, flash, lurl, abort, request, redirect, tmpl_context, session
+from tg.i18n import ugettext as _
 from tg.exceptions import HTTPFound
-from tg import predicates, session
 from acmwebsite import model
 from acmwebsite.model import DBSession
 from tgext.admin.controller import AdminController
@@ -22,13 +20,14 @@ from acmwebsite.controllers.user import UsersController
 from acmwebsite.controllers.meeting import MeetingsController
 from acmwebsite.controllers.schedule import ScheduleController
 from acmwebsite.controllers.survey import SurveysController
-from acmwebsite.controllers.project import ProjectsController
+from acmwebsite.controllers.project import ProjectsController, ProjectListController
 
 from sqlalchemy.sql import functions
 
 import datetime
 
 __all__ = ['RootController']
+
 
 class RootController(BaseController):
     """
@@ -52,7 +51,8 @@ class RootController(BaseController):
     schedule = ScheduleController()
     error = ErrorController()
     contact = ContactController()
-    projects = ProjectsController()
+    projects = ProjectListController()
+    p = ProjectsController()
 
     def _before(self, *args, **kw):
         tmpl_context.project_name = "acmwebsite"

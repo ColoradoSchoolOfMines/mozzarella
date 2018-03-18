@@ -30,3 +30,6 @@ class Project(DeclarativeBase):
     repository = Column(Unicode(512))
     video_url = Column(Unicode(512))
     image = Column(UploadedFileField(upload_type=UploadedImageWithThumb))
+
+    def __str__(self):
+        return self.name

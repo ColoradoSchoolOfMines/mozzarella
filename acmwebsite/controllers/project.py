@@ -1,11 +1,15 @@
 """Project controller module."""
 
-from tg import expose
+from tg import expose, abort, redirect
+
+from depot.manager import DepotManager
 
 from acmwebsite.lib.base import BaseController
 from acmwebsite.model import DBSession, Project
 
-__all__ = ['ProjectsController']
+__all__ = ['ProjectsController', 'ProjectListController']
+
+
 class ProjectController(BaseController):
     def __init__(self, project):
         self.project = project
@@ -19,13 +23,9 @@ class ProjectController(BaseController):
     def picture(self):
         redirect(DepotManager.url_for(self.project.image.path))
 
+
 class ProjectsController(BaseController):
-    """Root controller for listing all projects"""
-
-    @expose('acmwebsite.templates.projects')
-    def index(self):
-        return dict(page='projects', projects=DBSession.query(Project).all())
-
+    """Controller for individual projects."""
     @expose()
     def _lookup(self, pid=None, *args):
         # TODO: change to use textual ID instead of project id
@@ -37,3 +37,11 @@ class ProjectsController(BaseController):
         if not project:
             abort(404, "No such project")
         return ProjectController(project), args
+
+
+class ProjectListController(BaseController):
+    """Root controller for listing all projects"""
+
+    @expose('acmwebsite.templates.projects')
+    def index(self):
+        return dict(page='projects', projects=DBSession.query(Project).all())
