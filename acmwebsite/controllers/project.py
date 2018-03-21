@@ -7,8 +7,8 @@ from acmwebsite.model import DBSession, Project
 
 
 class ProjectsController(BaseController):
-    """Root controller for listing all projects"""
+    """Controller for listing all projects"""
 
     @expose('acmwebsite.templates.projects')
     def index(self):
-        return dict(page='projects', projects=DBSession.query(Project).all())
+        return dict(page='projects', projects=DBSession.query(Project))
