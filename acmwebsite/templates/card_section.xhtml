@@ -1,0 +1,10 @@
+<py:def function="section(cards)">
+  <div py:for="card in cards" class="col-md-6">
+    <div class="panel panel-default profile-card">
+      <div class="panel-heading">
+          <h3 class="panel-title">${card.title if card.title_escape else literal(card.title)}</h3>
+      </div>
+      <div class="panel-body">${card.body if card.body_escape else literal(card.body)}</div>
+    </div>
+  </div>
+</py:def>

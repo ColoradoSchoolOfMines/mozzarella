@@ -1,20 +1,21 @@
 # -*- coding: utf-8 -*-
 """Profile controller module"""
 
-from itertools import chain
-
 from tg import expose, redirect, abort
 
 from depot.manager import DepotManager
 
 from acmwebsite.lib.base import BaseController
 from acmwebsite.model import DBSession, User
+from acmwebsite.lib.card import Card, CardTypes
+
+cards = CardTypes()
 
 def card_about_me(user):
     if user.bio:
-        yield ("About Me", user.bio)
+        yield Card("About Me", dict(text=user.bio))
 
-card_types = [card_about_me]
+cards.register(card_about_me, body_template="bio_body")
 
 __all__ = ['ProfileController']
 class UserController(BaseController):
@@ -25,8 +26,7 @@ class UserController(BaseController):
     def _default(self):
         """Handle the user's profile page."""
 
-        cards = chain(*(card_gen(self.user) for card_gen in card_types))
-        return dict(page='profile', u=self.user, cards=cards)
+        return dict(page='profile', u=self.user, cardlist=cards.gen(self.user))
 
     @expose()
     def picture(self):
