@@ -26,7 +26,11 @@ def markdown(*args, strip_par=False, **kwargs):
 
 
 def icon(icon_name):
-    return Markup('<i class="glyphicon glyphicon-%s"></i>' % icon_name)
+    return Markup('<i class="glyphicon glyphicon-{}"></i>'.format(icon_name))
+
+
+def fa_icon(icon_name):
+    return Markup('<i class="fa fa-{}"></i>'.format(icon_name))
 
 
 def fa_icon(icon_name):

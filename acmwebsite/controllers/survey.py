@@ -93,7 +93,7 @@ class SurveyController(BaseController):
 
 class SurveysController(BaseController):
     @expose()
-    def _lookup(self, sid, *args):
+    def _lookup(self, sid=None, *args):
         survey = DBSession.query(Survey).filter(Survey.id == sid).first()
         if not survey:
             abort(404, "No such survey")
