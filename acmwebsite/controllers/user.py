@@ -17,7 +17,7 @@ def card_about_me(user):
 
 cards.register(card_about_me, body_template="bio_body")
 
-__all__ = ['ProfileController']
+__all__ = ['UsersController']
 class UserController(BaseController):
     def __init__(self, user):
         self.user = user
