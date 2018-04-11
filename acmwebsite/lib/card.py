@@ -24,7 +24,7 @@ class CardTypes:
             for the cards' title is. Defaults to ``None``.
         :param body_template: (optional) the file where the Kajiki template
             for the cards' body is. Defaults to ``None``.
-        :param loader: (optional) a Kahjiki :class:`FileLoader` object that is
+        :param loader: (optional) a Kajiki :class:`FileLoader` object that is
             used to load the aforementioned template files. Defaults to a
             :class:`FileLoader` object in the 'acmwebsite/templates/cards'
             directory
