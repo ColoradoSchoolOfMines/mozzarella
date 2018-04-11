@@ -28,7 +28,8 @@ class UserController(BaseController):
     def _default(self):
         """Handle the user's profile page."""
 
-        return dict(page='profile', u=self.user, cardlist=cards.gen(self.user))
+        return dict(page='profile', u=self.user,
+                    cardlist=cards.generate_cards(self.user))
 
     @expose()
     def picture(self):

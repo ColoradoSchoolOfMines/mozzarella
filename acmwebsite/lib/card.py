@@ -38,31 +38,27 @@ class CardTypes:
         if body_template is not None:
             body_template = loader.load('{}.xhtml'.format(body_template))
 
-        def _gen(*args, **kwargs):
-            context = {
-                "h": helpers,
-            }
-
+        def _generate_cards(*args, **kwargs):
             for gened in generator(*args, **kwargs):
                 if title_template is not None:
                     gened.title_escape = False
                     gened.title = title_template({
-                        **context,
+                        'h': helpers,
                         **gened.title,
                     }).render()
 
                 if body_template is not None:
                     gened.body_escape = False
                     gened.body = body_template({
-                        **context,
+                        'h': helpers,
                         **gened.body,
                     }).render()
 
                 yield gened
 
-        self.list.append(_gen)
+        self.list.append(_generate_cards)
 
-    def gen(self, *args, **kwargs):
+    def generate_cards(self, *args, **kwargs):
         """Generates an iterable that contains all of the cards
 
         All arguments passed to this function are immediately passed to the
