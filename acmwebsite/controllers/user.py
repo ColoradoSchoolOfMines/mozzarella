@@ -2,22 +2,24 @@
 """Profile controller module"""
 
 from tg import expose, redirect, abort
-
 from depot.manager import DepotManager
 
 from acmwebsite.lib.base import BaseController
 from acmwebsite.model import DBSession, User
 from acmwebsite.lib.card import Card, CardTypes
 
-cards = CardTypes()
+__all__ = ['UsersController']
+
 
 def card_about_me(user):
     if user.bio:
         yield Card("About Me", dict(text=user.bio))
 
+
+cards = CardTypes()
 cards.register(card_about_me, body_template="bio_body")
 
-__all__ = ['UsersController']
+
 class UserController(BaseController):
     def __init__(self, user):
         self.user = user
@@ -35,6 +37,7 @@ class UserController(BaseController):
     @expose('acmwebsite.templates.profile_edit')
     def edit(self):
         return dict(page='profile_edit', u=self.user)
+
 
 class UsersController(BaseController):
     @expose()
