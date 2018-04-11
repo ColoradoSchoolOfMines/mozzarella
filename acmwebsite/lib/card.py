@@ -83,8 +83,8 @@ class CardTypes:
 
 class Card:
     """A data structure which defines the basic elements of a card. Objects of this
-type are stored in a :class:`CardTypes` object, and should be returned by
-registered generator functions.
+    type are stored in a :class:`CardTypes` object, and should be returned by
+    registered generator functions.
     """
     def __init__(self, title, body):
         """Create a :class:`Card` with a given title and body.
