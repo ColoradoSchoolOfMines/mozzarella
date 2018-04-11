@@ -33,10 +33,10 @@ class CardTypes:
         """
 
         if title_template is not None:
-            title_template = loader.load(f'{title_template}.xhtml')
+            title_template = loader.load('{}.xhtml'.format(title_template))
 
         if body_template is not None:
-            body_template = loader.load(f'{body_template}.xhtml')
+            body_template = loader.load('{}.xhtml'.format(body_template))
 
         def _gen(*args, **kwargs):
             context = {
