@@ -72,13 +72,11 @@ class CardTypes:
         be used to generate the cards in any location on a webpage.
 
         For example, a webpage's Kajiki file can generate cards by first
-        importing the card api:
+        importing the card api::
+            <py:import href="acmwebsite.templates.card_section" alias="cards"/>
 
-        ``<py:import href="acmwebsite.templates.card_section" alias="cards"/>``
-
-        and then, when necessary, generating the cards anywhere on the webpage:
-
-        ``${cards.section(cardlist)}``
+        and then, when necessary, generating the cards anywhere on the webpage::
+            ${cards.section(cardlist)}
         """
         return chain(*(card_gen(*args, **kwargs) for card_gen in self.list))
 
