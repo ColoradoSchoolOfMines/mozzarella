@@ -2,7 +2,7 @@
   <li py:for="meeting in meetings" class="list-group-item">
     <div class="acm-meeting-block">
       <span class="acm-meeting-title" py:content="meeting.title" />
-      <span py:if="meeting.description"> – ${h.markdown(meeting.description, strip_par=True)}</span><br />
+      <span py:if="meeting.description"> – ${h.rst(meeting.description)}</span><br />
       <b>Date:</b> <span class="acm-meeting-date" py:content="h.ftime(meeting.date, meeting.duration, show_day=True)" /><br />
       <b>Location:</b> <span class="acm-meeting-location" py:content="meeting.location" />
     </div>
