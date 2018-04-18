@@ -14,6 +14,16 @@ class SurveyController(BaseController):
     @expose("json")
     @require(has_permission('admin'))
     def results(self, number=None, order_by=None, reverse=False):
+        """Return results of surveys
+
+        :param number: (optional) does nothing. Defaults to ``None``.
+        :param order_by: (optional) which field to sort survey results by. 
+            Defaults to ``None``.
+        :param reverse: (optional) whether or not the returned results should be
+            ascending. Defaults to ``False``.
+        :return: Results of surveys, modified by parameters
+        :rtype: Dictionary
+        """
         if type(reverse) is str:
             reverse = reverse == 'True'
 
