@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import concurrent.futures
 import requests
 import re

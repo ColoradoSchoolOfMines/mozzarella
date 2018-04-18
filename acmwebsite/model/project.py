@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Project model module."""
 
 from sqlalchemy.orm import relationship

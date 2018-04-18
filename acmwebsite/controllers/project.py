@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Project controller module."""
 
 from tg import expose

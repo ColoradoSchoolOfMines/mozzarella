@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from acmwebsite.model import DeclarativeBase
 from sqlalchemy import Column
 from sqlalchemy.types import Integer, Unicode
