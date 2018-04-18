@@ -25,6 +25,8 @@ class CardTypes:
         """
 
         def _generate_cards(*args, **kwargs):
+            """Render every card using :func:`tg.render_template`. All
+            arguments are given to each of the card generators"""
             for gened in generator(*args, **kwargs):
                 if title_template is not None:
                     gened.title_escape = False

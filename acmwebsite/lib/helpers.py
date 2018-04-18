@@ -15,13 +15,17 @@ mmadmin = ListAdminAPI(tg.config.get('mailman.url'), tg.config.get('mailman.secr
 
 
 def current_year():
+    """Return the current year as a string
+
+    :returns: The current year
+    :rtype: str
+    """
     now = datetime.now()
     return now.strftime('%Y')
 
 
 def rst(source, multipar=False):
-    """
-    Parse a simple paragraph of reStructuredText. Methods which need
+    """Parse a simple paragraph of reStructuredText. Methods which need
     more complicated things (like parsing a whole document) should
     use ``docutils.core.publish_parts`` directly.
 
@@ -61,6 +65,19 @@ def fa_icon(icon_name):
 
 
 def ftime(datetime_obj, duration=None, show_day=False):
+    """Create a nice string representing the date from :param:`datetime_obj`
+
+    :param datetime_obj: the date
+    :type datetime_obj: datetime
+    :param duration: (optional) how long the range of time should be. Defaults
+        to ``None``
+    :type duration: timedelta
+    :param show_day: (optional) whether the date should be shown in the string.
+        Defaults to ``False``
+    :type show_day: bool
+    :returns: the date expressed as a string
+    :rtype: str
+    """
     day_fmt = '{0:%A}, ' if show_day else ''
     date_fmt = '{0.day} {0:%B %Y}'
     time_fmt = '{0:%H}:{0:%M}'

@@ -2,7 +2,9 @@
 import concurrent.futures
 import requests
 import re
-from acmwebsite.lib.mpapi_connector import uidinfo, InvalidUsername
+
+from acmwebsite.lib.mpapi_connector import uidinfo
+
 
 class MailmanSession(requests.Session):
     def __init__(self, admin_url, admin_auth):
@@ -37,6 +39,7 @@ class MailmanSession(requests.Session):
             return super().post(*args, **kwargs)
 
         return r
+
 
 class ListAdminAPI:
     def __init__(self, admin_url, admin_auth):

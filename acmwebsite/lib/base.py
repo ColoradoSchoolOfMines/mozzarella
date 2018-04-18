@@ -9,12 +9,10 @@ __all__ = ['BaseController']
 
 
 class BaseController(TGController):
-    """
-    Base class for the controllers in the application.
+    """Base class for the controllers in the application.
 
     Your web application should have one of these. The root of
     your application is used to compute URLs used by your app.
-
     """
 
     def __call__(self, environ, context):
