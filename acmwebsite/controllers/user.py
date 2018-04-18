@@ -17,7 +17,7 @@ def card_about_me(user):
 
 
 cards = CardTypes()
-cards.register(card_about_me, body_template="bio_body")
+cards.register(card_about_me, body_template="cards/bio_body.xhtml")
 
 
 class UserController(BaseController):

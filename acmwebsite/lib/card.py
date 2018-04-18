@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
-from kajiki import FileLoader, XMLTemplate
 from itertools import chain
-from acmwebsite.lib import helpers
 
-
-default_loader = FileLoader('acmwebsite/templates/cards')
-default_loader.extension_map['xhtml'] = XMLTemplate
+import tg
 
 
 class CardTypes:
@@ -16,7 +12,7 @@ class CardTypes:
     def __init__(self):
         self.list = []
 
-    def register(self, generator, title_template=None, body_template=None, loader=default_loader):
+    def register(self, generator, title_template=None, body_template=None):
         """Register a new card generator
 
         :param generator: a generator function that yields individual cards.
@@ -24,35 +20,21 @@ class CardTypes:
             for the cards' title is. Defaults to ``None``.
         :param body_template: (optional) the file where the Kajiki template
             for the cards' body is. Defaults to ``None``.
-        :param loader: (optional) a Kajiki :class:`FileLoader` object that is
-            used to load the aforementioned template files. Defaults to a
-            :class:`FileLoader` object in the 'acmwebsite/templates/cards'
-            directory
         :return: ``None``
         :rtype: None
         """
-
-        if title_template is not None:
-            title_template = loader.load('{}.xhtml'.format(title_template))
-
-        if body_template is not None:
-            body_template = loader.load('{}.xhtml'.format(body_template))
 
         def _generate_cards(*args, **kwargs):
             for gened in generator(*args, **kwargs):
                 if title_template is not None:
                     gened.title_escape = False
-                    gened.title = title_template({
-                        'h': helpers,
-                        **gened.title,
-                    }).render()
+                    gened.title = tg.render_template(template_vars={**gened.title},
+                                                     template_name=title_template)
 
                 if body_template is not None:
                     gened.body_escape = False
-                    gened.body = body_template({
-                        'h': helpers,
-                        **gened.body,
-                    }).render()
+                    gened.body = tg.render_template(template_vars={**gened.body},
+                                                    template_name=body_template)
 
                 yield gened
 

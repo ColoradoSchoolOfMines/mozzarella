@@ -16,8 +16,8 @@ def project_card_gen(user):
 
 user.cards.register(
     project_card_gen,
-    title_template="project_title",
-    body_template="project_body",
+    title_template="cards/project_title.xhtml",
+    body_template="cards/project_body.xhtml",
 )
 
 
