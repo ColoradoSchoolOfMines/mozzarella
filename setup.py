@@ -53,6 +53,10 @@ install_requires = [
     "Pillow",
 ]
 
+extra_requires = {
+    'documentation': ["sphinx"]
+}
+
 if py_version != (3, 2):
     # Babel not available on 3.2
     install_requires.append("Babel")
