@@ -95,6 +95,7 @@ class User(DeclarativeBase):
     created = Column(DateTime, default=datetime.now)
     officer_title = Column(Unicode(255), nullable=True)
     profile_pic = Column(UploadedFileField)
+    projects = relation('Project', secondary='team', back_populates='team_members')
 
     def __repr__(self):
         return '<User: name=%s, display=%s>' % (

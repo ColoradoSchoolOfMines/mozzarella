@@ -8,7 +8,7 @@ from depot.manager import DepotManager
 from acmwebsite.lib.base import BaseController
 from acmwebsite.model import DBSession, User
 
-__all__ = ['ProfileController']
+__all__ = ['UsersController']
 class UserController(BaseController):
     def __init__(self, user):
         self.user = user
@@ -24,10 +24,12 @@ class UserController(BaseController):
 
 class UsersController(BaseController):
     @expose()
-    def _lookup(self, uname, *args):
-        user = DBSession.query(User) \
-                        .filter(User.user_name == uname) \
-                        .one_or_none()
+    def _lookup(self, uname=None, *args):
+        user = None
+        if uname:
+            user = DBSession.query(User) \
+                            .filter(User.user_name == uname) \
+                            .one_or_none()
         if not user:
             abort(404, "No such user")
         return UserController(user), args

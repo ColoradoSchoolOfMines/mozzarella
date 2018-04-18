@@ -1,6 +1,6 @@
-(function($){
+(function($) {
     var last_query = "";
-    $("#ml-username").on("change keyup paste", function(){
+    $("#ml-username").on("change keyup paste", function() {
         if ($("#ml-username").val().indexOf("@") >= 0) {
             $("#ml-username").val($("#ml-username").val().replace(/\@.*$/g, ""));
             alert("Only a Mines username is required, not a full email address.");
@@ -23,5 +23,4 @@
     $('#mailinglist-form').submit(function() {
         $(this).find("button[type='submit']").prop('disabled',true);
     });
-
 })(jQuery);
