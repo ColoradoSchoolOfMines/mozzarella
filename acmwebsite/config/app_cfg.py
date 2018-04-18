@@ -1,8 +1,22 @@
 # -*- coding: utf-8 -*-
 """
-Global configuration file for TG2-specific settings in acm-website.
+File for configuration **defaults** in Mozzarella.
 
-This file complements development/deployment.ini.
+Also specifies authentication methods.
+
+The defaults should be overridden by the paste config
+(``development.ini`` or ``production.ini``).
+
+From the TG docs:
+
+.. tip::
+
+    A good indicator of whether an option should be set in the config
+    directory code vs. the configuration file is whether or not the
+    option is necessary for the functioning of the application. If the
+    application won't function without the setting, it belongs in the
+    appropriate ``config`` directory file. If the option should be
+    changed depending on deployment, it belongs in the ``ini`` files.
 
 """
 from tg.configuration import AppConfig
@@ -158,10 +172,6 @@ base_config.sa_auth.post_logout_url = '/post_logout'
 class AdminConfig(TGAdminConfig):
     allow_only = tg.predicates.has_permission('admin')
 
-# Configure default depot
-tg.milestones.config_ready.register(
-    lambda: DepotManager.configure('default', tg.config)
-)
 
 # Variable provider: this provides a default set of variables to the templating engine
 def variable_provider():
@@ -172,23 +182,25 @@ def variable_provider():
         d['luser'] = None
     return d
 
+
 base_config.variable_provider = variable_provider
 
-# Task secheduler
-def start_tgscheduler():
+
+def config_ready():
+    """ Executed once the configuration is ready. """
     import tgscheduler
     tgscheduler.start_scheduler()
 
-    # Authenticate to Mailman to speed up the first request there
-    from acmwebsite.lib.helpers import mmadmin
-    tgscheduler.scheduler.add_single_task(action=mmadmin.session.authenticate, initialdelay=0)
+    # Configure default depot
+    DepotManager.configure('default', tg.config)
 
     # Schedule up some syncing with pipermail
     from acmwebsite.lib.pipermailsync import pmsync
     tgscheduler.scheduler.add_interval_task(action=pmsync, initialdelay=0, interval=5*60)
 
+
 from tg.configuration import milestones
-milestones.config_ready.register(start_tgscheduler)
+milestones.config_ready.register(config_ready)
 
 try:
     # Enable DebugBar if available, install tgext.debugbar to turn it on

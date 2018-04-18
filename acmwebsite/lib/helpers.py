@@ -1,22 +1,12 @@
 # -*- coding: utf-8 -*-
-"""Template Helpers used in acm-website."""
-import logging
-import markdown as md
+"""
+Templating helper functions for generating views in Mozzarella.
+"""
 import docutils.core
 from markupsafe import Markup
 from datetime import datetime, time, timedelta
 import tg
 
-log = logging.getLogger(__name__)
-
-# The mmadmin object
-from acmwebsite.lib.mailmanapi import ListAdminAPI
-mmadmin = ListAdminAPI(tg.config.get('mailman.url'), tg.config.get('mailman.secret'))
-
-
-def current_year():
-    now = datetime.now()
-    return now.strftime('%Y')
 
 
 def rst(source, multipar=False):
@@ -96,12 +86,3 @@ def field_cn(ty, *args):
     if ty.first_time:
         args.append('on-first-time')
     return ' '.join(args)
-
-
-# Import commonly used helpers from WebHelpers2 and TG
-from tg.util.html import script_json_encode
-
-try:
-    from webhelpers2 import date, html, number, misc, text
-except SyntaxError:
-    log.error("WebHelpers2 helpers not available with this Python Version")
