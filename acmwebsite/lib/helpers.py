@@ -42,24 +42,6 @@ def rst(source, multipar=False):
     return Markup(body)
 
 
-def markdown(*args, strip_par=False, **kwargs):
-    log.warning("h.markdown is deprecated. Use h.rst instead")
-    res = md.markdown(*args, **kwargs)
-    if strip_par:
-        res = res.replace('<p>', '').replace('</p>', '')
-    return Markup(res)
-
-
-def icon(icon_name):
-    log.warning("h.icon is deprecated. Write the markup for fa instead")
-    return Markup('<i class="glyphicon glyphicon-{}"></i>'.format(icon_name))
-
-
-def fa_icon(icon_name):
-    log.warning("h.fa_icon is deprecated. Write the markup for fa instead")
-    return Markup('<i class="fa fa-{}"></i>'.format(icon_name))
-
-
 def ftime(datetime_obj, duration=None, show_day=False):
     day_fmt = '{0:%A}, ' if show_day else ''
     date_fmt = '{0.day} {0:%B %Y}'

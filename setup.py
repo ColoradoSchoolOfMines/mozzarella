@@ -40,7 +40,6 @@ install_requires = [
     "icalendar",
     "Kajiki >= 0.6.3",
     "docutils",
-    "markdown",
     "pytz",
     "repoze.who",
     "requests",
