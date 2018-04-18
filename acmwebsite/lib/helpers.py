@@ -2,6 +2,7 @@
 """Template Helpers used in acm-website."""
 import logging
 import markdown as md
+import docutils.core
 from markupsafe import Markup
 from datetime import datetime, time, timedelta
 import tg
@@ -18,7 +19,31 @@ def current_year():
     return now.strftime('%Y')
 
 
+def rst(source, multipar=False):
+    """
+    Parse a simple paragraph of reStructuredText. Methods which need
+    more complicated things (like parsing a whole document) should
+    use ``docutils.core.publish_parts`` directly.
+
+    If ``multipar`` is ``True``, then this will allow multiple
+    paragraphs.
+
+    See http://docutils.sourceforge.net/docutils/examples.py for an
+    example.
+    """
+    body = docutils.core.publish_parts(
+        source,
+        writer_name='html',
+        settings_overrides={
+            'file_insertion_enabled': 0,
+            'raw_enabled': 0})['body']
+    if not multipar:
+        body = body.replace('<p>', '').replace('</p>', '')
+    return Markup(body)
+
+
 def markdown(*args, strip_par=False, **kwargs):
+    log.warning("h.markdown is deprecated. Use h.rst instead")
     res = md.markdown(*args, **kwargs)
     if strip_par:
         res = res.replace('<p>', '').replace('</p>', '')
@@ -26,14 +51,12 @@ def markdown(*args, strip_par=False, **kwargs):
 
 
 def icon(icon_name):
+    log.warning("h.icon is deprecated. Write the markup for fa instead")
     return Markup('<i class="glyphicon glyphicon-{}"></i>'.format(icon_name))
 
 
 def fa_icon(icon_name):
-    return Markup('<i class="fa fa-{}"></i>'.format(icon_name))
-
-
-def fa_icon(icon_name):
+    log.warning("h.fa_icon is deprecated. Write the markup for fa instead")
     return Markup('<i class="fa fa-{}"></i>'.format(icon_name))
 
 
