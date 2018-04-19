@@ -1,35 +1,24 @@
 # -*- coding: utf-8 -*-
-"""Template Helpers used in acm-website."""
-import logging
-import markdown as md
+"""
+Templating helper functions for generating views in Mozzarella.
+"""
 import docutils.core
 from markupsafe import Markup
 from datetime import datetime, time, timedelta
 import tg
-
-log = logging.getLogger(__name__)
-
-# The mmadmin object
-from acmwebsite.lib.mailmanapi import ListAdminAPI
-mmadmin = ListAdminAPI(tg.config.get('mailman.url'), tg.config.get('mailman.secret'))
-
-
-def current_year():
-    now = datetime.now()
-    return now.strftime('%Y')
 
 
 def rst(source, multipar=False):
     """
     Parse a simple paragraph of reStructuredText. Methods which need
     more complicated things (like parsing a whole document) should
-    use ``docutils.core.publish_parts`` directly.
+    use ``docutils.core.publish_parts`` directly. [1]_
 
     If ``multipar`` is ``True``, then this will allow multiple
     paragraphs.
 
-    See http://docutils.sourceforge.net/docutils/examples.py for an
-    example.
+    .. [1] See http://docutils.sourceforge.net/docutils/examples.py
+           for an example.
     """
     body = docutils.core.publish_parts(
         source,
@@ -42,67 +31,49 @@ def rst(source, multipar=False):
     return Markup(body)
 
 
-def markdown(*args, strip_par=False, **kwargs):
-    log.warning("h.markdown is deprecated. Use h.rst instead")
-    res = md.markdown(*args, **kwargs)
-    if strip_par:
-        res = res.replace('<p>', '').replace('</p>', '')
-    return Markup(res)
-
-
-def icon(icon_name):
-    log.warning("h.icon is deprecated. Write the markup for fa instead")
-    return Markup('<i class="glyphicon glyphicon-{}"></i>'.format(icon_name))
-
-
-def fa_icon(icon_name):
-    log.warning("h.fa_icon is deprecated. Write the markup for fa instead")
-    return Markup('<i class="fa fa-{}"></i>'.format(icon_name))
-
-
 def ftime(datetime_obj, duration=None, show_day=False):
+    """
+    Format a ``date``, ``datetime``, or ``time`` object for view on
+    the page. Optionally takes a duration to show a range of time.
+
+    :param datetime_obj: A ``date``, ``datetime`` or ``time`` to format.
+    :param duration: A ``timedelta`` indicating how long something
+                     lasts.
+    :param show_day: Show the day of the week.
+    :rtype: string
+
+    >>> t = datetime(year=2017, month=10, day=31, hour=17, minute=0, second=0)
+    >>> ftime(t, show_day=True)
+    'Tuesday, 31 October 2017 at 17:00'
+    >>> duration = timedelta(hours=3)
+    >>> ftime(t, duration=duration, show_day=True)
+    'Tuesday, 31 October 2017 from 17:00-20:00'
+
+    .. admonition:: Changed from early Mozzarella
+
+        No special behavior when the duration is the default duration.
+        Always show the duration if given: you must explicity pass
+        ``None`` for the duration if you do not want it to show.
+
+    """
     day_fmt = '{0:%A}, ' if show_day else ''
     date_fmt = '{0.day} {0:%B %Y}'
     time_fmt = '{0:%H}:{0:%M}'
     if isinstance(datetime_obj, datetime):
-        if not isinstance(duration, timedelta):
+        if duration is None:
             # Format date without duration
-            # For example, assume:
-            #     datetime_obj = datetime(year=2017, month=10, day=31,
-            #                             hour=17, minute=0, second=0)
-            #     show_day = True
-            # This will return:
-            #     'Tuesday, 31 October 2017 at 17:00'
             return (day_fmt + date_fmt + ' at ' + time_fmt).format(datetime_obj)
+        elif isinstance(duration, timedelta):
+            # Format date with duration
+            duration_str = (day_fmt + date_fmt + ' from ' + time_fmt).format(datetime_obj)
+            duration_str += '-' + time_fmt.format(datetime_obj + duration)
+            return duration_str
         else:
-            # Format date with duration if duration is not default
-            # For example, assume:
-            #     datetime_obj = datetime(year=2017, month=10, day=31,
-            #                             hour=17, minute=0, second=0)
-            #     show_day = True
-            #     duration = timedelta(hours=3)
-            # This will return:
-            #     'Tuesday, 31 October 2017 from 17:00-20:00'
-
-            default_duration = int(tg.config.get('meetings.default_duration'))
-            if duration == timedelta(seconds=default_duration):
-                return (day_fmt + date_fmt + ' at ' + time_fmt).format(datetime_obj)
-            else:
-                duration_str = (day_fmt + date_fmt + ' from ' + time_fmt).format(datetime_obj)
-                duration_str += '-' + time_fmt.format(datetime_obj + duration)
-                return duration_str
+            raise TypeError("duration must be a timedelta")
     if isinstance(datetime_obj, date):
         return (day_fmt + date_fmt).format(datetime_obj)
     if isinstance(datetime_obj, time):
         return (time_fmt).format(datetime_obj)
-
-
-def proccess_attr(name, attr):
-    if attr == True:
-        return name
-    if not attr:
-        return None
-    return attr
 
 
 def strip_attrs(ty, *args):
@@ -114,12 +85,3 @@ def field_cn(ty, *args):
     if ty.first_time:
         args.append('on-first-time')
     return ' '.join(args)
-
-
-# Import commonly used helpers from WebHelpers2 and TG
-from tg.util.html import script_json_encode
-
-try:
-    from webhelpers2 import date, html, number, misc, text
-except SyntaxError:
-    log.error("WebHelpers2 helpers not available with this Python Version")

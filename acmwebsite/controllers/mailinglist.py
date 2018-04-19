@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 """MailingListController controller module"""
 
-from tg import expose, redirect, validate, flash, url, lurl, abort
+from tg import expose, flash, lurl, abort, app_globals
 from tg.exceptions import HTTPFound
 from tg.decorators import paginate
 
 from acmwebsite.lib.base import BaseController
 from acmwebsite.model import DBSession, MailMessage
-from acmwebsite.lib.helpers import mmadmin
+
 
 class MailingListController(BaseController):
-
     @expose('acmwebsite.templates.mailinglist')
     def index(self):
         """Handle the 'mailinglist' page."""
@@ -20,7 +19,7 @@ class MailingListController(BaseController):
     @expose()
     def subscribe(self, came_from=lurl('/mailinglist'), ml_username=None, ml_fullname=None):
         try:
-            mmadmin.mymail_subscribe(ml_username, ml_fullname)
+            app_globals.mmadmin.mymail_subscribe(ml_username, ml_fullname)
             flash("Successfully subscribed to mailing list")
         except Exception as e:
             flash("An error occurred: {}".format(e), 'error')

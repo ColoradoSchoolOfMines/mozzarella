@@ -24,19 +24,25 @@
             <ul py:if="project.repository or project.website or project.video_url"
               class="list-inline dot-separated-list bold-list">
               <li py:if="project.repository">
-                ${h.fa_icon('code-fork')}
-                <a href="${project.repository}" target="_blank">Repository</a>
+                <a href="${project.repository}" target="_blank">
+                  <i class="fa fa-code-fork" aria-hidden="true"></i>
+                  Repository
+                </a>
               </li>
               <li py:if="project.website">
-                ${h.fa_icon('globe')}
-                <a href="${project.website}" target="_blank">Website</a>
+                <a href="${project.website}" target="_blank">
+                  <i class="fa fa-globe" aria-hidden="true"></i>
+                  Website
+                </a>
               </li>
               <li py:if="project.video_url">
-                ${h.fa_icon('video-camera')}
-                <a href="${project.video_url}" target="_blank">Video</a>
+                <a href="${project.video_url}" target="_blank">
+                  <i class="fa fa-video-camera" aria-hidden="true"></i>
+                  Video
+                </a>
               </li>
             </ul>
-            <p py:content="h.markdown(project.description)" />
+            <p py:content="h.rst(project.description, multipar=True)" />
             <p>
               <b>Contributors:</b>
               <ul>

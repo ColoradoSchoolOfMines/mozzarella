@@ -4,9 +4,11 @@ import email
 import tg
 import transaction
 import email.policy
+import logging
 from acmwebsite.model import MailMessage, DBSession
-from acmwebsite.lib.helpers import log
 from sqlalchemy.sql import exists
+
+log = logging.getLogger(__name__)
 
 archivefiles_p = re.compile(r'<td><A href="([a-zA-Z0-9_-]+\.txt)">\[ Text \d+ \w+ \]</a></td>')
 fromline_p = re.compile(r'^From: (\w+) at ([A-Za-z0-9.-]+) \(([^\)]+)\)$')
@@ -14,8 +16,10 @@ fromline2_p = re.compile(r'^From: (\w+) at ([A-Za-z0-9.-]+)$')
 subject_p = re.compile(r'^(?:\[ACMx?\] )?(.*)$')
 completed_one = False
 
+
 def parse_message(msgstring):
     return email.message_from_string(msgstring, policy=email.policy.default)
+
 
 def get_plaintext_body(message):
     body = ""
@@ -35,6 +39,7 @@ def get_plaintext_body(message):
         body = body.decode('utf-8')
 
     return body
+
 
 def pmsync():
     log.info("Starting mail sync from pipermail")

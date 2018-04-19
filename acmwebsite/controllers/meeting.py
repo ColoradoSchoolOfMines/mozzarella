@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-"""Profile controller module"""
+"""Meetings controller module"""
 
-from tg import expose, redirect, validate, flash, url, lurl, abort, require, request
+from tg import expose, redirect, abort
 
 from acmwebsite.lib.base import BaseController
-from acmwebsite.lib.helpers import log
 from acmwebsite.model import DBSession, Meeting
+
 
 class MeetingController(BaseController):
     def __init__(self, meeting):
@@ -17,6 +17,7 @@ class MeetingController(BaseController):
         if not survey:
             abort(404, "No survey for meeting")
         redirect('/s/{}/{}'.format(self.meeting.survey.id, '/'.join(args)))
+
 
 class MeetingsController(BaseController):
     @expose()

@@ -39,7 +39,7 @@ install_requires = [
     "filedepot",
     "icalendar",
     "Kajiki >= 0.6.3",
-    "markdown",
+    "docutils",
     "pytz",
     "repoze.who",
     "requests",

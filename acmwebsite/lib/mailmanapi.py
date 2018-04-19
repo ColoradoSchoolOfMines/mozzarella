@@ -3,6 +3,7 @@ import requests
 import re
 from acmwebsite.lib.mpapi_connector import uidinfo, InvalidUsername
 
+
 class MailmanSession(requests.Session):
     def __init__(self, admin_url, admin_auth):
         super().__init__()
@@ -10,6 +11,8 @@ class MailmanSession(requests.Session):
         self.admin_auth = admin_auth
 
     def authenticate(self):
+        if self.admin_url is None or self.admin_auth is None:
+            raise ValueError("admin_url or admin_auth is not set")
         r = super().post(self.admin_url, data={"adminpw": self.admin_auth})
         r.raise_for_status()
 
@@ -36,6 +39,7 @@ class MailmanSession(requests.Session):
             return super().post(*args, **kwargs)
 
         return r
+
 
 class ListAdminAPI:
     def __init__(self, admin_url, admin_auth):

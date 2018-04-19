@@ -22,8 +22,9 @@
               <th py:for="field in ('name', *(f['name'] for f in fields))">
                 <a href="${tg.url('/s/{}/results'.format(survey_id), {'order_by': field, 'reverse': (order_by == field and not reverse)})}"
                   py:content="field" />
-                <span py:if="order_by == field"
-                  py:content="h.icon('triangle-%s' % ('top' if reverse else 'bottom'))" />
+                <span py:if="order_by == field">
+                  <i class="fa fa-caret-${'up' if reverse else 'down'}" aria-hidden="true"></i>
+                </span>
               </th>
             </tr>
           </thead>
