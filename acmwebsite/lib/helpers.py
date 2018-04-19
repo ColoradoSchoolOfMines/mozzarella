@@ -65,7 +65,7 @@ def fa_icon(icon_name):
 
 
 def ftime(datetime_obj, duration=None, show_day=False):
-    """Create a nice string representing the date from :param:`datetime_obj`
+    """Create a nice string representing the date from `datetime_obj`
 
     :param datetime_obj: the date
     :type datetime_obj: datetime
