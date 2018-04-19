@@ -55,7 +55,8 @@ class CardTypes:
         importing the card api::
             <py:import href="acmwebsite.templates.card_section" alias="cards"/>
 
-        and then, when necessary, generating the cards anywhere on the webpage::
+        and then, when necessary, generating the cards anywhere on the
+        webpage::
             ${cards.section(cardlist)}
         """
         return chain(*(card_gen(*args, **kwargs) for card_gen in self.list))
