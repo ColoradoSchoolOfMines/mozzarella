@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 """MailMessage model module."""
-import tg
-import re
-from sqlalchemy import *
-from sqlalchemy import Table, ForeignKey, Column
-from sqlalchemy.types import Unicode, DateTime
-from sqlalchemy.orm import relationship, backref
 
-from acmwebsite.model import DeclarativeBase, metadata, DBSession, User
+__all__ = ['MailMessage']
+
+import re
+
+import tg
+from sqlalchemy import Column
+from sqlalchemy.types import Unicode, DateTime
+
+from acmwebsite.model import DeclarativeBase, DBSession, User
 
 user_p = re.compile(r'<(\w+)@(?:mymail\.)?mines\.edu>')
+
 
 class MailMessage(DeclarativeBase):
     __tablename__ = 'mailmessages'
@@ -27,11 +30,13 @@ class MailMessage(DeclarativeBase):
 
     @property
     def parent(self):
-        return DBSession.query(MailMessage).filter(MailMessage.message_id == self.parent_message_id).one_or_none()
+        return DBSession.query(MailMessage).filter(MailMessage.message_id
+                                                   == self.parent_message_id).one_or_none()
 
     @property
     def children(self):
-        return DBSession.query(MailMessage).filter(MailMessage.parent_message_id == self.message_id).all()
+        return DBSession.query(MailMessage).filter(MailMessage.parent_message_id
+                                                   == self.message_id).all()
 
     @property
     def linkname(self):
@@ -71,4 +76,3 @@ class MailMessage(DeclarativeBase):
             return self.from_.replace('@', '&nbsp;at&nbsp;').replace('<', '(').replace('>', ')')
 
 
-__all__ = ['MailMessage']

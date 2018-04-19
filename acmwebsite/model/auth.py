@@ -1,24 +1,19 @@
 # -*- coding: utf-8 -*-
-"""
-Auth* related model.
+"""Auth* related model.
 
 This is where the models used by the authentication stack are defined.
-
-It's perfectly fine to re-use this definition in the acm-website application,
-though.
-
 """
-import os
-import tg
-from datetime import datetime
-from hashlib import sha256
+
 __all__ = ['User', 'Group', 'Permission']
+
+from datetime import datetime
+
+import tg
+from tg.predicates import not_anonymous
 
 from sqlalchemy import Table, ForeignKey, Column
 from sqlalchemy.types import Unicode, Integer, DateTime
-from sqlalchemy.orm import relation, synonym
-
-from tg.predicates import not_anonymous
+from sqlalchemy.orm import relation
 
 from depot.fields.sqlalchemy import UploadedFileField
 
@@ -120,7 +115,6 @@ class User(DeclarativeBase):
         else:
             return tg.url('/img/default_user.png')
 
-
     @property
     def email_address(self):
         return '%s@mines.edu' % self.user_name
@@ -162,6 +156,7 @@ class User(DeclarativeBase):
 
         """
         return auth(self.user_name, password)
+
 
 class Permission(DeclarativeBase):
     """
