@@ -51,11 +51,9 @@ install_requires = [
     "WebHelpers2",
     "zope.sqlalchemy >= 0.4",
     "Pillow",
+    'sphinx[doc]'
 ]
 
-extra_requires = {
-    'documentation': ["sphinx"]
-}
 
 if py_version != (3, 2):
     # Babel not available on 3.2
