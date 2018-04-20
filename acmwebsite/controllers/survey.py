@@ -54,6 +54,13 @@ class SurveyController(BaseController):
         }
 
     def _response_dict(self, response):
+        """Creates a dictionary based on a single survey response
+
+        :param response: which specific survey response is desired. This 
+            function is called for each response in a survey.
+        :return: a single survey response 
+        :rtype: Dictionary
+        """
         out = {'name': response.name, 'email': response.email}
 
         # Add the actual response data for the fields that exist.
@@ -67,6 +74,11 @@ class SurveyController(BaseController):
 
     @expose('acmwebsite.templates.survey')
     def respond(self):
+        """Create an attendance survey form 
+
+        :return: ``None`` or the survey passed into __init__
+        :rtype: None or Dictionary
+        """
         if not self.survey:
             abort(404, 'No survey for meeting')
 
