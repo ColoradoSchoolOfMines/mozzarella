@@ -21,7 +21,14 @@
             <tr><td>Date:</td><td>${h.ftime(message.date)}</td></tr>
           </table>
           <div class="panel-body">
-            <pre class="emailtext">${message.body}</pre>
+            <div py:for="name, text in bodyparts" py:strip="True">
+              <py:if test="name == 'header'">
+                <h4 class="email-header" py:content="text.splitlines()[0]" />
+              </py:if><py:else>
+                <pre class="email-text" py:if="text.startswith('\n')" py:content="'\n\n'" />
+                <pre class="email-text email-${name}" py:content="text" />
+              </py:else>
+            </div>
           </div>
           <div class="panel-footer" py:if="message.attachments">
             <h3 class="panel-title">Attachments</h3>

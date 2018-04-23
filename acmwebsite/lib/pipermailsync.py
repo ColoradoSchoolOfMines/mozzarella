@@ -50,12 +50,12 @@ def parse_attachment(attstring):
         return False
 
     if 'url' not in aparts.keys() or '/private/' in aparts['url']:
-        return
+        return False
 
     r = requests.get(aparts['url'][1:-1])
     if not r.ok:
         log.warning("Failed to download attachment {}".format(r.url))
-        return
+        return False
 
     return FileIntent(r.content, aparts.get('name'), aparts.get('type'))
 

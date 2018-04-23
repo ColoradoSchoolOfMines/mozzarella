@@ -46,12 +46,33 @@
   display: none;
 }
 
-.emailtext {
+.email-text {
   padding: 0;
+  margin: 0;
   color: inherit;
   background-color: inherit;
   border: none;
   border-radius: inherit;
+}
+
+.email-body {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.email-quote {
+  color: #888888;
+  font-style: italic;
+}
+
+.email-signature {
+  color: #888888;
+}
+
+.email-header {
+  margin: 0;
+  border-bottom: 2px solid;
+  padding-bottom: 4px;
 }
 
 .navbar-right {
