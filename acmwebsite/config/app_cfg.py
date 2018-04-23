@@ -19,11 +19,12 @@ From the TG docs:
     changed depending on deployment, it belongs in the ``ini`` files.
 
 """
-from tg.configuration import AppConfig
+import sys
 
 import acmwebsite
 import transaction
 import tg.predicates
+from tg.configuration import AppConfig
 from acmwebsite import model, lib
 from acmwebsite.lib.mpapi_connector import auth, uidinfo
 from acmwebsite.model.auth import User
@@ -188,6 +189,10 @@ base_config.variable_provider = variable_provider
 
 def config_ready():
     """ Executed once the configuration is ready. """
+    # don't run when setting up the database
+    if 'setup-app' in sys.argv:
+        return
+
     import tgscheduler
     tgscheduler.start_scheduler()
 

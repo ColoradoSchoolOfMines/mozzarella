@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
-"""Setup the acm-website application"""
-from __future__ import print_function, unicode_literals
+"""Seed the Mozzarella database"""
 import transaction
 from acmwebsite import model
 
 
 def bootstrap(command, conf, vars):
-    """Place any commands to setup acmwebsite here"""
-
-    # <websetup.bootstrap.before.auth
+    # <websetup.bootstrap.before.auth>
     from sqlalchemy.exc import IntegrityError
     try:
         jack = model.User(

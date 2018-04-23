@@ -23,6 +23,12 @@
           <div class="panel-body">
             <pre class="emailtext">${message.body}</pre>
           </div>
+          <div class="panel-footer" py:if="message.attachments">
+            <h3 class="panel-title">Attachments</h3>
+            <ul py:for="a in message.attachments">
+              <li><a href="${a.file.url}">${a.file.filename or a.file.content_type or 'Attachment'}</a></li>
+            </ul>
+          </div>
         </div>
       </div>
       <div class="col-md-4">
