@@ -74,14 +74,3 @@ def ftime(datetime_obj, duration=None, show_day=False):
         return (day_fmt + date_fmt).format(datetime_obj)
     if isinstance(datetime_obj, time):
         return (time_fmt).format(datetime_obj)
-
-
-def strip_attrs(ty, *args):
-    return {v: proccess_attr(v, getattr(ty, v)) for v in args}
-
-
-def field_cn(ty, *args):
-    args = [x for x in args if x]
-    if ty.first_time:
-        args.append('on-first-time')
-    return ' '.join(args)
