@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
-"""MailMessage model module."""
+"""Models for mailing list messages in Mozzarella."""
 import tg
 import re
-from sqlalchemy import *
 from sqlalchemy import Table, ForeignKey, Column
-from sqlalchemy.types import Unicode, DateTime
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy.types import Unicode, DateTime, Integer
+from sqlalchemy.orm import relationship
+from depot.fields.sqlalchemy import UploadedFileField
 
-from acmwebsite.model import DeclarativeBase, metadata, DBSession, User
+from acmwebsite.model import DeclarativeBase, DBSession, User
 
-user_p = re.compile(r'<(\w+)@(?:mymail\.)?mines\.edu>')
+user_p = re.compile(r'<(\w+)@(?:mymail\.|alumni\.)?mines\.edu>')
+
 
 class MailMessage(DeclarativeBase):
     __tablename__ = 'mailmessages'
@@ -20,6 +21,7 @@ class MailMessage(DeclarativeBase):
     date = Column(DateTime, nullable=False)
     subject = Column(Unicode, nullable=True)
     parent_message_id = Column(Unicode, nullable=True)
+    attachments = relationship("MailAttachment", back_populates="message")
 
     @property
     def url(self):
@@ -27,11 +29,15 @@ class MailMessage(DeclarativeBase):
 
     @property
     def parent(self):
-        return DBSession.query(MailMessage).filter(MailMessage.message_id == self.parent_message_id).one_or_none()
+        return (DBSession.query(MailMessage)
+                         .filter(MailMessage.message_id == self.parent_message_id)
+                         .one_or_none())
 
     @property
     def children(self):
-        return DBSession.query(MailMessage).filter(MailMessage.parent_message_id == self.message_id).all()
+        return (DBSession.query(MailMessage)
+                         .filter(MailMessage.parent_message_id == self.message_id)
+                         .all())
 
     @property
     def linkname(self):
@@ -39,17 +45,17 @@ class MailMessage(DeclarativeBase):
 
     @property
     def next_by_date(self):
-        return DBSession.query(MailMessage)\
-                        .filter(MailMessage.date > self.date)\
-                        .order_by(MailMessage.date)\
-                        .first()
+        return (DBSession.query(MailMessage)
+                         .filter(MailMessage.date > self.date)
+                         .order_by(MailMessage.date)
+                         .first())
 
     @property
     def prev_by_date(self):
-        return DBSession.query(MailMessage)\
-                        .filter(MailMessage.date < self.date)\
-                        .order_by(MailMessage.date.desc())\
-                        .first()
+        return (DBSession.query(MailMessage)
+                         .filter(MailMessage.date < self.date)
+                         .order_by(MailMessage.date.desc())
+                         .first())
 
     @property
     def mines_username(self):
@@ -58,9 +64,9 @@ class MailMessage(DeclarativeBase):
 
     @property
     def user(self):
-        return DBSession.query(User)\
-                        .filter(User.user_name == self.mines_username)\
-                        .one_or_none()
+        return (DBSession.query(User)
+                         .filter(User.user_name == self.mines_username)
+                         .one_or_none())
 
     @property
     def from_display(self):
@@ -71,4 +77,13 @@ class MailMessage(DeclarativeBase):
             return self.from_.replace('@', '&nbsp;at&nbsp;').replace('<', '(').replace('>', ')')
 
 
-__all__ = ['MailMessage']
+class MailAttachment(DeclarativeBase):
+    __tablename__ = 'mailattachments'
+
+    id = Column(Integer, autoincrement=True, primary_key=True)
+    message_id = Column(Unicode, ForeignKey('mailmessages.message_id'))
+    message = relationship("MailMessage", back_populates="attachments")
+    file = Column(UploadedFileField)
+
+
+__all__ = ['MailMessage', 'MailAttachment']

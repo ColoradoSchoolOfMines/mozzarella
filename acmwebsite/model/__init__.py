@@ -57,10 +57,9 @@ def init_model(engine):
     # mapper(Reflected, t_reflected)
     return DBSession
 
-# Import your model modules here.
 from acmwebsite.model.auth import User, Group, Permission
 from acmwebsite.model.meeting import Meeting
-from acmwebsite.model.mailmessage import MailMessage
+from acmwebsite.model.mailmessage import MailMessage, MailAttachment
 from acmwebsite.model.survey import Survey, SurveyField, SurveyResponse, SurveyData
 from acmwebsite.model.project import Project
 from acmwebsite.model.banner import Banner
@@ -71,6 +70,7 @@ __all__ = (
     'Permission',
     'Meeting',
     'MailMessage',
+    'MailAttachment',
     'Survey',
     'SurveyField',
     'SurveyResponse',
