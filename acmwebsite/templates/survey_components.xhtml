@@ -1,51 +1,72 @@
 <html>
+<?py
+%def process_attr(name, attr):
+    if attr == True:
+        return name
+    if not attr:
+        return None
+    return attr
+
+
+def strip_attrs(ty, *args):
+    return {v: process_attr(v, getattr(ty, v)) for v in args}
+
+
+def field_cn(ty, *args):
+    args = [x for x in args if x]
+    if ty.first_time:
+        args.append('on-first-time')
+    return ' '.join(args)
+?>
+
   <label py:def="label(l, f=None)" py:if="l" py:attrs="{'for': f}">${l}</label>
 
-  <div py:def="checkbox(ty)" class="${h.field_cn(ty, 'form-group', 'checkbox', 'single-checkbox')}">
+  <div py:def="checkbox(ty)" class="${field_cn(ty, 'form-group', 'checkbox', 'single-checkbox')}">
     <label for="${ty.name}">
-      <input type="checkbox" id="${ty.name}" py:attrs="h.strip_attrs(ty, 'name', 'required', 'checked')" /> ${ty.label or ''}
+      <input type="checkbox" id="${ty.name}" py:attrs="strip_attrs(ty, 'name', 'required', 'checked')" /> ${ty.label or ''}
     </label>
   </div>
 
-  <div py:def="checkbox_group(ty)" class="${h.field_cn(ty, 'form-group', 'checkbox-group', 'one-required' if ty.required else None)}">
+  <div py:def="checkbox_group(ty)" class="${field_cn(ty, 'form-group', 'checkbox-group', 'one-required' if ty.required else None)}">
     ${label(ty.label)}
     <div py:for="i, c in enumerate(ty.options)" py:with="n = '{}_{}'.format(ty.name, i)" class="checkbox">
       <label><input type="checkbox" name="${n}" /> ${c or ''}</label>
     </div>
   </div>
 
-  <div py:def="radio_group(ty)" class="${h.field_cn(ty, 'form-group', 'radio-group')}">
+  <div py:def="radio_group(ty)" class="${field_cn(ty, 'form-group', 'radio-group')}">
     ${label(ty.label)}
     <div py:for="v in ty.options" class="radio-option">
       <label>
         <py:if test="v == ty.value">
-          <input type="radio" value="${v}" py:attrs="h.strip_attrs(ty, 'name', 'required')" checked="checked"/> ${v or ''}
+          <input type="radio" value="${v}" py:attrs="strip_attrs(ty, 'name', 'required')" checked="checked"/> ${v or ''}
         </py:if><py:else>
-          <input type="radio" value="${v}" py:attrs="h.strip_attrs(ty, 'name', 'required')" /> ${v or ''}
+          <input type="radio" value="${v}" py:attrs="strip_attrs(ty, 'name', 'required')" /> ${v or ''}
         </py:else>
       </label>
     </div>
   </div>
 
-  <div py:def="select(ty)" class="${h.field_cn(ty, 'form-group')}">
+  <div py:def="select(ty)" class="${field_cn(ty, 'form-group')}">
     ${label(ty.label, ty.name)}
-    <select id="${ty.name}" py:attrs="h.strip_attrs(ty, 'name', 'required', 'multiple')" class="form-control">
+    <select id="${ty.name}" py:attrs="strip_attrs(ty, 'name', 'required', 'multiple')" class="form-control">
       <option py:for="v in ty.options" py:attrs="{'selected': 'selected' if v == ty.value else None}">${v}</option>
     </select>
   </div>
 
-  <div py:def="text(ty)" class="${h.field_cn(ty, 'form-group')}">
+  <div py:def="text(ty)" class="${field_cn(ty, 'form-group')}">
     ${label(ty.label, ty.name)}
-    <input type="text" id="${ty.name}" py:attrs="h.strip_attrs(ty, 'name', 'required', 'value', 'placeholder')" class="form-control" />
+    <input type="text" id="${ty.name}" py:attrs="strip_attrs(ty, 'name', 'required', 'value', 'placeholder')" class="form-control" />
   </div>
 
-  <div py:def="textarea(ty)" class="${h.field_cn(ty, 'form-group')}">
+  <div py:def="textarea(ty)" class="${field_cn(ty, 'form-group')}">
     ${label(ty.label, ty.name)}
-    <textarea type="text" id="${ty.name}" py:attrs="h.strip_attrs(ty, 'name', 'required', 'placeholder')" class="form-control">${ty.value or ''}</textarea>
+    <textarea type="text" id="${ty.name}" py:attrs="strip_attrs(ty, 'name', 'required', 'placeholder')" class="form-control">${ty.value or ''}</textarea>
   </div>
 
-  <div py:def="number(ty)" class="${h.field_cn(ty, 'form-group')}">
+  <div py:def="number(ty)" class="${field_cn(ty, 'form-group')}">
     ${label(ty.label, ty.name)}
-    <input type="number" id="${ty.name}" py:attrs="h.strip_attrs(ty, 'name', 'required', 'value', 'min', 'max', 'step')" class="form-control" />
+    <input type="number" id="${ty.name}" py:attrs="strip_attrs(ty, 'name', 'required', 'value', 'min', 'max', 'step')" class="form-control" />
   </div>
+
 </html>
