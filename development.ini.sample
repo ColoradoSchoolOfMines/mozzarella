@@ -46,6 +46,10 @@ port = 8080
 [app:main]
 use = egg:acm-website
 
+# Set site name and short site name
+site_name =
+short_site_name =
+
 # Default application language, when available this will be
 # used when none of the browser requested languages is available.
 #i18n.lang = en
