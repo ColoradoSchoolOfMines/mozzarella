@@ -1,6 +1,6 @@
 <html py:extends="master.xhtml" py:strip="True">
   <head py:block="head" py:strip="True">
-    <title>Mines ACM - Error</title>
+    <title>${tg.config.get('short_site_name', 'not configured')} - Error</title>
   </head>
   <body py:block="body" py:strip="True">
     <h1>Error ${code}</h1>

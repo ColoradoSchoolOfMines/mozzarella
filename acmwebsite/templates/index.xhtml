@@ -4,7 +4,7 @@
 
   <py:extends href="master.xhtml" />
   <head py:block="head" py:strip="True">
-    <title>Mines ACM</title>
+    <title>${tg.config.get('short_site_name', 'not configured')}</title>
   </head>
   <body py:block="body" py:strip="True">
     <div class="row">
@@ -16,7 +16,7 @@
       </div>
       <div class="col-md-5">
         <div class="intro-block">
-        <h2>Mines ACM Student Chapter</h2>
+        <h2>${tg.config.get('site_name', 'not configured')}</h2>
         <p>
             The Mines ACM Student Chapter is the local chapter of the <a href="http://www.acm.org" target="_blank">Association for Computing
             Machinery</a> at the <a href="http://www.mines.edu" target="_blank">Colorado School of Mines</a>. As a Mozilla Open Source
@@ -32,7 +32,7 @@
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Join our ACM Chapter!</h3>
+          <h3 class="panel-title">Join our ${tg.config.get('site_name', 'not configured')}!</h3>
         </div>
         <div class="panel-body">
           <p>To join our ACM chapter, simply show up to our meetings. Newcomers are welcome to all meetings.</p>
