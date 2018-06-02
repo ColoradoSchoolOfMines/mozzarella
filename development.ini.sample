@@ -50,9 +50,6 @@ use = egg:acm-website
 #site_name =
 #short_site_name =
 
-# Set path to logo (from acmwebsite/public/ directory)
-path_to_img = /
-
 # Default application language, when available this will be
 # used when none of the browser requested languages is available.
 #i18n.lang = en
