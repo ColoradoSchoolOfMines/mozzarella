@@ -5,7 +5,7 @@ from acmwebsite.config.environment import load_environment
 
 # Depot
 from depot.manager import DepotManager
-from .statics import StaticsMiddleware
+
 
 __all__ = ['make_app']
 
@@ -34,8 +34,7 @@ def make_app(global_conf, full_stack=True, **app_conf):
     """
     app = make_base_app(global_conf, full_stack=True, **app_conf)
     app = DepotManager.make_middleware(app)
-    app = StaticsMiddleware(app, tg.config('custom_assets.dir'))
-    
+
     # Wrap your base TurboGears 2 application with custom middleware here
 
     return app
