@@ -9,6 +9,7 @@
     <link id='bs-css' rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/bootstrap.dark.min.css') if tg.session.get('theme', None) == 'dark' else tg.url('/css/bootstrap.light.min.css')}" />
     <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/style.css')}" />
     <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/font-awesome.min.css')}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="${tg.url(tg.config.get('custom_assets.css'))}" />
   </head>
 
   <body>
