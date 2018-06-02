@@ -157,7 +157,7 @@ Static Assets
 
 The location of site-specific assets for development can be configured in ``development.ini``:
 
-.. code:: console
+.. code:: ini 
 
     # Custom Assets Configuration
     custom_assets.dir = /path/to/assets/dir
