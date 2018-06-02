@@ -160,6 +160,6 @@ The location of site-specific assets for development can be configured in ``deve
 .. code:: console
 
     # Custom Assets Configuration
-        custom_assets.dir = /path/to/assets/dir
-        custom_assets.css = relative/path/to/css.file
-        custom_assets.logo = relative/path/to/logo.file
+    custom_assets.dir = /path/to/assets/dir
+    custom_assets.css = relative/path/to/css.file
+    custom_assets.logo = relative/path/to/logo.file
