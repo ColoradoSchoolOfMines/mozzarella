@@ -13,6 +13,9 @@
 # execute malicious code after an exception is raised.
 debug = true
 
+# Site name configuration
+#site.name = CSM Mozzarella
+
 # ERROR REPORTING BY EMAIL
 # Uncomment to enable email error reporting, you probably want this
 # on production to receive application crashes by email
@@ -45,10 +48,6 @@ port = 8080
 
 [app:main]
 use = egg:acm-website
-
-# Set site name and short site name
-#site_name =
-#short_site_name =
 
 # Default application language, when available this will be
 # used when none of the browser requested languages is available.
@@ -140,9 +139,9 @@ meetings.default_duration = 7200
 meetings.icalendar.prodid = -//Mines ACM//web//EN
 
 # Custom Assets Configuration
-custom_assets.dir = /home/lpetty/mozzarella/assets
-custom_assets.css = custom.css
-custom_assets.logo = custom.png
+#custom_assets.dir = /home/lpetty/mozzarella/assets
+#custom_assets.css = custom.css
+#custom_assets.logo = custom.png
 
 # Logging configuration
 # Add additional loggers, handlers, formatters here

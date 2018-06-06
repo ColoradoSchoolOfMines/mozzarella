@@ -155,7 +155,7 @@ Here is an example config for Apache with ``mod_wsgi``:
 Static Assets
 ~~~~~~~~~~~~~
 
-The location of site-specific assets for development can be configured in ``development.ini``:
+The location of site-specific assets for development can be configured in your development config: 
 
 .. code:: ini 
 
