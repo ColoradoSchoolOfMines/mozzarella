@@ -34,7 +34,10 @@ def make_app(global_conf, full_stack=True, **app_conf):
     """
     app = make_base_app(global_conf, full_stack=True, **app_conf)
     app = DepotManager.make_middleware(app)
-    app = StaticsMiddleware(app, app_conf['custom_assets.dir'])
+    try:
+        app = StaticsMiddleware(app, app_conf['custom_assets.dir'])
+    except KeyError:
+        pass
 
     # Wrap your base TurboGears 2 application with custom middleware here
 
