@@ -139,9 +139,9 @@ meetings.default_duration = 7200
 meetings.icalendar.prodid = -//Mines ACM//web//EN
 
 # Custom Assets Configuration
-#custom_assets.dir = /home/lpetty/mozzarella/assets
-#custom_assets.css = custom.css
-#custom_assets.logo = custom.png
+custom_assets.dir = /
+custom_assets.css = custom.css
+custom_assets.logo = custom.png
 
 # Logging configuration
 # Add additional loggers, handlers, formatters here

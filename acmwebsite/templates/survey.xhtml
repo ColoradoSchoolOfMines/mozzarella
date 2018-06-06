@@ -4,7 +4,7 @@
   py:extends="master.xhtml">
 
   <head py:block="head" py:strip="True">
-    <title>${tg.config.get('short_site_name', 'not configured')} - Survey</title>
+    <title>${tg.config.get('site.name')} - Survey</title>
   </head>
 
   <div py:def="unknown_type(ty)">
