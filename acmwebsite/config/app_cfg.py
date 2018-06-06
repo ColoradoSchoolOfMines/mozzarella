@@ -75,6 +75,9 @@ base_config.sa_auth.cookie_secret = "2a654f87-1cb4-43fb-834b-413c449a71a8"
 # what is the class you want to use to search for users in the database
 base_config.sa_auth.user_class = model.User
 
+#Configure site name
+base_config['site.name'] = 'Mozzarella'
+
 from tg.configuration.auth import TGAuthMetadata
 
 
