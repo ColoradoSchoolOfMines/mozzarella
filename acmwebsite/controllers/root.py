@@ -32,7 +32,7 @@ __all__ = ['RootController']
 
 class RootController(BaseController):
     """
-    The root controller for the acm-website application.
+    The root controller for Mozzarella.
 
     All the other controllers and WSGI applications should be mounted on this
     controller. For example::
@@ -55,7 +55,7 @@ class RootController(BaseController):
     projects = ProjectsController()
 
     def _before(self, *args, **kw):
-        tmpl_context.project_name = "acmwebsite"
+        tmpl_context.project_name = "Mozzarella"
 
     @expose('acmwebsite.templates.index')
     def index(self):
