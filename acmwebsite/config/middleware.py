@@ -35,7 +35,7 @@ def make_app(global_conf, full_stack=True, **app_conf):
     app = make_base_app(global_conf, full_stack=True, **app_conf)
     app = DepotManager.make_middleware(app)
     try:
-        app = StaticsMiddleware(app, app_conf['custom_assets.dir'])
+        app = StaticsMiddleware(app, app_conf['site.custom_assets'])
     except KeyError:
         pass
 

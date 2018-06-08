@@ -14,7 +14,7 @@
 debug = true
 
 # Site name configuration
-#site.name = CSM Mozzarella
+#site.name = Mozzarella
 
 # ERROR REPORTING BY EMAIL
 # Uncomment to enable email error reporting, you probably want this
@@ -139,9 +139,7 @@ meetings.default_duration = 7200
 meetings.icalendar.prodid = -//Mines ACM//web//EN
 
 # Custom Assets Configuration
-custom_assets.dir = /
-custom_assets.css = custom.css
-custom_assets.logo = custom.png
+#site.custom_assets  =
 
 # Logging configuration
 # Add additional loggers, handlers, formatters here
