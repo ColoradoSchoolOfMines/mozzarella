@@ -141,6 +141,9 @@ meetings.icalendar.prodid = -//Mines ACM//web//EN
 # Custom Assets Configuration
 #site.custom_assets =
 
+# Wiki repository location
+#wiki.repo = %(here)s/wiki
+
 # Logging configuration
 # Add additional loggers, handlers, formatters here
 # Uses python's logging config file format
