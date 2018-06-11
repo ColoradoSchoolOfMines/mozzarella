@@ -16,10 +16,6 @@ class WikiController(BaseController):
     Controls the wiki
     OC code donut steel
     """
-
-    def __init__(self, pagename="FrontPage"):
-        self.page = pagename
-
     def _before(self, *args, **kw):
         try:
             repo_path = tg.config.get('wiki.repo')
@@ -65,9 +61,9 @@ class WikiController(BaseController):
         )
         
     @expose('acmwebsite.templates.wikiview')
-    def index(self):
-        tb = self.repo.TreeBuilder(self.repo.head.peel().tree)
-        if tb.get(self.page + '.rst') is None:
+    def _default(self, pagename = "FrontPage"):
+        tb = self.repo.TreeBuilder(self.repo.head.peel(Tree))
+        if tb.get(pagename + '.rst') is None:
             tg.abort(404, "Page not found")
-        blob = self.repo.get(self.repo.head.peel(Tree)[self.page + '.rst'].id)
-        return dict(page=self.page, content=blob.data) #TODO: probably could just open(file) and return raw data
+        blob = self.repo.get(self.repo.head.peel(Tree)[pagename + '.rst'].id)
+        return dict(page=pagename, content=blob.data) #TODO: probably could just open(file) and return raw data
