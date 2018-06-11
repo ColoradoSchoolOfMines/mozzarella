@@ -67,10 +67,3 @@ class WikiController(BaseController):
             tg.abort(404, "Page not found")
         blob = self.repo.get(self.repo.index[''.join((pagename, '.rst'))].id)
         return dict(page=pagename, content=blob.data) #TODO: probably could just open(file) and return raw data
-
-    @expose('acmwebsite.templates.wikiedit')
-    def edit(self, pagename):
-        pass
-
-    def save(self, pagename):
-        pass
