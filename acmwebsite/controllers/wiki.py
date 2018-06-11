@@ -11,6 +11,8 @@ from pygit2 import GIT_FILEMODE_BLOB
 import os
 import tg
 
+__all__ = ['WikiController']
+
 class WikiController(BaseController):
     """
     Controls the wiki
@@ -60,10 +62,16 @@ class WikiController(BaseController):
             [self.repo.head.target]
         )
         
-    @expose('acmwebsite.templates.wikiview')
-    def _default(self, pagename = "FrontPage"):
+    @expose('acmwebsite.templates.wiki_view')
+    def _default(self, pagename):
+        """Display a specific page"""
         tb = self.repo.TreeBuilder(self.repo.head.peel(Tree))
         if tb.get(pagename + '.rst') is None:
             tg.abort(404, "Page not found")
         blob = self.repo.get(self.repo.head.peel(Tree)[pagename + '.rst'].id)
         return dict(page=pagename, content=blob.data) #TODO: probably could just open(file) and return raw data
+
+    # @expose('acmwebsite.templates.wiki_frontpage')
+    # def index(self):
+    #     """Display the wiki frontpage"""
+    #     pass
