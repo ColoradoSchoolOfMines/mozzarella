@@ -21,5 +21,8 @@ pip-log.txt
 development.ini
 production.ini
 
-# Wiki directory
+# Default wiki directory
 wiki/
+
+# Default assets directory
+assets/
