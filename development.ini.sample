@@ -139,7 +139,7 @@ meetings.default_duration = 7200
 meetings.icalendar.prodid = -//Mines ACM//web//EN
 
 # Custom Assets Configuration
-#site.custom_assets =
+#site.custom_assets = %(here)s/assets
 
 # Wiki repository location
 #wiki.repo = %(here)s/wiki
