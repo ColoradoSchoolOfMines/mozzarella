@@ -22,7 +22,7 @@ development.ini
 production.ini
 
 # Default wiki directory
-wiki/
+wiki.git/
 
 # Default assets directory
 assets/

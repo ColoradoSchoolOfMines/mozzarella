@@ -142,7 +142,7 @@ meetings.icalendar.prodid = -//Mines ACM//web//EN
 #site.custom_assets = %(here)s/assets
 
 # Wiki repository location
-#wiki.repo = %(here)s/wiki
+#wiki.repo = %(here)s/wiki.git
 
 # Logging configuration
 # Add additional loggers, handlers, formatters here
