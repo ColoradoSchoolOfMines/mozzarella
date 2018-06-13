@@ -70,8 +70,7 @@ class WikiController(BaseController):
         if tb.get(pagename + '.rst') is None:
             tg.abort(404, "Page not found")
         blob = self.repo.get(self.repo.head.peel(Tree)[pagename + '.rst'].id)
-        #return dict(page=pagename, content=publish_parts(writer_name='html5', source="Monkey\nD\nLuffy")['body']) #TODO: probably could just open(file) and return raw data
-        return dict(page=pagename, content=publish_parts(writer_name='html5', source=blob.data)['body']) #TODO: probably could just open(file) and return raw data
+        return dict(page=pagename, content=publish_parts(blob.data, writer_name='html5', settings_overrides={'initial_header_level': 2,})['body']) #TODO: probably could just open(file) and return raw data
     
 
     # @expose('acmwebsite.templates.wiki_frontpage')
