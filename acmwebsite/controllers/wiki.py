@@ -1,3 +1,4 @@
+"""Wiki controller module"""
 from tg import expose
 
 from acmwebsite.lib.base import BaseController
@@ -8,16 +9,16 @@ from pygit2 import Signature
 from pygit2 import GitError
 from pygit2 import GIT_FILEMODE_BLOB
 
+from docutils.core import publish_parts
+
 import os
 import tg
 
 __all__ = ['WikiController']
 
 class WikiController(BaseController):
-    """
-    Controls the wiki
-    OC code donut steel
-    """
+    """Controls the wiki"""
+
     def _before(self, *args, **kw):
         try:
             repo_path = tg.config.get('wiki.repo')
@@ -29,45 +30,34 @@ class WikiController(BaseController):
 
     def _init_wiki_repo(self):
         self.repo = init_repository(tg.config.get('wiki.repo'), True)
-        signature = Signature("Brandon Verkamp", "jadelclemens@gmail.com") #TODO: Replace me
+        signature = Signature("Example McPersonson", "emailuser@emailsite.tld") #TODO: Replace me
 
         tb = self.repo.TreeBuilder()
+
+        # Write initial front page
+        filename = "FrontPage.rst"
+        data = "In the *future*, this **content** will be filled from a standard file!"
+
+        # Create blob from frontpage content and insert into tree
+        blobid = self.repo.create_blob(data)
+        tb.insert(filename, blobid, GIT_FILEMODE_BLOB)
         tree = tb.write()
+        
+        # Commit the change
         branch_commit = self.repo.create_commit(
             'HEAD',
             signature,
             signature,
-            "Create master branch",
+            "Initial commit",
             tree,
             []
         )
 
-        filename = "FrontPage.rst"
-        data = "In the future, this content will be filled from a standard file!"
-        newfile = open(os.path.join(self.repo.path, filename), 'w')
-        newfile.write(data)
-        newfile.close()
-
-        blobid = self.repo.create_blob(data)
-        tb = self.repo.TreeBuilder(self.repo.head.peel(Tree))
-        tb.insert(filename, blobid, GIT_FILEMODE_BLOB)
-        tree = tb.write()
-
-        self.repo.create_commit(
-            'HEAD',
-            signature,
-            signature,
-            "Initial Commit",
-            tree,
-            [self.repo.head.target]
-        )
-        
     @expose('acmwebsite.templates.wiki_view')
     def _default(self, pagename):
         """Display a specific page"""
-        from docutils.core import publish_parts
         tb = self.repo.TreeBuilder(self.repo.head.peel(Tree))
-        if tb.get(pagename + '.rst') is None:
+        if not tb.get(pagename + '.rst'):
             tg.abort(404, "Page not found")
         blob = self.repo.get(self.repo.head.peel(Tree)[pagename + '.rst'].id)
         return dict(page=pagename, content=publish_parts(blob.data, writer_name='html5', settings_overrides={'initial_header_level': 2,})['body']) #TODO: probably could just open(file) and return raw data
