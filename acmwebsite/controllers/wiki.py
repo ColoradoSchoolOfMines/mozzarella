@@ -65,11 +65,14 @@ class WikiController(BaseController):
     @expose('acmwebsite.templates.wiki_view')
     def _default(self, pagename):
         """Display a specific page"""
+        from docutils.core import publish_parts
         tb = self.repo.TreeBuilder(self.repo.head.peel(Tree))
         if tb.get(pagename + '.rst') is None:
             tg.abort(404, "Page not found")
         blob = self.repo.get(self.repo.head.peel(Tree)[pagename + '.rst'].id)
-        return dict(page=pagename, content=blob.data) #TODO: probably could just open(file) and return raw data
+        #return dict(page=pagename, content=publish_parts(writer_name='html5', source="Monkey\nD\nLuffy")['body']) #TODO: probably could just open(file) and return raw data
+        return dict(page=pagename, content=publish_parts(writer_name='html5', source=blob.data)['body']) #TODO: probably could just open(file) and return raw data
+    
 
     # @expose('acmwebsite.templates.wiki_frontpage')
     # def index(self):
