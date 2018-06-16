@@ -168,6 +168,8 @@ Wiki
 ~~~~
 
 Mozzarella includes a wiki that can be enabled by uncommenting the `wiki.repo` option in your configuration.
+When visiting the wiki for the first time after enabling it, Mozzarella will generate a bare git repository with a sample
+page in it.
 
 .. code:: ini
 
