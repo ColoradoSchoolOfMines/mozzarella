@@ -39,6 +39,10 @@ class WikiController(BaseController):
         filepath = resource_filename('acmwebsite', 'wiki-assets/FrontPage.rst')
         blobid = self.repo.create_blob_fromdisk(filepath)
         tb.insert(filename, blobid, pg.GIT_FILEMODE_BLOB)
+        filename = "PageList.rst"
+        filepath = resource_filename('acmwebsite', 'wiki-assets/PageList.rst')
+        blobid = self.repo.create_blob_fromdisk(filepath)
+        tb.insert(filename, blobid, pg.GIT_FILEMODE_BLOB)
         tree = tb.write()
 
         # Commit the change
