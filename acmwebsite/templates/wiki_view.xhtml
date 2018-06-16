@@ -10,6 +10,26 @@
 
   <body py:block="body" py:strip="True">
     <h1 class="page-header">$page</h1>
-    <div py:replace="Markup(content)">Page content will go here</div>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div py:replace="Markup(content)" class="page-body">Page content will go here</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Links</h3>
+          </div>
+          <div class="panel-body">
+            <ul class="nav">
+              <li class="nav-item">
+                <a class="nav-link" href="${tg.url('/wiki/history/%s' % page)}">History</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
