@@ -76,6 +76,7 @@ class WikiController(BaseController):
                 last_id = entry.id 
         if not revision_list:
             tg.abort(404, "Page not found")
+        revision_list.reverse()
         return dict(page=pagename, revisions=revision_list)
 
     @expose('acmwebsite.templates.wiki_front')
