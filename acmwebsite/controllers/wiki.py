@@ -33,15 +33,14 @@ class WikiController(BaseController):
 
         tb = self.repo.TreeBuilder()
 
-        # Write initial front page
-        filename = "FrontPage.rst"
-        data = "In the *future*, this **content** will be filled from a standard file!"
-
         # Create blob from frontpage content and insert into tree
-        blobid = self.repo.create_blob(data)
+        from pkg_resources import resource_filename
+        filename = "FrontPage.rst"
+        filepath = resource_filename('acmwebsite', 'wiki-assets/FrontPage.rst')
+        blobid = self.repo.create_blob_fromdisk(filepath)
         tb.insert(filename, blobid, pg.GIT_FILEMODE_BLOB)
         tree = tb.write()
-        
+
         # Commit the change
         branch_commit = self.repo.create_commit(
             'HEAD',
@@ -81,7 +80,7 @@ class WikiController(BaseController):
         revision_list.reverse()
         return dict(page=pagename, revisions=revision_list)
 
-    @expose('acmwebsite.templates.wiki_front')
+    @expose()
     def index(self):
         """Display the wiki frontpage"""
         tg.redirect('/wiki/FrontPage')
