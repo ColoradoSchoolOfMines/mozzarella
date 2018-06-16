@@ -63,7 +63,7 @@ class WikiController(BaseController):
         return dict(page=pagename, content=publish_parts(blob.data, writer_name='html5', settings_overrides={'initial_header_level': 2,})['body']) #TODO: probably could just open(file) and return raw data
     
 
-    # @expose('acmwebsite.templates.wiki_frontpage')
-    # def index(self):
-    #     """Display the wiki frontpage"""
-    #     pass
+    @expose('acmwebsite.templates.wiki_front')
+    def index(self):
+        """Display the wiki frontpage"""
+        return dict()
