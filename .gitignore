@@ -23,6 +23,7 @@ production.ini
 
 # Default wiki directory
 wiki.git/
+wiki/
 
 # Default assets directory
 assets/
