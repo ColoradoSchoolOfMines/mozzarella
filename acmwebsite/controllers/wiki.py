@@ -59,7 +59,8 @@ class WikiController(BaseController):
         if not tb.get(pagename + '.rst'):
             tg.abort(404, "Page not found")
         blob = self.repo.get(self.repo.head.peel(Tree)[pagename + '.rst'].id)
-        return dict(page=pagename, content=publish_parts(blob.data, writer_name='html5', settings_overrides={'initial_header_level': 2,})['body']) #TODO: probably could just open(file) and return raw data
+        settings = {'initial_header_level': 2, 'file_insertion_enabled': 0, 'raw_enabled': 0, 'disable_config': 1,}
+        return dict(page=pagename, content=publish_parts(blob.data, writer_name='html5', settings_overrides=settings)['body']) #TODO: probably could just open(file) and return raw data
     
     @expose('acmwebsite.templates.wiki_history')
     def history(self, pagename):
