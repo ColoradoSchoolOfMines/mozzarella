@@ -6,8 +6,7 @@ from acmwebsite.lib.base import BaseController
 from pygit2 import Repository,init_repository
 from pygit2 import Tree
 from pygit2 import Signature
-from pygit2 import GitError
-from pygit2 import GIT_FILEMODE_BLOB
+import pygit2 as pg
 
 from docutils.core import publish_parts
 
@@ -25,7 +24,7 @@ class WikiController(BaseController):
             if not repo_path:
                 tg.abort(400, "Wiki not enabled")
             self.repo = Repository(repo_path)
-        except GitError:
+        except pg.GitError:
             self._init_wiki_repo()
 
     def _init_wiki_repo(self):
@@ -40,7 +39,7 @@ class WikiController(BaseController):
 
         # Create blob from frontpage content and insert into tree
         blobid = self.repo.create_blob(data)
-        tb.insert(filename, blobid, GIT_FILEMODE_BLOB)
+        tb.insert(filename, blobid, pg.GIT_FILEMODE_BLOB)
         tree = tb.write()
         
         # Commit the change
@@ -63,6 +62,22 @@ class WikiController(BaseController):
         settings = {'initial_header_level': 2, 'file_insertion_enabled': 0, 'raw_enabled': 0, 'disable_config': 1,}
         return dict(page=pagename, content=publish_parts(blob.data, writer_name='html5', settings_overrides=settings)['body']) #TODO: probably could just open(file) and return raw data
     
+    @expose('acmwebsite.templates.wiki_history')
+    def history(self, pagename):
+        filename = pagename + ".rst"
+        revision_list = [] 
+        last_id = None
+
+        for commit in self.repo.walk(self.repo.head.target, pg.GIT_SORT_TIME | pg.GIT_SORT_REVERSE):
+            if filename in commit.tree:
+                entry = commit.tree[filename]
+                if entry.id != last_id:
+                    revision_list.append({"author": commit.author, "time": commit.commit_time, "message": commit.message})
+                last_id = entry.id 
+        if not revision_list:
+            tg.abort(404, "Page not found")
+        revision_list.reverse()
+        return dict(page=pagename, revisions=revision_list)
 
     @expose('acmwebsite.templates.wiki_front')
     def index(self):
