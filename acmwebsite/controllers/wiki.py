@@ -60,7 +60,7 @@ class WikiController(BaseController):
             tg.abort(404, "Page not found")
         blob = self.repo.get(self.repo.head.peel(Tree)[pagename + '.rst'].id)
         settings = {'initial_header_level': 2, 'file_insertion_enabled': 0, 'raw_enabled': 0, 'disable_config': 1,}
-        return dict(page=pagename, content=publish_parts(blob.data, writer_name='html5', settings_overrides=settings)['body']) #TODO: probably could just open(file) and return raw data
+        return dict(pagename=pagename, parts=publish_parts(blob.data, writer_name='html5', settings_overrides=settings))
     
     @expose('acmwebsite.templates.wiki_history')
     def history(self, pagename):
@@ -68,13 +68,15 @@ class WikiController(BaseController):
         revision_list = [] 
         last_id = None
 
+        #Get a list of commits that include the queried file
         for commit in self.repo.walk(self.repo.head.target, pg.GIT_SORT_TIME | pg.GIT_SORT_REVERSE):
             if filename in commit.tree:
                 entry = commit.tree[filename]
-                if entry.id != last_id:
+                if entry.id != last_id: #Only add commit to history if it actually altered the file.
                     revision_list.append({"author": commit.author, "time": commit.commit_time, "message": commit.message})
-                last_id = entry.id 
-        if not revision_list:
+                last_id = entry.id
+
+        if not revision_list: #No commits found that include file - possibly faulty?
             tg.abort(404, "Page not found")
         revision_list.reverse()
         return dict(page=pagename, revisions=revision_list)
@@ -82,4 +84,4 @@ class WikiController(BaseController):
     @expose('acmwebsite.templates.wiki_front')
     def index(self):
         """Display the wiki frontpage"""
-        return dict()
+        tg.redirect('/wiki/FrontPage')
