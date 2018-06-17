@@ -1,0 +1,21 @@
+<html py:strip=""
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <py:extends href="master.xhtml" />
+
+  <head py:block="head" py:strip="True">
+    <title>${tg.config.get('site.name')} Wiki - Page List</title>
+  </head>
+
+  <body py:block="body" py:strip="True">
+    <h1 class="page-header">Page List</h1>
+    <div class="container">
+      <div class="row" py:for="page in pages">
+        <div class="col">
+          <a href="$page">$page</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

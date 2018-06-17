@@ -59,11 +59,7 @@ class WikiController(BaseController):
     def _default(self, pagename):
         """Display a specific page"""
         settings = {'initial_header_level': 2, 'file_insertion_enabled': 0, 'raw_enabled': 0, 'disable_config': 1,}
-        if pagename == 'PageList':
-            # This is so dirty
-            string = "Page List\n=========" + '\n\n'.join('\n\n`%s`_\n\n.. _%s: /wiki/%s' % (tuple(entry.name[:-4] for i in range(2)) + (entry.name[:-4].replace(' ', '%20'),)) for entry in self.repo.head.peel(Tree))
-            return dict(pagename=pagename, parts=publish_parts(string, writer_name='html5', settings_overrides=settings))
-
+        
         tb = self.repo.TreeBuilder(self.repo.head.peel(Tree))
         if not tb.get(pagename + '.rst'):
             tg.abort(404, "Page not found")
@@ -89,9 +85,11 @@ class WikiController(BaseController):
         revision_list.reverse()
         return dict(page=pagename, revisions=revision_list)
 
-    # @expose('acmwebsite.templates.wiki_pagelist')
-    # def pagelist(self):
-        
+    @expose('acmwebsite.templates.wiki_pagelist')
+    def pagelist(self):
+        pages = [entry.name[:-4] for entry in self.repo.head.peel(Tree)]
+        return dict(pages=pages)
+
 
     @expose()
     def index(self):
