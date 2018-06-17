@@ -35,10 +35,6 @@ class WikiController(BaseController):
 
         # Create blob from frontpage content and insert into tree
         from pkg_resources import resource_filename
-        filename = "FrontPage.rst"
-        filepath = resource_filename('acmwebsite', 'wiki-assets/FrontPage.rst')
-        blobid = self.repo.create_blob_fromdisk(filepath)
-        tb.insert(filename, blobid, pg.GIT_FILEMODE_BLOB)
         filename = "PageList.rst"
         filepath = resource_filename('acmwebsite', 'wiki-assets/PageList.rst')
         blobid = self.repo.create_blob_fromdisk(filepath)
@@ -58,13 +54,18 @@ class WikiController(BaseController):
     @expose('acmwebsite.templates.wiki_view')
     def _default(self, pagename):
         """Display a specific page"""
-        settings = {'initial_header_level': 2, 'file_insertion_enabled': 0, 'raw_enabled': 0, 'disable_config': 1,}
-        
+        settings = {'initial_header_level': 2,
+                    'file_insertion_enabled': 0,
+                    'raw_enabled': 0,
+                    'disable_config': 1,
+        }
+
         tb = self.repo.TreeBuilder(self.repo.head.peel(Tree))
         if not tb.get(pagename + '.rst'):
             tg.abort(404, "Page not found")
         blob = self.repo.get(self.repo.head.peel(Tree)[pagename + '.rst'].id)
-        return dict(pagename=pagename, parts=publish_parts(blob.data, writer_name='html5', settings_overrides=settings))
+        document = publish_parts(blob.data, writer_name='html5', settings_overrides=settings)
+        return dict(pagename=pagename, parts=document)
 
     @expose('acmwebsite.templates.wiki_history')
     def history(self, pagename):
@@ -73,16 +74,18 @@ class WikiController(BaseController):
         last_id = None
 
         #Get a list of commits that include the queried file
-        for commit in self.repo.walk(self.repo.head.target, pg.GIT_SORT_TIME | pg.GIT_SORT_REVERSE):
+        flags = pg.GIT_SORT_TIME
+        for commit in self.repo.walk(self.repo.head.target, flags):
             if filename in commit.tree:
                 entry = commit.tree[filename]
-                if entry.id != last_id: #Only add commit to history if it actually altered the file.
-                    revision_list.append({"author": commit.author, "time": commit.commit_time, "message": commit.message})
+                if entry.id != last_id: #Only add to history if it file chnaged.
+                    revision_list.append({"author": commit.author,
+                                          "time": commit.commit_time,
+                                          "message": commit.message})
                 last_id = entry.id
 
-        if not revision_list: #No commits found that include file - possibly faulty?
+        if not revision_list: #No commits include file - possibly faulty?
             tg.abort(404, "Page not found")
-        revision_list.reverse()
         return dict(page=pagename, revisions=revision_list)
 
     @expose('acmwebsite.templates.wiki_pagelist')
