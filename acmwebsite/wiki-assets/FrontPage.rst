@@ -14,12 +14,13 @@ must be in `reStructuredText format`_ and have the file extension ``.rst``
 .. FIXME this still resolves to a local url
 .. _reStructuredText format: <http://docutils.sourceforge.net/rst.html>
 
-The wiki page titles depend on your ReST documents having titles.
+The wiki page titles depend on your ReST documents having titles - don't include
+any text before the page title.
 
 .. code:: rest
 
    This is a title
    ===============
 
-This page is in your wiki repository as ``FrontPage.rst``. To replace it (i.e. set a new
-index page for your wiki), replace this file with the new front page.
+This page is in your wiki repository as ``FrontPage.rst``. To replace it (i.e.
+set a new index page for your wiki), replace this file with the new front page.
