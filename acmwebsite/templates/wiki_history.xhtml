@@ -1,0 +1,40 @@
+<html py:strip=""
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <py:extends href="master.xhtml" />
+
+  <head py:block="head" py:strip="True">
+    <title>${tg.config.get('site.name')} Wiki - $page History</title>
+  </head>
+
+  <body py:block="body" py:strip="True">
+    <py:def function="revision(item)">
+      <td>
+        ${item["message"]}
+      </td>
+      <td>
+        ${item["author"].name}
+      </td>
+      <td>
+        ${item["time"]}
+      </td>
+    </py:def>  
+
+
+    <h1 class="page-header">History: <a href="${tg.url('/wiki/%s' % page)}">$page</a></h1>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Commit Message</th>
+          <th>Author</th>
+          <th>Commit time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr py:for="entry in revisions">${revision(entry)}</tr>
+      </tbody>
+    </table>
+  </body>
+</html>

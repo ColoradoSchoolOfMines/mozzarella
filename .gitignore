@@ -20,3 +20,10 @@ pip-log.txt
 # paste config files
 development.ini
 production.ini
+
+# Default wiki directory
+wiki.git/
+wiki/
+
+# Default assets directory
+assets/
