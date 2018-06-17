@@ -39,6 +39,10 @@ class WikiController(BaseController):
         filepath = resource_filename('acmwebsite', 'wiki-assets/FrontPage.rst')
         blobid = self.repo.create_blob_fromdisk(filepath)
         tb.insert(filename, blobid, pg.GIT_FILEMODE_BLOB)
+        filename = "PageList.rst"
+        filepath = resource_filename('acmwebsite', 'wiki-assets/PageList.rst')
+        blobid = self.repo.create_blob_fromdisk(filepath)
+        tb.insert(filename, blobid, pg.GIT_FILEMODE_BLOB)
         tree = tb.write()
 
         # Commit the change
@@ -59,6 +63,9 @@ class WikiController(BaseController):
             tg.abort(404, "Page not found")
         blob = self.repo.get(self.repo.head.peel(Tree)[pagename + '.rst'].id)
         settings = {'initial_header_level': 2, 'file_insertion_enabled': 0, 'raw_enabled': 0, 'disable_config': 1,}
+        if pagename == 'PageList':
+            string = ''.join('\n\n%s' % entry.name[:-4] for entry in self.repo.head.peel(Tree))
+            return dict(pagename=pagename, parts=publish_parts(string, writer_name='html5', settings_overrides=settings))
         return dict(pagename=pagename, parts=publish_parts(blob.data, writer_name='html5', settings_overrides=settings))
     
     @expose('acmwebsite.templates.wiki_history')
