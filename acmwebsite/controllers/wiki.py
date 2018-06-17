@@ -58,20 +58,22 @@ class WikiController(BaseController):
     @expose('acmwebsite.templates.wiki_view')
     def _default(self, pagename):
         """Display a specific page"""
+        settings = {'initial_header_level': 2, 'file_insertion_enabled': 0, 'raw_enabled': 0, 'disable_config': 1,}
+        if pagename == 'PageList':
+            # This is so dirty
+            string = "Page List\n=========" + '\n\n'.join('\n\n`%s`_\n\n.. _%s: /wiki/%s' % (tuple(entry.name[:-4] for i in range(2)) + (entry.name[:-4].replace(' ', '%20'),)) for entry in self.repo.head.peel(Tree))
+            return dict(pagename=pagename, parts=publish_parts(string, writer_name='html5', settings_overrides=settings))
+
         tb = self.repo.TreeBuilder(self.repo.head.peel(Tree))
         if not tb.get(pagename + '.rst'):
             tg.abort(404, "Page not found")
         blob = self.repo.get(self.repo.head.peel(Tree)[pagename + '.rst'].id)
-        settings = {'initial_header_level': 2, 'file_insertion_enabled': 0, 'raw_enabled': 0, 'disable_config': 1,}
-        if pagename == 'PageList':
-            string = ''.join('\n\n%s' % entry.name[:-4] for entry in self.repo.head.peel(Tree))
-            return dict(pagename=pagename, parts=publish_parts(string, writer_name='html5', settings_overrides=settings))
         return dict(pagename=pagename, parts=publish_parts(blob.data, writer_name='html5', settings_overrides=settings))
-    
+
     @expose('acmwebsite.templates.wiki_history')
     def history(self, pagename):
         filename = pagename + ".rst"
-        revision_list = [] 
+        revision_list = []
         last_id = None
 
         #Get a list of commits that include the queried file
@@ -86,6 +88,10 @@ class WikiController(BaseController):
             tg.abort(404, "Page not found")
         revision_list.reverse()
         return dict(page=pagename, revisions=revision_list)
+
+    # @expose('acmwebsite.templates.wiki_pagelist')
+    # def pagelist(self):
+        
 
     @expose()
     def index(self):
