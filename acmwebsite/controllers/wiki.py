@@ -35,8 +35,8 @@ class WikiController(BaseController):
 
         # Create blob from frontpage content and insert into tree
         from pkg_resources import resource_filename
-        filename = "PageList.rst"
-        filepath = resource_filename('acmwebsite', 'wiki-assets/PageList.rst')
+        filename = "FrontPage.rst"
+        filepath = resource_filename('acmwebsite', 'wiki-assets/FrontPage.rst')
         blobid = self.repo.create_blob_fromdisk(filepath)
         tb.insert(filename, blobid, pg.GIT_FILEMODE_BLOB)
         tree = tb.write()
