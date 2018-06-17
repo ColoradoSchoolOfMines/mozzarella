@@ -74,8 +74,7 @@ class WikiController(BaseController):
         last_id = None
 
         #Get a list of commits that include the queried file
-        flags = pg.GIT_SORT_TIME
-        for commit in self.repo.walk(self.repo.head.target, flags):
+        for commit in self.repo.walk(self.repo.head.target, pg.GIT_SORT_TIME):
             if filename in commit.tree:
                 entry = commit.tree[filename]
                 if entry.id != last_id: #Only add to history if it file chnaged.
