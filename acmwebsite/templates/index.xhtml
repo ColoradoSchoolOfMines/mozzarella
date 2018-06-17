@@ -8,8 +8,8 @@
   </head>
   <body py:block="body" py:strip="True">
     <div class="row">
-      <div class="col-md-7">
-        <div py:if="banner is not None" class="home-banner">
+      <div py:if="banner is not None" class="col-md-7">
+        <div class="home-banner">
           <img class="home-banner-img" src="${banner.photo.url}" />
           <small py:if="banner.description" py:content="h.rst(banner.description)"></small>
         </div>
