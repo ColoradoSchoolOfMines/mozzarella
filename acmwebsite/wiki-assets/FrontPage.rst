@@ -11,8 +11,7 @@ To edit or add pages to the wiki, clone the wiki repository, edit or create your
 pages, then commit and push them the remote repository on the website. Pages
 must be in `reStructuredText format`_ and have the file extension ``.rst``
 
-.. FIXME this still resolves to a local url
-.. _reStructuredText format: <http://docutils.sourceforge.net/rst.html>
+.. _reStructuredText format: http://docutils.sourceforge.net/rst.html
 
 The wiki page titles depend on your ReST documents having titles - don't include
 any text before the page title.

@@ -1,4 +1,8 @@
 """Wiki controller module"""
+import os
+import tg
+import pygit2 as pg
+
 from tg import expose
 
 from acmwebsite.lib.base import BaseController
@@ -6,12 +10,9 @@ from acmwebsite.lib.base import BaseController
 from pygit2 import Repository,init_repository
 from pygit2 import Tree
 from pygit2 import Signature
-import pygit2 as pg
 
 from docutils.core import publish_parts
 
-import os
-import tg
 
 __all__ = ['WikiController']
 
@@ -22,7 +23,7 @@ class WikiController(BaseController):
         try:
             repo_path = tg.config.get('wiki.repo')
             if not repo_path:
-                tg.abort(400, "Wiki not enabled")
+                tg.abort(404, "Wiki not enabled")
             self.repo = Repository(repo_path)
         except pg.GitError:
             self._init_wiki_repo()
