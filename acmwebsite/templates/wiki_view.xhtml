@@ -19,7 +19,7 @@
       <nav class="navbar navbar-default">
         <ul class="nav navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="${tg.url('/wiki/history/%s' % pagename)}">History</a>
+            <a class="nav-link" href="${tg.url('/wiki/history/{}/'.format(pagename))}">History</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="${tg.url('/wiki/pagelist')}">Page List</a>
@@ -27,6 +27,5 @@
         </ul>
       </nav>
     </div>
-
   </body>
 </html>
