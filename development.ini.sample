@@ -16,6 +16,13 @@ debug = true
 # Site name configuration
 #site.name = Mozzarella
 
+# Custom Assets Configuration
+#site.custom_assets = %(here)s/assets
+
+# Wiki repository location
+#wiki.repo = %(here)s/wiki.git
+
+
 # ERROR REPORTING BY EMAIL
 # Uncomment to enable email error reporting, you probably want this
 # on production to receive application crashes by email
@@ -137,12 +144,6 @@ depot.storage_path = /tmp/depot
 meetings.timezone = America/Denver
 meetings.default_duration = 7200
 meetings.icalendar.prodid = -//Mines ACM//web//EN
-
-# Custom Assets Configuration
-#site.custom_assets = %(here)s/assets
-
-# Wiki repository location
-#wiki.repo = %(here)s/wiki.git
 
 # Logging configuration
 # Add additional loggers, handlers, formatters here
