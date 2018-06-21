@@ -12,6 +12,7 @@ from pygit2 import Tree
 from pygit2 import Signature
 
 from docutils.core import publish_parts
+from kajiki import TextTemplate
 
 
 __all__ = ['WikiController']
@@ -33,8 +34,10 @@ class WikiController(BaseController):
         }
 
         blob = self.repo.get(self.entry.id)
-        document = publish_parts(blob.data, writer_name='html5', settings_overrides=settings)
-        return dict(pagename=self.entry.name.strip('.rst'), parts=document)
+        template = TextTemplate(str(blob.data, 'utf-8'))
+        formatted = template(dict(tg=tg, filename=self.entry.name))
+        document = publish_parts(formatted.render(), writer_name='html5', settings_overrides=settings)
+        return dict(pagename=self.entry.name.strip('.rst'), parts=document, tmp=TextTemplate)
 
     @expose('acmwebsite.templates.wiki_history')
     def history(self):
@@ -43,8 +46,8 @@ class WikiController(BaseController):
 
         #Get a list of commits that include the queried file
         for commit in self.repo.walk(self.repo.head.target, pg.GIT_SORT_TIME):
-            if filename in commit.tree:
-                entry = commit.tree[filename]
+            if self.entry.name in commit.tree:
+                entry = commit.tree[self.entry.name]
                 if entry.id != last_id: #Only add to history if it file chnaged.
                     revision_list.append({"author": commit.author,
                                           "time": commit.commit_time,
@@ -53,7 +56,7 @@ class WikiController(BaseController):
 
         if not revision_list: #No commits include file - possibly faulty?
             tg.abort(404, "Page not found")
-        return dict(page=pagename, revisions=revision_list)
+        return dict(page=entry.name.strip('.rst'), revisions=revision_list)
 
 class WikiPagesController(BaseController):
     def __init__(self):
@@ -99,7 +102,7 @@ class WikiPagesController(BaseController):
         tree = tb.write()
 
         # Commit the change
-        branch_commit = self.repo.create_commit(
+        initial_commit = self.repo.create_commit(
             'HEAD',
             signature,
             signature,
