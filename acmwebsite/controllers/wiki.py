@@ -48,7 +48,7 @@ class WikiController(BaseController):
         for commit in self.repo.walk(self.repo.head.target, pg.GIT_SORT_TIME):
             if self.entry.name in commit.tree:
                 entry = commit.tree[self.entry.name]
-                if entry.id != last_id: #Only add to history if it file chnaged.
+                if entry.id != last_id: #Only add to history if it file changed.
                     revision_list.append({"author": commit.author,
                                           "time": commit.commit_time,
                                           "message": commit.message})
