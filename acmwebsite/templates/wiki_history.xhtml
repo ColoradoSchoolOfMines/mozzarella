@@ -11,13 +11,13 @@
   <body py:block="body" py:strip="True">
     <py:def function="revision(item)">
       <td>
-        ${item["message"]}
+        ${item.message}
       </td>
       <td>
-        ${item["author"].name}
+        ${item.author.name}
       </td>
       <td>
-        ${item["time"]}
+        ${item.commit_time}
       </td>
     </py:def>  
 

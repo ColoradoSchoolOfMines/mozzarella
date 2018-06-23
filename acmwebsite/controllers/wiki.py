@@ -49,9 +49,7 @@ class WikiController(BaseController):
             if self.entry.name in commit.tree:
                 entry = commit.tree[self.entry.name]
                 if entry.id != last_id: #Only add to history if it file changed.
-                    revision_list.append({"author": commit.author,
-                                          "time": commit.commit_time,
-                                          "message": commit.message})
+                    revision_list.append(commit)
                 last_id = entry.id
 
         if not revision_list: #No commits include file - possibly faulty?
