@@ -1,0 +1,6 @@
+<html>
+  <div class="col-md-4">
+    <img py:if="project.image" src="${project.image.url}" class="card-image" />
+  </div>
+  <div class="col-md-8" py:content="h.rst(project.description, multipar=True)" />
+</html>
