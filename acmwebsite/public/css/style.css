@@ -95,9 +95,17 @@
   font-style: italic;
 }
 
-.acm-officer-img {
+/* Profile Styles */
+.profile-image {
   width: 100%;
   border-radius: 8px;
+}
+
+.profile-tagline {
+  font-size: 1.4em;
+  margin-top: -10px;
+  display: block;
+  margin-bottom: 10px;
 }
 
 /* Homepage */
@@ -144,16 +152,20 @@
   margin-bottom: 10px;
 }
 
-.project-list-item .project-title,
-.project-links li {
+.bold-list li {
   font-weight: bold;
 }
 
+.dot-separated-list {
+  margin-bottom: 0px;
+}
+
 /* Add a dot between every project link */
-.project-links li:not(:last-child)::after {
+.dot-separated-list li:not(:last-child)::after {
   content: '\00B7';
   font-size: 20px;
   margin-left: 10px;
+  line-height: 1em;
 }
 
 /* Footer */
@@ -165,4 +177,16 @@ footer .social-links {
 
 footer .social-links a:not(:last-child) {
   margin-right: 10px;
+}
+
+.profile-card {
+  overflow-y: auto;
+  height: 17em;
+  min-height: 17em;
+}
+
+.card-image {
+  border-radius: 8px;
+  width: 100%;
+  margin-bottom: 5px;
 }
