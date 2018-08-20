@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Profile controller module"""
 
-from tg import expose, redirect, abort
+from tg import expose, redirect, abort, url
 from depot.manager import DepotManager
 
 from acmwebsite.lib.base import BaseController
@@ -33,7 +33,10 @@ class UserController(BaseController):
 
     @expose()
     def picture(self):
-        redirect(DepotManager.url_for(self.user.profile_pic.path))
+        if self.user.profile_pic:
+            redirect(DepotManager.url_for(self.user.profile_pic.path))
+        else:
+            redirect(url('/img/default_user.png'))
 
     @expose('acmwebsite.templates.profile_edit')
     def edit(self):
