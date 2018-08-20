@@ -95,8 +95,8 @@ class User(DeclarativeBase):
     created = Column(DateTime, default=datetime.now)
     officer_title = Column(Unicode(255), nullable=True)
     profile_pic = Column(UploadedFileField)
-    bio = Column(Unicode(255), nullable=True)
-    github_username = Column(Unicode(255), nullable=True)
+    bio = Column(Unicode(256), nullable=True)
+    github_username = Column(Unicode(256), nullable=True)
     tagline = Column(Unicode(256), nullable=True)
     projects = relation('Project', secondary='team', back_populates='team_members')
 
