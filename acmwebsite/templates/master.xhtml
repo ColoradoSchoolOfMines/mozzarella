@@ -90,8 +90,8 @@
           <!-- Social Links -->
           <p class="social-links">
             <a py:for="link in [k.split('.')[1] for k in tg.config.keys() if k.startswith('social_link.')]"
-              py:content="h.fa_icon(link)"
               href="${tg.config.get('social_link.{}'.format(link))}">
+              <i class="fa fa-${link}" aria-hidden="true"></i>
             </a>
           </p>
         </footer>

@@ -90,8 +90,8 @@ class User(DeclarativeBase):
     created = Column(DateTime, default=datetime.now)
     officer_title = Column(Unicode(255), nullable=True)
     profile_pic = Column(UploadedFileField)
-    bio = Column(Unicode(255), nullable=True)
-    github_username = Column(Unicode(255), nullable=True)
+    bio = Column(Unicode(256), nullable=True)
+    github_username = Column(Unicode(256), nullable=True)
     tagline = Column(Unicode(256), nullable=True)
     projects = relation('Project', secondary='team', back_populates='team_members')
 
@@ -110,10 +110,7 @@ class User(DeclarativeBase):
 
     @property
     def profile_image_url(self):
-        if self.profile_pic:
-            return tg.url('/u/{}/picture'.format(self.user_name))
-        else:
-            return tg.url('/img/default_user.png')
+        return tg.url('/u/{}/picture'.format(self.user_name))
 
     @property
     def email_address(self):

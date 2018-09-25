@@ -5,18 +5,61 @@ import email
 import tg
 import transaction
 import email.policy
-from acmwebsite.model import MailMessage, DBSession
-from acmwebsite.lib.helpers import log
+import logging
+from acmwebsite.model import MailMessage, MailAttachment, DBSession
 from sqlalchemy.sql import exists
+from  depot.io.utils import FileIntent
 
-archivefiles_p = re.compile(r'<td><A href="([a-zA-Z0-9_-]+\.txt)">\[ Text \d+ \w+ \]</a></td>')
+log = logging.getLogger(__name__)
+
+nextpart = '-------------- next part --------------\n'
+archivefiles_p = re.compile(
+    r'<td><A href="([a-zA-Z0-9_-]+\.txt)">\[ Text \d+ \w+ \]</a></td>')
 fromline_p = re.compile(r'^From: (\w+) at ([A-Za-z0-9.-]+) \(([^\)]+)\)$')
 fromline2_p = re.compile(r'^From: (\w+) at ([A-Za-z0-9.-]+)$')
 subject_p = re.compile(r'^(?:\[ACMx?\] )?(.*)$')
-completed_one = False
+scrubbed_p = re.compile(r'An? ([\w-]+) attachment was scrubbed...')
+
 
 def parse_message(msgstring):
     return email.message_from_string(msgstring, policy=email.policy.default)
+
+
+def parse_attachment(attstring):
+    if not attstring:
+        return
+
+    m = scrubbed_p.match(attstring)
+    if m:
+        atype = m.group(1)
+    else:
+        return
+
+    aparts = {}
+    for line in attstring.splitlines():
+        k, s, v = line.partition(': ')
+        if not s:
+            continue
+        aparts[k.casefold()] = v
+
+    if 'type' not in aparts.keys() and atype == 'HTML':
+        aparts['type'] = 'text/html'
+
+    if aparts.get('type') == 'application/pgp-signature':
+        # Unfortunately, Mailman has a tendency to mutilate the
+        # messages, so PGP signatures aren't useful :-(
+        return False
+
+    if 'url' not in aparts.keys() or '/private/' in aparts['url']:
+        return False
+
+    r = requests.get(aparts['url'][1:-1])
+    if not r.ok:
+        log.warning("Failed to download attachment {}".format(r.url))
+        return False
+
+    return FileIntent(r.content, aparts.get('name'), aparts.get('type'))
+
 
 def get_plaintext_body(message):
     body = ""
@@ -27,19 +70,17 @@ def get_plaintext_body(message):
             cdispo = str(part.get('Content-Disposition'))
 
             if ctype == 'text/plain' and 'attachment' not in cdispo:
-                body = part.get_payload(decode=True)  # decode
+                body = part.get_payload(decode=True)
                 break
     else:
         body = message.get_payload(decode=True)
 
     if isinstance(body, bytes):
         body = body.decode('utf-8')
-
     return body
 
+
 def pmsync():
-    log.info("Starting mail sync from pipermail")
-    global completed_one
     session = requests.Session()
     pmurl = tg.config.get("mailman.pipermail.url")
     r = session.get(pmurl)
@@ -65,26 +106,47 @@ def pmsync():
                 msglines.append(line)
         messages.append(parse_message('\n'.join(msglines)))
         for message in messages:
-            if DBSession.query(MailMessage).filter(MailMessage.message_id == message.get('message-id')).count():
+            message_id = message.get('message-id')
+            date = email.utils.parsedate_to_datetime(
+                message.get('date', '1 Jan 1970 00:00:00 -0000'))
+
+            if (DBSession.query(MailMessage)
+                         .filter(MailMessage.message_id == message_id)
+                         .count()):
                 # this is already in our databases
-                continue
+                transaction.commit()
+                return
+
             m = subject_p.match(message.get('subject', ''))
             subject = m.group(1)
-            DBSession.add(
-                MailMessage(
-                    message_id=message.get('message-id'),
-                    from_=message.get('from'),
-                    date=email.utils.parsedate_to_datetime(message.get('date', '1 Jan 1970 00:00:00 -0000')),
-                    subject=subject,
-                    body=get_plaintext_body(message),
-                    parent_message_id=message.get('in-reply-to'))
-            )
-        DBSession.flush()
-        if completed_one:
-            transaction.commit()
-            log.info("Stopping sync for now as I think I have done everything else recently")
-            return
-    completed_one=True
+
+            body = get_plaintext_body(message)
+            attachments = []
+            while True:
+                nbody, _, attstring = body.rpartition(nextpart)
+                attachment = parse_attachment(attstring)
+                if attachment is None:
+                    break
+                if attachment is not False:
+                    attachments.append(attachment)
+                body = nbody
+
+            mm = MailMessage(
+                message_id=message_id,
+                from_=message.get('from'),
+                date=date,
+                subject=subject,
+                body=body,
+                parent_message_id=message.get('in-reply-to'))
+            DBSession.add(mm)
+
+            for f in reversed(attachments):
+                DBSession.add(
+                    MailAttachment(
+                        message=mm,
+                        file=f))
+
+            DBSession.flush()
+
     transaction.commit()
-    log.info("Complete sync finished")
 

@@ -8,7 +8,7 @@
   </head>
 
   <div py:def="unknown_type(ty)">
-    Unknown survey field! 
+    Unknown survey field!
   </div>
 
   <body py:block="body" py:strip="True">
@@ -28,7 +28,7 @@
             </p>
           </div>
           <py:for each="f in survey.fields" py:with="fo = f.type_object()">
-            ${(getattr(comp, fo.template) or unknown_type)(fo)}
+            ${getattr(comp, fo.template, unknown_type)(fo)}
           </py:for>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>

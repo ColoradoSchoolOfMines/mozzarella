@@ -1,4 +1,6 @@
-# -*- coding: utf-8 -*-
+"""
+Schedule page and iCalendar controller
+"""
 import datetime
 import pytz
 
@@ -6,7 +8,6 @@ from icalendar import Calendar, Event
 from tg import expose, response, request, config
 
 from acmwebsite.lib.base import BaseController
-from acmwebsite.lib.helpers import log
 from acmwebsite.model import DBSession, Meeting
 
 

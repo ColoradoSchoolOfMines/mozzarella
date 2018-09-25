@@ -36,3 +36,11 @@ class Meeting(DeclarativeBase):
         """Return the meetings duration as a ``datetime.timedelta``."""
         return datetime.timedelta(seconds=self._duration or
                                   int(config.get('meetings.default_duration')))
+
+    @property
+    def has_specific_duration(self):
+        """
+        Returns ``True`` if the meeting has a specified duration,
+        ``False`` otherwise.
+        """
+        return bool(self._duration)

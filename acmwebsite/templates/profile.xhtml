@@ -21,11 +21,11 @@
         <span class="profile-tagline" py:content="u.tagline" />
         <ul class="list-inline bold-list dot-separated-list">
           <li>
-            ${h.icon('envelope')}
+            <i class="fa fa-envelope" aria-hidden="true"></i>
             ${Markup(u.email_address_html)}
           </li>
           <li py:if="u.github_username">
-            ${h.fa_icon('github')}
+            <i class="fa fa-github" aria-hidden="true"></i>
             <a href="${'https://github.com/{}'.format(u.github_username)}" target="_blank">
               ${u.github_username}
             </a>
