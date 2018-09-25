@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Setup the acm-website application"""
 
 import logging

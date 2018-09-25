@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from itertools import chain
 
 import tg
@@ -25,6 +24,8 @@ class CardTypes:
         """
 
         def _generate_cards(*args, **kwargs):
+            """Render every card using :func:`tg.render_template`. All
+            arguments are given to each of the card generators"""
             for gened in generator(*args, **kwargs):
                 if title_template is not None:
                     gened.title_escape = False
@@ -53,7 +54,8 @@ class CardTypes:
         importing the card api::
             <py:import href="acmwebsite.templates.card_section" alias="cards"/>
 
-        and then, when necessary, generating the cards anywhere on the webpage::
+        and then, when necessary, generating the cards anywhere on the
+        webpage::
             ${cards.section(cardlist)}
         """
         return chain(*(card_gen(*args, **kwargs) for card_gen in self.list))

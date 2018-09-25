@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Seed the Mozzarella database"""
 import transaction
 from acmwebsite import model

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 #  Quickstarted Options:
 #
@@ -51,7 +50,9 @@ install_requires = [
     "WebHelpers2",
     "zope.sqlalchemy >= 0.4",
     "Pillow",
+    'sphinx[doc]'
 ]
+
 
 if py_version != (3, 2):
     # Babel not available on 3.2

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Meetings controller module"""
 
 from tg import expose, redirect, abort

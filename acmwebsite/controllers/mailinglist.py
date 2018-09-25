@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """MailingListController controller module"""
 
 import re

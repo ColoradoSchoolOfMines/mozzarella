@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Error controller"""
 from tg import request, expose
 from acmwebsite.lib.base import BaseController

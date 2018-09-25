@@ -20,3 +20,7 @@ pip-log.txt
 # paste config files
 development.ini
 production.ini
+
+# Sphinx Autodoc Result
+docs/api
+docs/_build/*

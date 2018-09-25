@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Profile controller module"""
 
 from tg import expose, redirect, abort, url

@@ -1,7 +1,9 @@
 import concurrent.futures
 import requests
 import re
-from acmwebsite.lib.mpapi_connector import uidinfo, InvalidUsername
+
+from acmwebsite.lib.mpapi_connector import uidinfo
+
 
 
 class MailmanSession(requests.Session):

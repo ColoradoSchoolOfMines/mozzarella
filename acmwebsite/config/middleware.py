@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """WSGI middleware initialization for the acm-website application."""
 from acmwebsite.config.app_cfg import base_config
 from acmwebsite.config.environment import load_environment

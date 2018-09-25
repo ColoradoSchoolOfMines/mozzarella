@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Models for mailing list messages in Mozzarella."""
 import tg
 import re
@@ -10,6 +9,7 @@ from depot.fields.sqlalchemy import UploadedFileField
 from acmwebsite.model import DeclarativeBase, DBSession, User
 
 user_p = re.compile(r'<(\w+)@(?:mymail\.|alumni\.)?mines\.edu>')
+
 
 
 class MailMessage(DeclarativeBase):

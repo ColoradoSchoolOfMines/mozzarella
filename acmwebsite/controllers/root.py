@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Main Controller"""
 
 from tg import expose, flash, require, url, lurl, abort

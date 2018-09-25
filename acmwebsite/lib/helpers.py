@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Templating helper functions for generating views in Mozzarella.
 """
@@ -9,8 +8,7 @@ import tg
 
 
 def rst(source, multipar=False):
-    """
-    Parse a simple paragraph of reStructuredText. Methods which need
+    """Parse a simple paragraph of reStructuredText. Methods which need
     more complicated things (like parsing a whole document) should
     use ``docutils.core.publish_parts`` directly. [1]_
 
