@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Defines the Meeting model.
 
 Meetings are points in time when the club is meeting.

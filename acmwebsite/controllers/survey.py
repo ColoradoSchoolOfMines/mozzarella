@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from tg import abort, expose, flash, redirect, request, require
 from tg.predicates import has_permission
 

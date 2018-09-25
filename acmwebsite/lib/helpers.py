@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Templating helper functions for generating views in Mozzarella.
 """

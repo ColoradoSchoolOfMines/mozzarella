@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Models for mailing list messages in Mozzarella."""
 import tg
 import re

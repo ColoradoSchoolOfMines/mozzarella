@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """The application's Globals object"""
 
 import tg

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Defines the Banner model.
 
 Banners are the images displayed on the website's fron page with a description.

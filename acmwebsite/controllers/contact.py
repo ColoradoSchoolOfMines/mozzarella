@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Contact controller module"""
 
 from tg import expose

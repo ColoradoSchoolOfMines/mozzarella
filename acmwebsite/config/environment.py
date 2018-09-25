@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """WSGI environment setup for acm-website."""
 from acmwebsite.config.app_cfg import base_config
 

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """The base Controller API."""
 
 from tg import TGController, tmpl_context
