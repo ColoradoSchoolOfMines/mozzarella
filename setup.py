@@ -50,7 +50,7 @@ install_requires = [
     "WebHelpers2",
     "zope.sqlalchemy >= 0.4",
     "Pillow",
-    'sphinx[doc]'
+    "sphinx"
 ]
 
 
