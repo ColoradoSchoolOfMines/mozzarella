@@ -67,7 +67,9 @@ class RootController(BaseController):
 
     @expose('acmwebsite.templates.login')
     def login(self, came_from=lurl('/'), failure=None, login=''):
-        """Start the user login."""
+        """login(came_from=tg.lurl('/'), failure=None, login='')
+
+        Start the user login."""
         if failure is not None:
             if failure == 'user-not-found':
                 flash(_('User not found'), 'error')
@@ -83,10 +85,10 @@ class RootController(BaseController):
 
     @expose()
     def post_login(self, came_from=lurl('/')):
-        """
+        """post_login(came_from=tg.lurl('/'))
+
         Redirect the user to the initially requested page on successful
         authentication or redirect her back to the login page if login failed.
-
         """
         if not request.identity:
             login_counter = request.environ.get('repoze.who.logins', 0) + 1
@@ -101,10 +103,10 @@ class RootController(BaseController):
 
     @expose()
     def post_logout(self, came_from=lurl('/')):
-        """
+        """post_logout(came_from=tg.lurl('/'))
+
         Redirect the user to the initially requested page on logout and say
         goodbye as well.
-
         """
         flash(_('We hope to see you soon!'))
         return HTTPFound(location=came_from)

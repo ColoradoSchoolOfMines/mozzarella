@@ -24,6 +24,7 @@ class MailingListController(BaseController):
 
     @expose()
     def subscribe(self, came_from=lurl('/mailinglist'), ml_username=None, ml_fullname=None):
+        """subscribe(came_from=tg.lurl('/mailinglist'), ml_username=None, ml_fullname=None)"""
         try:
             app_globals.mmadmin.mymail_subscribe(ml_username, ml_fullname)
             flash("Successfully subscribed to mailing list")
