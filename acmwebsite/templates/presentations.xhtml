@@ -1,0 +1,40 @@
+<html py:strip=""
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <py:extends href="master.xhtml" />
+
+<head py:block="head" py:strip="True">
+  <title>Colorado School of Mines: LUG - Presentations</title>
+</head>
+
+<body py:block="body" py:strip="True">
+    <h1 class="page-header">Presentations</h1>
+    <div class="panel panel-default" py:for="p in presentations">
+        <div class="panel-heading">
+            <h2 class="panel-title lug-presentation-title" py:content="literal(p.title_md)"></h2>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="lug-presentation-description" py:content="literal(p.description_md)"></div>
+                    <ul class="lug-presentation-data">
+                        <li><b>Author:</b> <a href="${p.user.profile_path}">${p.user}</a></li>
+                        <li><b>Date:</b> ${p.date}</li>
+                    </ul>
+                </div>
+                <div py:if="p.thumbnail_url" class="col-md-3">
+                    <img src="${p.thumbnail_url}" class="img-fill" />
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <span py:for="link in p.link_tuples">
+                <a href="${link[0]}" class="btn btn-success btn-lg" target="_blank">
+                    <i class="${link[2]} fa-lg"></i> ${link[1]}
+                </a>
+            </span>
+        </div>
+    </div>
+</body>
+</html>

@@ -190,3 +190,8 @@ footer .social-links a:not(:last-child) {
   width: 100%;
   margin-bottom: 5px;
 }
+
+/* Presentation */
+.lug-presentation-title {
+    font-size: 20px !important;
+}
