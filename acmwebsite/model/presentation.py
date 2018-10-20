@@ -7,10 +7,12 @@ among its cohorts, usually during Meetings.
 import tarfile
 
 import yaml
+import bleach
 from sqlalchemy import Column, orm
 from sqlalchemy.types import Integer
 
 from acmwebsite.model import DeclarativeBase
+from acmwebsite.lib.helpers import rst
 
 
 class Presentation(DeclarativeBase):
@@ -36,3 +38,12 @@ class Presentation(DeclarativeBase):
         for k in self._meta:
             if isinstance(k, str) and k.lower() != k:
                 self._meta[k.lower()] = self._meta.pop(k)
+
+    @property
+    def title(self):
+        return bleach.clean(self._meta['title'] if 'title' in self._meta
+                            else 'No title')
+
+    @property
+    def title_rst(self):
+        return rst(self.title)

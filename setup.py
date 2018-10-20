@@ -52,6 +52,7 @@ install_requires = [
     "Pillow",
     "sphinx",
     "pyyaml",
+    "bleach",
 ]
 
 
