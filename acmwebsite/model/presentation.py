@@ -11,7 +11,7 @@ from acmwebsite.model import DeclarativeBase
 
 
 class Presentation(DeclarativeBase):
-    """A model that defines a a club presentation.
+    """A model that defines a club presentation.
 
     Presentations are slides, files, or other presentables that the club shares
     among its cohorts, usually during Meetings. They are displayed on the
