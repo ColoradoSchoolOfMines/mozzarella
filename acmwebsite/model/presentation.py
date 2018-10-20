@@ -47,3 +47,12 @@ class Presentation(DeclarativeBase):
     @property
     def title_rst(self):
         return rst(self.title)
+
+    @property
+    def description(self):
+        return bleach.clean(self._meta['description'] if 'description' in
+                            self._meta else 'No description')
+
+    @property
+    def description_rst(self):
+        return rst(self.description)
