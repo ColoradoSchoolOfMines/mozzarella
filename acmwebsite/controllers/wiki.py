@@ -56,14 +56,15 @@ class WikiController(BaseController):
         return dict(page=pagename, revisions=revision_list)
 
 class WikiPagesController(BaseController):
-    def __init__(self):
-        try:
+    def __new__(cls, repo_path=None):
+        if not repo_path:
             repo_path = tg.config.get('wiki.repo')
-            if not repo_path:
-                tg.abort(404, "Wiki not enabled")
-            self.repo = Repository(repo_path)
-        except pg.GitError:
-            self._init_wiki_repo()
+        if not repo_path:
+            return None
+
+        obj = super().__new__()
+        self.repo = Repository(repo_path)
+        return obj
 
     @expose()
     def _lookup(self, pagename=None, *args):
