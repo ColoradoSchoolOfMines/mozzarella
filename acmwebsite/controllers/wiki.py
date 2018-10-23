@@ -62,8 +62,8 @@ class WikiPagesController(BaseController):
         if not repo_path:
             return None
 
-        obj = super().__new__()
-        self.repo = Repository(repo_path)
+        obj = super().__new__(cls)
+        obj.repo = Repository(repo_path)
         return obj
 
     @expose()
@@ -84,27 +84,3 @@ class WikiPagesController(BaseController):
     def pagelist(self):
         pages = [entry.name[:-4] for entry in self.repo.head.peel(Tree)]
         return dict(pages=pages)
-
-    def _init_wiki_repo(self):
-        self.repo = init_repository(tg.config.get('wiki.repo'), True)
-        signature = Signature("Example McPersonson", "emailuser@emailsite.tld") #TODO: Replace me
-
-        tb = self.repo.TreeBuilder()
-
-        # Create blob from frontpage content and insert into tree
-        from pkg_resources import resource_filename
-        filename = "FrontPage.rst"
-        filepath = resource_filename('acmwebsite', 'wiki-assets/FrontPage.rst')
-        blobid = self.repo.create_blob_fromdisk(filepath)
-        tb.insert(filename, blobid, pg.GIT_FILEMODE_BLOB)
-        tree = tb.write()
-
-        # Commit the change
-        branch_commit = self.repo.create_commit(
-            'HEAD',
-            signature,
-            signature,
-            "Initial commit",
-            tree,
-            []
-        )
