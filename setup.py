@@ -53,6 +53,7 @@ install_requires = [
     "sphinx",
     "pyyaml",
     "bleach",
+    "file-magic",
 ]
 
 

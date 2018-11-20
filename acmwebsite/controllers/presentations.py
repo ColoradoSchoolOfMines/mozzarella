@@ -1,5 +1,5 @@
 """Presentations controller"""
-from tg import expose
+from tg import expose, request
 
 from acmwebsite.model import DBSession
 from acmwebsite.model.presentation import Presentation
@@ -15,3 +15,8 @@ class PresentationsController(BaseController):
         presentations.sort(key=lambda p: p.date, reverse=True)
 
         return dict(page='presentations', presentations=presentations)
+
+    @expose('acmwebsite.templates.upload_presentation')
+    def upload(self):
+        if request.method == 'GET':
+            return dict(page='upload_presentation')
