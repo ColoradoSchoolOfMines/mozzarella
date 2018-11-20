@@ -27,7 +27,7 @@ presentation_user_xref = Table('author_users', metadata,
                                       primary_key=True),
                                Column('user_id',
                                       Integer,
-                                      ForeignKey('user.user_id'),
+                                      ForeignKey('tg_user.user_id'),
                                       primary_key=True)
 )
 
