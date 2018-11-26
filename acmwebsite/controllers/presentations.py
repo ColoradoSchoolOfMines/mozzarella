@@ -16,7 +16,7 @@ class PresentationsController(BaseController):
 
         return dict(page='presentations', presentations=presentations)
 
-    @expose('acmwebsite.templates.upload_presentation')
+    @expose('acmwebsite.templates.presentation_upload')
     def upload(self):
         if request.method == 'GET':
-            return dict(page='upload_presentation')
+            return dict(page='presentation_upload')
