@@ -20,7 +20,7 @@ from acmwebsite.model.auth import User
 from acmwebsite.lib.helpers import rst
 
 
-presentation_user_xref = Table('author_users', metadata,
+presentation_user_xref = Table('presentation_author_user', metadata,
                                Column('presentation_id',
                                       Integer,
                                       ForeignKey('presentation.id'),
@@ -41,7 +41,7 @@ class Presentation(DeclarativeBase):
     """
     __tablename__ = 'presentation'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     tarball = Column(UploadedFileField)
     authors = relation('User', secondary=presentation_user_xref,
                        backref='presentations')
