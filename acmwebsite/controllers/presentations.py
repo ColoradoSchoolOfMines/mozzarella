@@ -9,7 +9,7 @@ __all__ = ['PresentationsController']
 
 class PresentationsController(BaseController):
     @expose('acmwebsite.templates.presentations')
-    def index():
+    def index(self):
         """List all presentations"""
         presentations = list(DBSession.query(Presentation))
         presentations.sort(key=lambda p: p.date, reverse=True)
