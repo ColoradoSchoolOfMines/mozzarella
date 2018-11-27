@@ -1,5 +1,5 @@
 """Presentations controller"""
-from tg import expose, request
+from tg import expose, request, redirect, url
 
 from acmwebsite.model import DBSession
 from acmwebsite.model.presentation import Presentation
@@ -18,5 +18,14 @@ class PresentationsController(BaseController):
 
     @expose('acmwebsite.templates.presentation_upload')
     def upload(self):
-        if request.method == 'GET':
+        if request.POST:
+            # TODO
+            pass
+            return '\n'.join(dir(request.POST))
+
+        # GET
+        if request.identity:
             return dict(page='presentation_upload')
+        else:
+            redirect(url('/login',
+                         params=dict(came_from='/presentations/upload')))

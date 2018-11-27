@@ -10,7 +10,10 @@
 
 <body py:block="body" py:strip="True">
     <h1 class="page-header">Presentations</h1>
-    <div class="panel panel-default" py:for="p in presentations">
+
+    <p py:if="not presentations">No presentations have been uploaded yet :(</p>
+
+    <div class="panel panel-default" py:if="presentations" py:for="p in presentations">
         <div class="panel-heading">
             <h2 class="panel-title mozz-presentation-title" py:content="literal(p.title_rst)"></h2>
         </div>
@@ -36,6 +39,8 @@
             </span>
         </div>
     </div>
+
+    <a href="${tg.url('/presentations/upload')}">Want to add your presentation to the page?</a>
 </body>
 
 </html>
