@@ -1,4 +1,0 @@
-git add: add changes to commit
-git commit : Post the commit -m "[description]"
-git log: show list of all commits
-git pull: update code to version currently online, may cause conflict
