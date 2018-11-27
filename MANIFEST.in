@@ -1,4 +1,4 @@
-recursive-include acmwebsite/public *
-include acmwebsite/public/favicon.ico
-recursive-include acmwebsite/i18n *
-recursive-include acmwebsite/templates *
+recursive-include mozzarella/public *
+include mozzarella/public/favicon.ico
+recursive-include mozzarella/i18n *
+recursive-include mozzarella/templates *

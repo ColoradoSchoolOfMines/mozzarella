@@ -51,7 +51,7 @@ use = egg:acm-website
 #i18n.lang = en
 
 cache_dir = %(here)s/data
-session.key = acmwebsite
+session.key = mozzarella
 session.secret = 2a654f87-1cb4-43fb-834b-413c449a71a8
 
 # Configuration to interface with ACM mailman
@@ -140,7 +140,7 @@ meetings.icalendar.prodid = -//Mines ACM//web//EN
 # Uses python's logging config file format
 # http://docs.python.org/lib/logging-config-fileformat.html
 [loggers]
-keys = root, acmwebsite, sqlalchemy, auth
+keys = root, mozzarella, sqlalchemy, auth
 
 [handlers]
 keys = console
@@ -153,10 +153,10 @@ keys = generic
 level = INFO
 handlers = console
 
-[logger_acmwebsite]
+[logger_mozzarella]
 level = DEBUG
 handlers =
-qualname = acmwebsite
+qualname = mozzarella
 [logger_sqlalchemy]
 level = WARN
 handlers =
