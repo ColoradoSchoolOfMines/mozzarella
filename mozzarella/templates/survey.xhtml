@@ -1,0 +1,38 @@
+<html py:strip=""
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:extends="master.xhtml">
+
+  <head py:block="head" py:strip="True">
+    <title>Mines ACM - Survey</title>
+  </head>
+
+  <div py:def="unknown_type(ty)">
+    Unknown survey field!
+  </div>
+
+  <body py:block="body" py:strip="True">
+    <py:import href="mozzarella.templates.survey_components" alias="comp" />
+
+    <h1 class="page-header">${survey.title or (survey.meeting and survey.meeting.title) or 'Survey'}</h1>
+    <div class="row">
+      <div class="col-md-8">
+        <p>Welcome to ACM! Please take a minute to fill out these questions.</p>
+        <form action="${tg.url('/s/{}/respond'.format(survey.id))}" method="post" id="meeting-form">
+          <div py:if="not luser" class="form-group">
+            <label for="_provided_name">Your Name</label>
+            <input type="text" name="_provided_name" id="_provided_name" class="form-control" />
+            <p class="form-text text-muted">… or
+              <a href="${tg.url('/login', params=dict(came_from='/s/{}/respond'.format(survey.id)))}">login</a>
+              using MultiPass
+            </p>
+          </div>
+          <py:for each="f in survey.fields" py:with="fo = f.type_object()">
+            ${getattr(comp, fo.template, unknown_type)(fo)}
+          </py:for>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
