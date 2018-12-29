@@ -1,1 +1,1 @@
-"""The acm-website package"""
+"""The mozzarella package"""

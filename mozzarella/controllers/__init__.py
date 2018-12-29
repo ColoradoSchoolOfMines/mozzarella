@@ -1,1 +1,1 @@
-"""Controllers for the acm-website application."""
+"""Controllers for the mozzarella application."""

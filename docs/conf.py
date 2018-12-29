@@ -71,7 +71,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
 
-# Currently necessary for much of the acmwebsite code.
+# Currently necessary for much of the mozzarella code.
 autodoc_mock_imports = ['PIL']
 
 # -- Options for HTML output -------------------------------------------------

@@ -1,4 +1,4 @@
-"""WSGI environment setup for acm-website."""
+"""WSGI environment setup for mozzarella."""
 from mozzarella.config.app_cfg import base_config
 
 __all__ = ['load_environment']
