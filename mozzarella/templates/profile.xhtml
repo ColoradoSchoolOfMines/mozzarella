@@ -1,0 +1,42 @@
+<html py:strip=""
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <py:extends href="master.xhtml" />
+
+  <head py:block="head" py:strip="True">
+      <title>Mines ACM - ${u}</title>
+  </head>
+
+  <body py:block="body" py:strip="True">
+    <py:import href="mozzarella.templates.card_section" alias="cards"/>
+
+    <div class="row">
+      <!-- Header -->
+      <div class="col-md-3">
+        <img src="${u.profile_image_url}" alt="${u}" class="profile-image" />
+      </div>
+      <div class="col-md-9">
+        <h1 py:content="u" />
+        <span class="profile-tagline" py:content="u.tagline" />
+        <ul class="list-inline bold-list dot-separated-list">
+          <li>
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+            ${Markup(u.email_address_html)}
+          </li>
+          <li py:if="u.github_username">
+            <i class="fa fa-github" aria-hidden="true"></i>
+            <a href="${'https://github.com/{}'.format(u.github_username)}" target="_blank">
+              ${u.github_username}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <hr />
+
+    <div class="row">
+      ${cards.section(cardlist)}
+    </div>
+  </body>
+</html>

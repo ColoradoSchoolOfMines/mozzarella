@@ -10,7 +10,7 @@ BUILDDIR      = _build
 SPHINXDOCBUILD = sphinx-apidoc
 SPHINXDOCOPTS  = -f
 DOCSSOURCE     = ./api/
-PROJECTDIR     = ../acmwebsite
+PROJECTDIR     = ../mozzarella
 
 
 # Put it first so that "make" without argument is like "make help".

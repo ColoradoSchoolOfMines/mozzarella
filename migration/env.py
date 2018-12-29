@@ -15,7 +15,7 @@ config = context.config
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from acmwebsite import model
+from mozzarella import model
 target_metadata = model.metadata
 
 # other values from the config, defined by the needs of env.py,
