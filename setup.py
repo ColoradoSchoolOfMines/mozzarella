@@ -59,7 +59,7 @@ if py_version != (3, 2):
     install_requires.append("Babel")
 
 setup(
-    name='acm-website',
+    name='mozzarella',
     version='0.1',
     description='',
     author='',
