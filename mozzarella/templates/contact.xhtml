@@ -6,13 +6,13 @@
     <div class="row">
       <div class="col-md-12">
         <h2>Contact</h2>
-        <div py:for="officer in officers" class="acm-officer-info row">
+        <div py:for="officer in officers" class="mozz-officer-info row">
           <div class="col-md-9 col-xs-12">
             <h2 py:content="officer"></h2>
-            <p class="acm-officer-position"
+            <p class="mozz-officer-position"
               py:content="officer.officer_title">
             </p>
-            <p class="acm-officer-email">
+            <p class="mozz-officer-email">
               <i class="fa fa-envelope" aria-hidden="true"></i>
               ${Markup(officer.email_address_html)}
             </p>
