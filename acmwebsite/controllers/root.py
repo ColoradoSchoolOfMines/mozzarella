@@ -22,6 +22,7 @@ from acmwebsite.controllers.meeting import MeetingsController
 from acmwebsite.controllers.schedule import ScheduleController
 from acmwebsite.controllers.survey import SurveysController
 from acmwebsite.controllers.project import ProjectsController
+from acmwebsite.controllers.presentations import PresentationsController
 
 from sqlalchemy.sql import functions
 
@@ -52,6 +53,7 @@ class RootController(BaseController):
     error = ErrorController()
     contact = ContactController()
     projects = ProjectsController()
+    presentations = PresentationsController()
 
     def _before(self, *args, **kw):
         tmpl_context.project_name = "Mozzarella"
