@@ -42,3 +42,17 @@ class Presentation(DeclarativeBase):
         secondary=presentation_author_table,
         backref='presentations'
     )
+    repo_url = Column(Unicode(512))
+    slides_pdf = Column(UploadedFileField)
+    latex_source = Column(UploadedFileField)
+
+    @property
+    def page_buttons(self):
+        return dict(
+            repo_url=(self.repo_url,
+                      'View repo', 'fa fa-github') if self.repo_url else None,
+            slides_pdf=(self.slides_pdf.url,
+                        'View Slides PDF', 'fa fa-file-pdf-o') if self.slides_pdf else None,
+            latex_source=(self.latex_source.url,
+                          'View LaTeX source', 'fa fa-file-code-o') if self.latex_source else None,
+        )

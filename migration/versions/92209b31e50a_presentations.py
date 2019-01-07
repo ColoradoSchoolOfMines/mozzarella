@@ -26,6 +26,9 @@ def upgrade():
         sa.Column('date', sa.Date),
         sa.Column('thumbnail',
                   UploadedFileField(upload_type=UploadedImageWithThumb)),
+        sa.Column('repo_url', sa.Unicode(512)),
+        sa.Column('slides_pdf', UploadedFileField),
+        sa.Column('latex_source', UploadedFileField),
     )
 
     op.create_table(
