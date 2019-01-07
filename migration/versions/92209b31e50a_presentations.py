@@ -19,7 +19,7 @@ def upgrade():
     op.create_table(
         'presentation',
         sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
-        sa.Column('title', sa.String(32)),
+        sa.Column('title', sa.String(32), nullable=False),
         sa.Column('description', sa.Unicode),
         sa.Column('date', sa.Date),
     )

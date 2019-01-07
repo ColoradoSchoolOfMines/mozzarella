@@ -30,7 +30,7 @@ class Presentation(DeclarativeBase):
     __tablename__ = 'presentation'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    title = Column(String(32))
+    title = Column(String(32), nullable=False)
     description = Column(Unicode)
     date = Column(Date, nullable=False)
     authors = relation(
