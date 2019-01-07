@@ -195,3 +195,8 @@ footer .social-links a:not(:last-child) {
 .mozz-presentation-title {
     font-size: 20px !important;
 }
+
+.img-fill {
+    width: 100%;
+    height: auto;
+}
