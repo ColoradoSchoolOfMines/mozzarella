@@ -8,6 +8,9 @@ from sqlalchemy import Column, Table, ForeignKey
 from sqlalchemy.orm import relation
 from sqlalchemy.types import Integer, Unicode, String, Date
 
+from depot.fields.sqlalchemy import UploadedFileField
+from depot.fields.specialized.image import UploadedImageWithThumb
+
 from acmwebsite.model import DeclarativeBase, metadata
 from acmwebsite.model.auth import User
 
@@ -33,6 +36,7 @@ class Presentation(DeclarativeBase):
     title = Column(String(32), nullable=False)
     description = Column(Unicode)
     date = Column(Date, nullable=False)
+    thumbnail = Column(UploadedFileField(upload_type=UploadedImageWithThumb))
     authors = relation(
         User,
         secondary=presentation_author_table,

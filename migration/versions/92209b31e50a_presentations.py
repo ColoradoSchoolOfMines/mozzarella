@@ -9,6 +9,8 @@ Create Date: 2019-01-02 16:22:15.746372
 
 from alembic import op
 import sqlalchemy as sa
+from depot.fields.sqlalchemy import UploadedFileField
+from depot.fields.specialized.image import UploadedImageWithThumb
 
 # revision identifiers, used by Alembic.
 revision = '92209b31e50a'
@@ -22,6 +24,8 @@ def upgrade():
         sa.Column('title', sa.String(32), nullable=False),
         sa.Column('description', sa.Unicode),
         sa.Column('date', sa.Date),
+        sa.Column('thumbnail',
+                  UploadedFileField(upload_type=UploadedImageWithThumb)),
     )
 
     op.create_table(
