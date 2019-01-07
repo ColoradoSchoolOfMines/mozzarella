@@ -6,7 +6,7 @@ among its cohorts, usually during Meetings.
 
 from sqlalchemy import Column, Table, ForeignKey
 from sqlalchemy.orm import relation
-from sqlalchemy.types import Integer, Unicode, String
+from sqlalchemy.types import Integer, Unicode, String, DateTime
 
 from acmwebsite.model import DeclarativeBase, metadata
 from acmwebsite.model.auth import User
@@ -32,6 +32,7 @@ class Presentation(DeclarativeBase):
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(Unicode)
     description = Column(String(32))
+    date = Column(DateTime, nullable=False)
     authors = relation(
         User,
         secondary=presentation_author_table,
