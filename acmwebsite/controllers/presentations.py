@@ -13,7 +13,7 @@ __all__ = ['PresentationsController']
 
 class NewPresentationForm(AddRecordForm):
     __model__ = Presentation
-    __require_fields__ = ['title']
+    __require_fields__ = ['title', 'date']
 new_presentation_form = NewPresentationForm(DBSession)
 
 
