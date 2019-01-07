@@ -21,7 +21,7 @@ def upgrade():
         sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
         sa.Column('title', sa.Unicode),
         sa.Column('description', sa.String(32)),
-        sa.Column('date', sa.DateTime),
+        sa.Column('date', sa.Date),
     )
 
     op.create_table(
