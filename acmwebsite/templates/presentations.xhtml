@@ -37,10 +37,10 @@
             </div>
         </div>
         <div class="panel-footer">
-            <span py:for="button in p.page_buttons.values()">
+            <span py:for="button in p.page_buttons">
                 <py:if test="button">
                     <a href="${button[0]}" class="btn btn-success btn-lg" target="_blank">
-                        <i class="${button[2]} fa-lg"></i> ${button[1]}
+                        <i class="fa ${button[2]} fa-lg"></i> ${button[1]}
                     </a>
                 </py:if>
             </span>
