@@ -67,7 +67,7 @@ class Presentation(DeclarativeBase):
     def page_buttons(self):
         buttons = [
             (self.repo_url, 'View repo',
-             'fa-github') if self.repo_url else None,
+             'fa-code-fork') if self.repo_url else None,
         ]
         for file in self.files:
             buttons.append((file.url, file.description, file.icon))
