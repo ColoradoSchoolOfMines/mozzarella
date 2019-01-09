@@ -66,7 +66,7 @@ class Presentation(DeclarativeBase):
     files = relation(PresentationFile)
 
     @property
-    def page_buttons(self):
+    def buttons(self):
         buttons = [
             (self.repo_url, 'View repo',
              'fa-code-fork') if self.repo_url else None,
