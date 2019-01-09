@@ -1,5 +1,6 @@
 """Presentations controller"""
-from tg import expose, validate, tmpl_context, flash, redirect
+from tg import expose, validate, tmpl_context, flash, redirect, require
+from tg.predicates import not_anonymous
 from sprox.formbase import AddRecordForm
 import tw2.core as twc
 import tw2.forms as twf
@@ -49,21 +50,46 @@ class PresentationsController(BaseController):
         return dict(page='presentations', presentations=presentations)
 
     @expose('acmwebsite.templates.presentation_upload')
+    @require(not_anonymous())
     def upload_form(self, **kw):
         tmpl_context.form = new_presentation_form
         return dict(page='presentation_upload', value=kw)
 
-    # @validate(new_presentation_form, error_handler=upload_form)
     @expose()
+    @require(not_anonymous())
     def upload(self, **kw):
         del kw['sprox_id']  # required by sprox
-        print(kw)
-        raise Exception('ohea')
-        kw['authors'] = [DBSession.query(User).get(id) for id in kw['authors']]
-        kw['files'] = [DBSession.query(PresentationFile).get(id) for id in kw['files']]
-        pres = Presentation(**kw)
-        for f in kw['files']:
-            f.presentation_id = pres.id
+
+        authors = [DBSession.query(User).get(id) for id in kw['authors']]
+
+        descriptions = {}
+        uploads = {}
+        for k, v in kw.items():
+            if not k.startswith('filedesc') and not k.startswith('fileupload'):
+                continue
+            if k.startswith('filedesc'):
+                descriptions[k[9:]] = v
+            if k.startswith('fileupload'):
+                uploads[k[11:]] = v
+
+        files = []
+        for k, v in descriptions.items():
+            if k not in uploads:
+                raise Exception(f'File for {v} is not present')
+
+            files.append(PresentationFile(v, uploads[k]))
+
+        pres = Presentation(
+            title= kw['title'],
+            description=kw['description'],
+            date=kw['date'],
+            thumbnail=kw['thumbnail'],
+            repo_url=kw['repo_url'],
+            authors=authors,
+            files=files
+        )
+        print(pres)
+        raise Exception('dont do it')
         DBSession.add(pres)
         flash('Your presentation was successfully uploaded')
         redirect('/index')

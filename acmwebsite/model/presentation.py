@@ -29,9 +29,13 @@ class PresentationFile(DeclarativeBase):
     __tablename__ = 'presentation_file'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    presentation_id = Column(Integer, ForeignKey('presentation.id'))
+    presentation_id = Column(Integer, ForeignKey('presentation.id'), nullable=False)
     description = Column(String(32), nullable=False)
     file = Column(UploadedFileField)
+
+    def __init__(self, description, file):
+        self.description = description
+        self.file = file
 
     @property
     def icon(self):

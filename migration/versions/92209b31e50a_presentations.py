@@ -39,10 +39,10 @@ def upgrade():
 
     op.create_table(
         'presentation_file',
-        sa.Column('id', sa.Integer),
-        sa.Column('presentation_id', sa.Integer, sa.ForeignKey('presentation.id')),
-        sa.Column('description', sa.String(32)),
-        sa.Column('file', UploadedFileField),
+        sa.Column('id', sa.Integer, primary_key=True, autoincrement=True, nullable=False),
+        sa.Column('presentation_id', sa.Integer, sa.ForeignKey('presentation.id'), nullable=False),
+        sa.Column('description', sa.String(32), nullable=False),
+        sa.Column('file', UploadedFileField, nullable=False),
     )
 
 
