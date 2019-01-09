@@ -200,3 +200,11 @@ footer .social-links a:not(:last-child) {
     width: 100%;
     height: auto;
 }
+
+.mozz-presentation-button {
+  text-transform: uppercase;
+}
+
+.mozz-presentation-button i {
+  margin-right: 4px;
+}
