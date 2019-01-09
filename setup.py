@@ -51,7 +51,6 @@ install_requires = [
     "zope.sqlalchemy >= 0.4",
     "Pillow",
     "sphinx",
-    "file-magic",
 ]
 
 

@@ -4,8 +4,6 @@ Presentations are slides, files, or other presentables that the club shares
 among its cohorts, usually during Meetings.
 """
 
-import magic
-
 from sqlalchemy import Column, ForeignKey, Table
 from sqlalchemy.orm import relation
 from sqlalchemy.types import Date, Integer, String, Unicode
@@ -38,7 +36,7 @@ class PresentationFile(DeclarativeBase):
     @property
     def icon(self):
         icons = {'application/pdf': 'fa-file-pdf-o'}
-        return icons.get(magic.detect_from_fobj(self.file.file).mime_type, 'fa-file-code-o')
+        return icons.get(self.file.content_type, 'fa-file-code-o')
 
     @property
     def url(self):
@@ -63,7 +61,7 @@ class Presentation(DeclarativeBase):
 
     authors = relation(
         User, secondary=presentation_author_table, backref='presentations')
-    files = relation(PresentationFile, backref='presentation_id')
+    files = relation(PresentationFile)
 
     @property
     def page_buttons(self):
