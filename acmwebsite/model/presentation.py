@@ -38,11 +38,11 @@ class PresentationFile(DeclarativeBase):
     @property
     def icon(self):
         icons = {'application/pdf': 'fa-file-pdf-o'}
-        return icons.get(magic.detect_from_fobj(file.file).mime_type, 'fa-file-code-o')
+        return icons.get(magic.detect_from_fobj(self.file.file).mime_type, 'fa-file-code-o')
 
     @property
     def url(self):
-        return file.url
+        return self.file.url
 
 
 class Presentation(DeclarativeBase):
