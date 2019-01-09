@@ -1,8 +1,9 @@
 """Presentations controller"""
+from datetime import datetime
+
 from tg import expose, validate, tmpl_context, flash, redirect, require
 from tg.predicates import not_anonymous
 from sprox.formbase import AddRecordForm
-import tw2.core as twc
 import tw2.forms as twf
 
 from acmwebsite.model import DBSession
@@ -58,8 +59,8 @@ class PresentationsController(BaseController):
     @expose()
     @require(not_anonymous())
     def upload(self, **kw):
-        del kw['sprox_id']  # required by sprox
-
+        if type(kw['authors']) == str:
+            kw['authors'] = [kw['authors']]
         authors = [DBSession.query(User).get(id) for id in kw['authors']]
 
         descriptions = {}
@@ -77,19 +78,25 @@ class PresentationsController(BaseController):
             if k not in uploads:
                 raise Exception(f'File for {v} is not present')
 
-            files.append(PresentationFile(v, uploads[k]))
+            presentation_file = PresentationFile(
+                description=v,
+                file=uploads[k].file.read(),
+            )
+            files.append(presentation_file)
+
+        thumbnail = None
+        if type(kw['thumbnail']) != bytes:
+            thumbnail = kw['thumbnail']
 
         pres = Presentation(
             title= kw['title'],
             description=kw['description'],
-            date=kw['date'],
-            thumbnail=kw['thumbnail'],
+            date=datetime.strptime(kw['date'], '%Y-%m-%d').date(),
+            thumbnail=thumbnail,
             repo_url=kw['repo_url'],
             authors=authors,
-            files=files
+            files=files,
         )
-        print(pres)
-        raise Exception('dont do it')
         DBSession.add(pres)
         flash('Your presentation was successfully uploaded')
-        redirect('/index')
+        redirect('/presentations')

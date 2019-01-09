@@ -33,13 +33,11 @@ class PresentationFile(DeclarativeBase):
     description = Column(String(32), nullable=False)
     file = Column(UploadedFileField)
 
-    def __init__(self, description, file):
-        self.description = description
-        self.file = file
-
     @property
     def icon(self):
-        icons = {'application/pdf': 'fa-file-pdf-o'}
+        icons = {
+            'application/pdf': 'fa-file-pdf-o'
+        }
         return icons.get(self.file.content_type, 'fa-file-code-o')
 
     @property
