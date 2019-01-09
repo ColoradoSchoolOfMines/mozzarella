@@ -61,7 +61,7 @@ from acmwebsite.model.meeting import Meeting
 from acmwebsite.model.mailmessage import MailMessage, MailAttachment
 from acmwebsite.model.survey import Survey, SurveyField, SurveyResponse, SurveyData
 from acmwebsite.model.project import Project
-from acmwebsite.model.presentation import Presentation
+from acmwebsite.model.presentation import Presentation, PresentationFile
 from acmwebsite.model.banner import Banner
 
 __all__ = (
@@ -69,6 +69,7 @@ __all__ = (
     'Group',
     'Permission',
     'Presentation',
+    'PresentationFile',
     'Meeting',
     'MailMessage',
     'MailAttachment',

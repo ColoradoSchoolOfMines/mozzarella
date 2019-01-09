@@ -37,7 +37,16 @@ def upgrade():
         sa.Column('user_id', sa.Integer, sa.ForeignKey('tg_user.user_id'), primary_key=True),
     )
 
+    op.create_table(
+        'presentation_file',
+        sa.Column('id', sa.Integer),
+        sa.Column('presentation_id', sa.Integer, sa.ForeignKey('presentation.id')),
+        sa.Column('description', sa.String(32)),
+        sa.Column('file', UploadedFileField),
+    )
+
 
 def downgrade():
     op.drop_table('presentation')
     op.drop_table('presentation_author')
+    op.drop_table('presentation_file')
