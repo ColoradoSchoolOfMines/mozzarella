@@ -14,30 +14,22 @@ from acmwebsite.lib.base import BaseController
 __all__ = ['PresentationsController']
 
 
-# WIP
-class MultiFileField(twf.widgets.FormField):
-    inline_engine_name = 'kajiki'
-    template = '''
-    <div id="${w.id}">
-        <table>
-            <tr>
-                <th width="200">Description</th>
-                <th width="300">File</th>
-                <th width="50">Delete</th>
-            </tr>
-            <tbody id="file_list">
-            </tbody>
-        </table>
-        <button id="add_file" type="button">Add File</button>
-    </div>
-    '''
-
 
 class NewPresentationForm(AddRecordForm):
     __model__ = Presentation
     __require_fields__ = ['title', 'date']
+    __omit_fields__ = ['files']
+    __field_order__ = ['title', 'description', 'date', 'thumbnail', 'repo_url',
+                       'authors', 'file', 'file_description', 'file_2',
+                       'file_2_description', 'file_3', 'file_3_description']
     repo_url = twf.UrlField('repo_url')
-    files = MultiFileField('files')
+    # this sucks, but I can't figure out a cleaner, simpler way of doing it
+    file = twf.FileField('file')
+    file_description = twf.TextField('file_description')
+    file_2 = twf.FileField('file_2')
+    file_2_description = twf.TextField('file_2_description')
+    file_3 = twf.FileField('file_3')
+    file_3_description = twf.TextField('file_3_description')
 new_presentation_form = NewPresentationForm(DBSession)
 
 
@@ -51,52 +43,35 @@ class PresentationsController(BaseController):
         return dict(page='presentations', presentations=presentations)
 
     @expose('acmwebsite.templates.presentation_upload')
-    @require(not_anonymous())
+    @require(not_anonymous(msg='Only logged in users can sumbit presentations'))
     def upload_form(self, **kw):
         tmpl_context.form = new_presentation_form
         return dict(page='presentation_upload', value=kw)
 
+    @validate(new_presentation_form, error_handler=upload_form)
     @expose()
-    @require(not_anonymous())
+    @require(not_anonymous(msg='Only logged in users can sumbit presentations'))
     def upload(self, **kw):
-        if type(kw['authors']) == str:
-            kw['authors'] = [kw['authors']]
-        authors = [DBSession.query(User).get(id) for id in kw['authors']]
+        del kw['sprox_id']  # required by sprox
+        kw['authors'] = [DBSession.query(User).get(id) for id in kw['authors']]
 
-        descriptions = {}
-        uploads = {}
+        pres = Presentation()
+
+        kw['files'] = []
+        for f in ('file', 'file_2', 'file_3'):
+            if kw[f] is not None:
+                print('ohea', kw)
+                kw['files'].append(PresentationFile(presentation_id=pres.id,
+                                                    file=kw[f],
+                                                    description=kw['{}_description'.format(f)]))
+                DBSession.add(kw['files'][-1])
+            del kw[f]
+            del kw['{}_description'.format(f)]
+
         for k, v in kw.items():
-            if not k.startswith('filedesc') and not k.startswith('fileupload'):
-                continue
-            if k.startswith('filedesc'):
-                descriptions[k[9:]] = v
-            if k.startswith('fileupload'):
-                uploads[k[11:]] = v
-
-        files = []
-        for k, v in descriptions.items():
-            if k not in uploads:
-                raise Exception(f'File for {v} is not present')
-
-            presentation_file = PresentationFile(
-                description=v,
-                file=uploads[k].file.read(),
-            )
-            files.append(presentation_file)
-
-        thumbnail = None
-        if type(kw['thumbnail']) != bytes:
-            thumbnail = kw['thumbnail']
-
-        pres = Presentation(
-            title= kw['title'],
-            description=kw['description'],
-            date=datetime.strptime(kw['date'], '%Y-%m-%d').date(),
-            thumbnail=thumbnail,
-            repo_url=kw['repo_url'],
-            authors=authors,
-            files=files,
-        )
+            setattr(pres, k, v)
         DBSession.add(pres)
+        DBSession.flush()
+
         flash('Your presentation was successfully uploaded')
         redirect('/presentations')
