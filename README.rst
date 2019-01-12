@@ -20,7 +20,7 @@ Setting up a Development Environment
        $ git clone https://github.com/ColoradoSchoolOfMines/mozzarella.git
        $ cd mozzarella
 
-2. Next, install the application in editable form using ``pip``. Passing the
+2. Next, install the application in editable form using ``pip3``. Passing the
    ``--user`` flag installs for just your local user (typically in ``~/.local``).
    Alternatively, you may wish to use a `virtual enviornment`_.
 
@@ -28,13 +28,13 @@ Setting up a Development Environment
 
    .. code:: console
 
-       $ pip install -e . --user
+       $ pip3 install -e . --user
 
 3. Install development tools for TurboGears:
 
    .. code:: console
 
-       $ pip install --user tg.devtools
+       $ pip3 install --user tg.devtools
 
 4. Next, setup the ``development.ini`` file:
 
@@ -74,7 +74,7 @@ Next, install the application:
 
 .. code:: console
 
-    $ pip install .
+    $ pip3 install .
 
 Next, set up a ``production.ini`` file next to ``app.wsgi``. This file should
 look like ``development.ini``, but you should be sure to disable debug mode and
