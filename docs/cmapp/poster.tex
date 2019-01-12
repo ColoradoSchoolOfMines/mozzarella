@@ -86,68 +86,22 @@
 
             \begin{column}{\onecolwid} % The first column
 
-                \begin{block}{Goals}
-
-                    We set out to find a system that provides a modern, fast,
-                    and practical approach to virtual reality development.
-                    Specifically, we needed a framework which met the
-                    following criteria:
-
-                    \begin{enumerate}[leftmargin=8.75cm, labelsep=1cm]
-
-                        \item[\textbf{Performant}] VR requires at least 90
-                            frames per second to run smoothly. Low frame rates
-                            can cause users to experience headaches and nausea
-                            faster than when at high frame rates~\cite{irisVR}.
-                            This requires VR programs to be highly optimized and
-                            multi-threadable.
-
-                        \item[\textbf{Natural}] VR enables new user interfaces
-                            where components are organized within a 3D space. We
-                            wanted such components to be first class.
-
-                        \item[\textbf{Flexible}] We need a general purpose user
-                            interface toolkit designed specifically for VR.
-
-                        \item[\textbf{Modular}] We need a toolkit which does
-                            not include unnecessary features, but is extensible
-                            with modular components.
-
-                    \end{enumerate}
-
+                \begin{block}{Background}
+                    Website for the CS@Mines clubs: the Association for
+                    Computing Machinery (ACM), the Linux User Group (LUG), and
+                    (soon) the Cybersecurity Club, OreSec.
                 \end{block}
 
-                \begin{block}{Exploration}
-
-                    Over the course of many months, we explored several existing
-                    VR frameworks and application architectures. We determined
-                    that none of them meet our criteria for VR development.
-
-                    We created our own user interface and rendering framework
-                    which addresses the problems that we encountered during our
-                    exploration. We initially made use of the immediate mode
-                    program architecture because of its flexibility and
-                    extensibility, but repeatedly ran into the following
-                    problem:
-
-                    \begin{quote}
-
-                        \textbf{There are some questions about the state of the
-                        system which cannot be answered until all system
-                        elements have ``reported'' their state.}
-
-                    \end{quote}
-
-                    To solve this problem, we created a powerful new program
-                    architecture called \textbf{Deferred Immediate Mode (DIM)}.
-                    The addition of \textit{deferrability} to the classic
-                    immediate mode architecture solves our issues with
-                    interdependent user interface elements without sacrificing
-                    flexibility.
-
-                    The DIM architecture enabled us to meet all of our goals for
-                    effective VR application development.
-
+                \begin{block}{Features}
+                    \begin{itemize}[leftmargin=8.75cm, labelsep=1cm]
+                        \item[---] Surveys for club meetings
+                        \item[---] Club presentations
+                        \item[---] Subscribable schedules
+                        \item[---] Club projects
+                        \item[---] Mailing lists
+                        \item[---] Mines user authentication
+                        \item[---] Built on TurboGears
+                    \end{itemize}
                 \end{block}
 
             \end{column} % End of the first column
