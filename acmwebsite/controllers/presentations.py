@@ -3,6 +3,8 @@ from datetime import datetime
 
 from tg import expose, validate, tmpl_context, flash, redirect, require
 from tg.predicates import not_anonymous
+from formencode.validators import RequireIfPresent
+from formencode.schema import Schema
 from sprox.formbase import AddRecordForm
 import tw2.forms as twf
 
@@ -14,6 +16,11 @@ from acmwebsite.lib.base import BaseController
 __all__ = ['PresentationsController']
 
 
+form_validator = Schema(allow_extra_fields=True,
+                        chained_validators=[RequireIfPresent('file_description', present='file'),
+                                            RequireIfPresent('file_2_description', present='file_2'),
+                                            RequireIfPresent('file_3_description', present='file_3')])
+
 
 class NewPresentationForm(AddRecordForm):
     __model__ = Presentation
@@ -22,6 +29,7 @@ class NewPresentationForm(AddRecordForm):
     __field_order__ = ['title', 'description', 'date', 'thumbnail', 'repo_url',
                        'authors', 'file', 'file_description', 'file_2',
                        'file_2_description', 'file_3', 'file_3_description']
+    __base_validator__ = form_validator
     repo_url = twf.UrlField('repo_url')
     # this sucks, but I can't figure out a cleaner, simpler way of doing it
     file = twf.FileField('file')
