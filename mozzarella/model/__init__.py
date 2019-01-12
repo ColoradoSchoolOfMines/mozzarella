@@ -61,12 +61,15 @@ from mozzarella.model.meeting import Meeting
 from mozzarella.model.mailmessage import MailMessage, MailAttachment
 from mozzarella.model.survey import Survey, SurveyField, SurveyResponse, SurveyData
 from mozzarella.model.project import Project
+from mozzarella.model.presentation import Presentation, PresentationFile
 from mozzarella.model.banner import Banner
 
 __all__ = (
     'User',
     'Group',
     'Permission',
+    'Presentation',
+    'PresentationFile',
     'Meeting',
     'MailMessage',
     'MailAttachment',

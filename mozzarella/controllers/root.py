@@ -22,6 +22,7 @@ from mozzarella.controllers.meeting import MeetingsController
 from mozzarella.controllers.schedule import ScheduleController
 from mozzarella.controllers.survey import SurveysController
 from mozzarella.controllers.project import ProjectsController
+from mozzarella.controllers.presentations import PresentationsController
 from mozzarella.controllers.research import ResearchController
 
 from sqlalchemy.sql import functions
@@ -53,6 +54,7 @@ class RootController(BaseController):
     error = ErrorController()
     contact = ContactController()
     projects = ProjectsController()
+    presentations = PresentationsController()
     research = ResearchController()
 
     def _before(self, *args, **kw):

@@ -1,0 +1,49 @@
+<html py:strip=""
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <py:extends href="master.xhtml" />
+
+<head py:block="head" py:strip="True">
+    <title>Mines ACM - Presentations</title>
+</head>
+
+<body py:block="body" py:strip="True">
+    <h1 class="page-header">Presentations</h1>
+    <div class="panel panel-default" py:for="p in presentations">
+        <div class="panel-heading">
+            <h2 class="panel-title mozz-presentation-title" py:content="h.rst(p.title)"></h2>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="mozz-presentation-description" py:content="h.rst(p.description)"></div>
+                    <ul class="mozz-presentation-data">
+                        <py:if test="len(list(p.authors)) > 0">
+                            <li>
+                                <b>
+                                    <py:if test="len(list(p.authors)) > 1"> Authors: </py:if><py:else>Author: </py:else>
+                                    <a py:for="a in p.authors[:-1]" href="${a.profile_url}">${a.display_name}, </a>
+                                    <a href="${p.authors[-1].profile_url}">${p.authors[-1].display_name}</a>
+                                </b>
+                            </li>
+                        </py:if>
+                        <li><b>Date:</b> ${p.date}</li>
+                    </ul>
+                </div>
+                <div py:if="p.thumbnail" class="col-md-3">
+                    <img src="${p.thumbnail.url}" class="img-fill" />
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <span py:for="button in p.buttons">
+                <a py:if="button" href="${button[0]}" class="btn btn-success mozz-presentation-button" target="_blank">
+                    <i class="fa ${button[2]} fa"></i> ${button[1]}
+                </a>
+            </span>
+        </div>
+    </div>
+</body>
+
+</html>
