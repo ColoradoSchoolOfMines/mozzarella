@@ -31,7 +31,7 @@ class PresentationFile(DeclarativeBase):
     id = Column(Integer, primary_key=True, autoincrement=True)
     presentation_id = Column(Integer, ForeignKey('presentation.id'), nullable=False)
     description = Column(String(32), nullable=False)
-    file = Column(UploadedFileField)
+    file = Column(UploadedFileField, nullable=False)
 
     @property
     def icon(self):

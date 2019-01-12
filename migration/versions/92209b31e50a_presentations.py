@@ -23,12 +23,10 @@ def upgrade():
         sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
         sa.Column('title', sa.String(32), nullable=False),
         sa.Column('description', sa.Unicode),
-        sa.Column('date', sa.Date),
+        sa.Column('date', sa.Date, nullable=False),
         sa.Column('thumbnail',
                   UploadedFileField(upload_type=UploadedImageWithThumb)),
         sa.Column('repo_url', sa.Unicode(512)),
-        sa.Column('slides_pdf', UploadedFileField),
-        sa.Column('latex_source', UploadedFileField),
     )
 
     op.create_table(
@@ -39,7 +37,7 @@ def upgrade():
 
     op.create_table(
         'presentation_file',
-        sa.Column('id', sa.Integer, primary_key=True, autoincrement=True, nullable=False),
+        sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
         sa.Column('presentation_id', sa.Integer, sa.ForeignKey('presentation.id'), nullable=False),
         sa.Column('description', sa.String(32), nullable=False),
         sa.Column('file', UploadedFileField, nullable=False),
