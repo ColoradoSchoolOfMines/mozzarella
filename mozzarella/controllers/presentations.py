@@ -68,7 +68,6 @@ class PresentationsController(BaseController):
         kw['files'] = []
         for f in ('file', 'file_2', 'file_3'):
             if kw[f] is not None:
-                print('ohea', kw)
                 kw['files'].append(PresentationFile(presentation_id=pres.id,
                                                     file=kw[f],
                                                     description=kw['{}_description'.format(f)]))
