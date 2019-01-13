@@ -25,11 +25,13 @@ form_validator = Schema(allow_extra_fields=True,
 class NewPresentationForm(AddRecordForm):
     __model__ = Presentation
     __require_fields__ = ['title', 'date']
-    __omit_fields__ = ['files']
+    __omit_fields__ = ['files', '_other_authors']
     __field_order__ = ['title', 'description', 'date', 'thumbnail', 'repo_url',
-                       'authors', 'file', 'file_description', 'file_2',
-                       'file_2_description', 'file_3', 'file_3_description']
+                       'authors', 'other_authors', 'file', 'file_description',
+                       'file_2', 'file_2_description', 'file_3',
+                       'file_3_description']
     __base_validator__ = form_validator
+    other_authors = twf.TextField('other_authors', placeholder='Separate by commas')
     repo_url = twf.UrlField('repo_url')
     # this sucks, but I can't figure out a cleaner, simpler way of doing it
     file = twf.FileField('file')
@@ -68,7 +70,6 @@ class PresentationsController(BaseController):
         kw['files'] = []
         for f in ('file', 'file_2', 'file_3'):
             if kw[f] is not None:
-                print('ohea', kw)
                 kw['files'].append(PresentationFile(presentation_id=pres.id,
                                                     file=kw[f],
                                                     description=kw['{}_description'.format(f)]))
