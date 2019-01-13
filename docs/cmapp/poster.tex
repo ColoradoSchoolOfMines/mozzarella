@@ -30,13 +30,14 @@
 
 \documentclass[final]{beamer}
 
-\usepackage[scale=1.6]{beamerposter} % Use the beamerposter package for laying out the poster
+\usepackage[scale=1.45]{beamerposter} % Use the beamerposter package for laying out the poster
 \usepackage{biblatex}
 \usepackage{csquotes}
 \usepackage{enumitem}
 \usepackage{graphicx}
 \usepackage{subcaption}
 \usepackage{booktabs} % Top and bottom rules for tables
+\usepackage{svg}
 
 \usetheme{confposter} % Use the confposter theme supplied with this template
 
@@ -103,7 +104,8 @@
                         \item[--] Built on TurboGears
                     \end{itemize}
                 \end{block}
-		\includegraphics[width=.95\linewidth]{lug-logo.png}
+
+                \includesvg[width=.95\linewidth]{mvc.svg}
 
             \end{column} % End of the first column
 
@@ -130,8 +132,8 @@
 			\item \textbf{Documentation} We have begun to use the
                         Sphinx documentation system
                         (\href{http://www.sphinx-doc.org/}{http://www.sphinx-doc.org/})
-                        to write tutorials for new clubs to use and customize
-                        the website.
+                        to write tutorials for new clubs on how to use and
+                        customize the website.
 		    \end{itemize}
 
                 \end{block}
@@ -151,7 +153,11 @@
                     \end{enumerate}
 
                 \end{alertblock}
+
+                \vspace*{10ex}
+
 		\includegraphics[width=.95\linewidth]{csam.pdf}
+
             \end{column} % End of column 2
 
             \begin{column}{\sepwid}\end{column} % Empty spacer column
@@ -184,7 +190,14 @@
                     \end{itemize}
 
                 \end{block}
+
+                \vspace*{7ex}
+
 		\includegraphics[width=.95\linewidth]{full_2048.png}
+
+                \vspace*{10ex}
+
+                \includegraphics[width=.95\linewidth]{cs.png}
 
             \end{column} % End of the third column
 
