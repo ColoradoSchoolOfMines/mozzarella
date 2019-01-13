@@ -4,6 +4,8 @@ Presentations are slides, files, or other presentables that the club shares
 among its cohorts, usually during Meetings.
 """
 
+from collections.abc import Iterable
+
 from sqlalchemy import Column, ForeignKey, Table
 from sqlalchemy.orm import relation
 from sqlalchemy.types import Date, Integer, String, Unicode
@@ -60,6 +62,7 @@ class Presentation(DeclarativeBase):
     date = Column(Date, nullable=False)
     thumbnail = Column(UploadedFileField(upload_type=UploadedImageWithThumb))
     repo_url = Column(Unicode(512))
+    _other_authors = Column(Unicode(512))
 
     authors = relation(
         User, secondary=presentation_author_table, backref='presentations')
@@ -75,3 +78,18 @@ class Presentation(DeclarativeBase):
             buttons.append((file.url, file.description, file.icon))
 
         return buttons
+
+    @property
+    def other_authors(self):
+        if self._other_authors:
+            return tuple(s for s in self._other_authors.split(',') if s)
+        else:
+            return tuple()
+
+    @other_authors.setter
+    def other_authors(self, oa):
+        if isinstance(oa, str):
+            self._other_authors = ','.join(s.strip() for s in oa.split(',')
+                                           if s.strip())
+        elif isinstance(oa, Iterable):
+            self._other_authors = ','.join(s.strip() for s in oa if s.strip())

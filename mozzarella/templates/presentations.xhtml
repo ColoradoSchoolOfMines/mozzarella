@@ -19,13 +19,13 @@
                 <div class="col-md-9">
                     <div class="mozz-presentation-description" py:content="h.rst(p.description)"></div>
                     <ul class="mozz-presentation-data">
-                        <py:if test="len(list(p.authors)) > 0">
+                        <py:if test="p.authors or p.other_authors">
                             <li>
-                                <b>
-                                    <py:if test="len(list(p.authors)) > 1"> Authors: </py:if><py:else>Author: </py:else>
-                                    <a py:for="a in p.authors[:-1]" href="${a.profile_url}">${a.display_name}, </a>
-                                    <a href="${p.authors[-1].profile_url}">${p.authors[-1].display_name}</a>
-                                </b>
+                                <b><py:if test="len(p.authors) + len(p.other_authors) > 1"> Authors:</py:if><py:else>Author:</py:else></b>
+                                <a py:for="a in p.authors[:-1]" href="${a.profile_url}">${a.display_name}, </a>
+                                <a py:if="p.authors" href="${p.authors[-1].profile_url}">${p.authors[-1].display_name}<py:if test="p.other_authors">, </py:if></a>
+                                <span py:for="a in p.other_authors[:-1]">${a}, </span>
+                                <span py:if="p.other_authors">${p.other_authors[-1]}</span>
                             </li>
                         </py:if>
                         <li><b>Date:</b> ${p.date}</li>
