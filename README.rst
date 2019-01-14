@@ -1,3 +1,6 @@
+MIGRATED TO GITLAB: https://gitlab.com/ColoradoSchoolOfMines/mozzarella
+=======================================================================
+
 Mozzarella
 ==========
 A Collaborative Web System for Student Computing Clubs
